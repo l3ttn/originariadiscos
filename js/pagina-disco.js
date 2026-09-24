@@ -3,6 +3,8 @@ import { NOME_LOJA, INSTAGRAM } from './config.js';
 import { linkAviseMe, linkEncontrePraMim, linkProcuraGenerica } from './whatsapp.js';
 import { porId } from './catalogo.js';
 import { thumbUrl, embedUrl, dedupeVideos } from './youtube.js';
+import { atualizarContadorHeader } from './carrinho.js';
+import { adicionarAoCarrinho } from './card.js';
 
 const ROTULOS_STATUS = {
   disponivel: 'Disponível',
@@ -21,6 +23,8 @@ function ligarCabecalhoRodape() {
     instagram.href = `https://instagram.com/${INSTAGRAM}`;
     instagram.textContent = `Instagram @${INSTAGRAM}`;
   }
+  atualizarContadorHeader();
+  document.addEventListener('carrinho:mudou', atualizarContadorHeader);
 }
 
 function el(tag, className, texto) {
@@ -150,6 +154,13 @@ function renderFicha(container, disco) {
   info.appendChild(renderTags(disco));
 
   info.appendChild(el('p', 'ficha__preco', disco.preco != null ? `R$ ${disco.preco}` : 'Sob consulta'));
+
+  const btnAdicionar = document.createElement('button');
+  btnAdicionar.type = 'button';
+  btnAdicionar.className = 'btn btn--primary btn--bloco';
+  btnAdicionar.textContent = 'Adicionar ao carrinho';
+  btnAdicionar.addEventListener('click', () => adicionarAoCarrinho(disco.id));
+  info.appendChild(btnAdicionar);
 
   const ctas = el('div', 'ficha__ctas');
   const ctaAviseMe = document.createElement('a');

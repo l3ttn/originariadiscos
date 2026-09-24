@@ -5,6 +5,7 @@ import { linkProcuraGenerica } from './whatsapp.js';
 import { todos } from './catalogo.js';
 import { criarCard } from './card.js';
 import { filtrar, buscar, ordenar, paginar, lerEstado, escreverEstado } from './filtros.js';
+import { atualizarContadorHeader } from './carrinho.js';
 
 const ROTULOS_STATUS = {
   disponivel: 'Disponível',
@@ -30,6 +31,8 @@ function ligarCabecalhoRodape() {
     instagram.href = `https://instagram.com/${INSTAGRAM}`;
     instagram.textContent = `Instagram @${INSTAGRAM}`;
   }
+  atualizarContadorHeader();
+  document.addEventListener('carrinho:mudou', atualizarContadorHeader);
 }
 
 function preencherSelect(select, valores, rotulos = {}, valorAtual = '') {

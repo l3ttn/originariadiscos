@@ -1,5 +1,6 @@
 // Monta links wa.me. O número nunca é hardcoded aqui — vem de js/config.js.
-import { WHATSAPP } from './config.js';
+import { WHATSAPP, NOME_LOJA } from './config.js';
+import { mensagemPedido } from './carrinho.js';
 
 /** Link wa.me com a mensagem já codificada. */
 export function montarLink(msg) {
@@ -40,4 +41,9 @@ export function linkProcuraGenerica(q = '') {
     `Olá! Estou procurando um disco que não encontrei no site da Originária Discos:\n\n` +
     `Artista / título: ${q}\nEdição ou prensagem (se souber): \n\nVocê consegue pra mim?`;
   return montarLink(msg);
+}
+
+/** Link "Pedir pelo WhatsApp" do carrinho, com a mensagem inteira do pedido. */
+export function linkPedido(estado, catalogo) {
+  return montarLink(mensagemPedido(estado, catalogo, NOME_LOJA));
 }
