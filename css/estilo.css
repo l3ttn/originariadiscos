@@ -542,6 +542,12 @@ section > .container > h2 {
   flex-wrap: wrap;
 }
 
+/* Especificidade de .paginacao empata com [hidden] do UA stylesheet; sem isto
+   o display:flex acima vence e o bloco fica visível mesmo com [hidden]. */
+.paginacao[hidden] {
+  display: none;
+}
+
 .paginacao__info {
   color: var(--cor-texto-suave);
   font-size: 0.9rem;
