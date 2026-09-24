@@ -1,5 +1,5 @@
 {
-  "geradoEm": "2026-09-24T14:35:16.675Z",
+  "geradoEm": "2026-09-24T14:50:01.832Z",
   "fonte": "Discogs",
   "discos": [
     {
@@ -1108,6 +1108,237 @@
       "comentario": null,
       "adicionadoEm": "2026-09-24T14:28:35.753Z",
       "ordem": 7
+    },
+    {
+      "id": 14478692,
+      "masterId": 96344,
+      "artista": "Elis Regina & Antonio Carlos Jobim",
+      "titulo": "Elis & Tom",
+      "ano": 1974,
+      "pais": "Brazil",
+      "selo": "Philips",
+      "catno": "6349.112",
+      "formatoTipo": "LP",
+      "formatoLabel": "Vinil LP",
+      "cor": null,
+      "edicao": "Gatefold",
+      "generos": [
+        "Jazz",
+        "Latin"
+      ],
+      "estilos": [
+        "Bossa Nova",
+        "Latin Jazz"
+      ],
+      "capa": "https://i.discogs.com/fbtEqdn-LR6PaB9LBGrFj86W8nIKJJcTZE4BIh8-wcs/rs:fit/g:sm/q:90/h:600/w:595/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE0NDc4/NjkyLTE2ODcyMjM4/MjEtNzc2MS5qcGVn.jpeg",
+      "faixas": [
+        {
+          "pos": "A1",
+          "titulo": "Águas De Março",
+          "dur": "3:29"
+        },
+        {
+          "pos": "A2",
+          "titulo": "Pois É",
+          "dur": "1:45"
+        },
+        {
+          "pos": "A3",
+          "titulo": "Só Tinha De Ser Com Você",
+          "dur": "3:50"
+        },
+        {
+          "pos": "A4",
+          "titulo": "Modinha",
+          "dur": "2:12"
+        },
+        {
+          "pos": "A5",
+          "titulo": "Triste",
+          "dur": "3:53"
+        },
+        {
+          "pos": "A6",
+          "titulo": "Corcovado",
+          "dur": "1:40"
+        },
+        {
+          "pos": "A7",
+          "titulo": "O Que Tinha De Ser",
+          "dur": "1:40"
+        },
+        {
+          "pos": "B1",
+          "titulo": "Retrato Em Branco E Preto",
+          "dur": "3:02"
+        },
+        {
+          "pos": "B2",
+          "titulo": "Brigas, Nunca Mais",
+          "dur": "1:36"
+        },
+        {
+          "pos": "B3",
+          "titulo": "Por Toda Minha Vida",
+          "dur": "2:02"
+        },
+        {
+          "pos": "B4",
+          "titulo": "Fotografia",
+          "dur": "2:45"
+        },
+        {
+          "pos": "B5",
+          "titulo": "Soneto De Separação",
+          "dur": "2:18"
+        },
+        {
+          "pos": "B6",
+          "titulo": "Chovendo Na Roseira",
+          "dur": "3:10"
+        },
+        {
+          "pos": "B7",
+          "titulo": "Inútil Paisagem",
+          "dur": "3:11"
+        }
+      ],
+      "videos": [
+        {
+          "ytId": "6ehTwq-ZMm8",
+          "titulo": "Águas de Março - Elis Regina e Tom Jobim - Elis & Tom 30 Anos"
+        },
+        {
+          "ytId": "WZ1_wNAhukE",
+          "titulo": "Pois É"
+        },
+        {
+          "ytId": "QfMd4qhVkYo",
+          "titulo": "Só Tinha De Ser Com Você"
+        },
+        {
+          "ytId": "DRuYQAs4QZY",
+          "titulo": "Modinha - Elis Regina - Elis & Tom 30 Anos"
+        },
+        {
+          "ytId": "pNWpquMzJSY",
+          "titulo": "Triste"
+        },
+        {
+          "ytId": "mDVXVNm1fpo",
+          "titulo": "Corcovado"
+        },
+        {
+          "ytId": "ZqorIA4Muzs",
+          "titulo": "O que Tinha de Ser - Elis Regina - Elis & Tom 30 Anos"
+        },
+        {
+          "ytId": "1l07CWQFmrc",
+          "titulo": "Retrato em Branco e Preto - Elis Regina - Elis & Tom 30 Anos"
+        },
+        {
+          "ytId": "hYVwJkIsj7M",
+          "titulo": "Brigas Nunca Mais"
+        },
+        {
+          "ytId": "dcNJTJingec",
+          "titulo": "Por Toda A Minha Vida (Exaltação Ao Amor)"
+        },
+        {
+          "ytId": "8p0pxlVqUHk",
+          "titulo": "Fotografia"
+        },
+        {
+          "ytId": "2Rvx9UPn_-g",
+          "titulo": "Soneto De Separação"
+        },
+        {
+          "ytId": "QGPc5hOphyM",
+          "titulo": "Chovendo Na Roseira"
+        },
+        {
+          "ytId": "tggzkeOntCg",
+          "titulo": "Inútil Paisagem"
+        },
+        {
+          "ytId": "6ehTwq-ZMm8",
+          "titulo": "Águas de Março - Elis Regina e Tom Jobim - Elis & Tom 30 Anos"
+        },
+        {
+          "ytId": "WZ1_wNAhukE",
+          "titulo": "Pois É"
+        },
+        {
+          "ytId": "QfMd4qhVkYo",
+          "titulo": "Só Tinha De Ser Com Você"
+        },
+        {
+          "ytId": "DRuYQAs4QZY",
+          "titulo": "Modinha - Elis Regina - Elis & Tom 30 Anos"
+        },
+        {
+          "ytId": "pNWpquMzJSY",
+          "titulo": "Triste"
+        },
+        {
+          "ytId": "mDVXVNm1fpo",
+          "titulo": "Corcovado"
+        },
+        {
+          "ytId": "ZqorIA4Muzs",
+          "titulo": "O que Tinha de Ser - Elis Regina - Elis & Tom 30 Anos"
+        },
+        {
+          "ytId": "1l07CWQFmrc",
+          "titulo": "Retrato em Branco e Preto - Elis Regina - Elis & Tom 30 Anos"
+        },
+        {
+          "ytId": "hYVwJkIsj7M",
+          "titulo": "Brigas Nunca Mais"
+        },
+        {
+          "ytId": "dcNJTJingec",
+          "titulo": "Por Toda A Minha Vida (Exaltação Ao Amor)"
+        },
+        {
+          "ytId": "8p0pxlVqUHk",
+          "titulo": "Fotografia"
+        },
+        {
+          "ytId": "2Rvx9UPn_-g",
+          "titulo": "Soneto De Separação"
+        },
+        {
+          "ytId": "QGPc5hOphyM",
+          "titulo": "Chovendo Na Roseira"
+        },
+        {
+          "ytId": "tggzkeOntCg",
+          "titulo": "Inútil Paisagem"
+        },
+        {
+          "ytId": "PUw5l9Z-ack",
+          "titulo": "Elis Regina & Tom  Jobim -  Corcovado - ( 1974)"
+        },
+        {
+          "ytId": "ZIyPGcSjZlc",
+          "titulo": "Elis Regina & Tom Jobim - \"Aguas de Março\" - 1974 HQ"
+        },
+        {
+          "ytId": "GSvsNIUQ-pU",
+          "titulo": "Elis Regina & Tom Jobim - Chovendo Na Roseira "
+        }
+      ],
+      "notas": "Fully laminated gatefold sleeve. Label printed in silver ink (later reissues are printed in white)",
+      "discogsUrl": "https://www.discogs.com/release/14478692-Elis-Tom-Elis-Tom",
+      "status": "esgotado",
+      "preco": null,
+      "secao": "Brasil",
+      "destaque": false,
+      "novo": true,
+      "comentario": "Elis & Tom (1974). No Discogs o artista é \"Elis* & Tom*\", por isso a linha usa o link direto.",
+      "adicionadoEm": "2026-09-24T14:50:01.810Z",
+      "ordem": 8
     },
     {
       "id": 13374934,
