@@ -1,0 +1,13 @@
+{
+  "name": "originariadiscos",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Originária Discos — vitrine de vinil com atendimento pelo WhatsApp",
+  "scripts": {
+    "catalogo": "node scripts/build-catalogo.mjs",
+    "test": "node --test tests/",
+    "lint": "for f in js/*.js scripts/*.mjs; do node --check \"$f\" || exit 1; done",
+    "dev": "python3 -m http.server 8080"
+  }
+}

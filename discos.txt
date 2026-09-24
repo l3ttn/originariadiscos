@@ -1,0 +1,69 @@
+# Originária Discos — lista de discos do site.
+# Uma linha por disco: "Artista – Título" ou link do Discogs. Campos opcionais depois de "|":
+#   status=esgotado|disponivel|encomenda   preco=220   nota=comentário curto   destaque   novo
+# "## Nome" abre uma seção (Brasil, Jazz...) que vale para as linhas abaixo dela.
+
+## Brasil
+Jorge Ben – África Brasil | destaque | nota=O disco que define o samba-funk. Prensagem original de 1976 é lendária.
+Tim Maia – Racional Vol. 1
+Marcos Valle – Previsão do Tempo | novo
+Arthur Verocai – Arthur Verocai | destaque
+Milton Nascimento & Lô Borges – Clube da Esquina
+Gal Costa – Índia
+Os Mutantes – Os Mutantes
+Elis Regina & Tom Jobim – Elis & Tom | novo
+Azymuth – Light As A Feather
+Novos Baianos – Acabou Chorare
+
+## Jazz
+Miles Davis – Kind of Blue
+John Coltrane – A Love Supreme
+Alice Coltrane – Journey in Satchidananda | novo
+Pharoah Sanders – Karma
+Herbie Hancock – Head Hunters
+Kamasi Washington – The Epic
+Bill Evans Trio – Sunday at the Village Vanguard
+
+## Soul / Funk
+Marvin Gaye – What's Going On
+Stevie Wonder – Innervisions
+Curtis Mayfield – Superfly
+D'Angelo – Voodoo | novo
+Erykah Badu – Baduizm
+Sly & The Family Stone – There's a Riot Goin' On
+Roy Ayers Ubiquity – Everybody Loves the Sunshine
+
+## Hip Hop
+A Tribe Called Quest – The Low End Theory
+Nas – Illmatic
+Madvillain – Madvillainy | destaque
+MF DOOM – MM..FOOD
+J Dilla – Donuts | novo
+Kendrick Lamar – To Pimp a Butterfly
+Racionais MC's – Sobrevivendo no Inferno
+
+## Reggae / Dub
+Bob Marley & The Wailers – Exodus
+Augustus Pablo – King Tubbys Meets Rockers Uptown
+Lee Perry & The Upsetters – Super Ape | novo
+Burning Spear – Marcus Garvey
+King Tubby – Dub from the Roots
+Toots & The Maytals – Funky Kingston
+
+## Eletrônico
+Daft Punk – Discovery
+Boards of Canada – Music Has the Right to Children
+Aphex Twin – Selected Ambient Works 85-92
+Kraftwerk – Trans-Europe Express
+Massive Attack – Mezzanine | novo
+Burial – Untrue
+Moodymann – Silentintroduction
+
+## Rock / Psicodélico
+Pink Floyd – The Dark Side of the Moon
+Radiohead – OK Computer
+The Velvet Underground & Nico – The Velvet Underground & Nico
+Tame Impala – Currents | novo
+Khruangbin – Con Todo El Mundo
+David Bowie – Low
+Fleetwood Mac – Rumours

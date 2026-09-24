@@ -1,0 +1,507 @@
+{
+  "geradoEm": "2026-09-24T14:00:00.000Z",
+  "fonte": "Discogs",
+  "discos": [
+    {
+      "id": 726944,
+      "masterId": 112296,
+      "artista": "Jorge Ben",
+      "titulo": "África Brasil",
+      "ano": 1976,
+      "pais": "Brazil",
+      "selo": "Philips",
+      "catno": "6349 187",
+      "formatoTipo": "LP",
+      "formatoLabel": "Vinil LP",
+      "cor": null,
+      "edicao": null,
+      "generos": [
+        "Jazz",
+        "Latin",
+        "Funk / Soul"
+      ],
+      "estilos": [
+        "MPB",
+        "Samba",
+        "Funk",
+        "Soul"
+      ],
+      "capa": "https://i.discogs.com/0U5iXX13lho82ZjU2rnrH4z64LR5AzaFzgzSLpTcH1Q/rs:fit/g:sm/q:90/h:596/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTcyNjk0/NC0xNTUzNjMyODAw/LTg1MzYuanBlZw.jpeg",
+      "faixas": [
+        {
+          "pos": "A1",
+          "titulo": "Ponta De Lança Africano (Umbabarauma)",
+          "dur": "3:58"
+        },
+        {
+          "pos": "A2",
+          "titulo": "Hermes Trismegisto Escreveu",
+          "dur": "3:04"
+        },
+        {
+          "pos": "A3",
+          "titulo": "O Filósofo",
+          "dur": "3:30"
+        },
+        {
+          "pos": "A4",
+          "titulo": "Meus Filhos, Meu Tesouro",
+          "dur": "3:53"
+        },
+        {
+          "pos": "A5",
+          "titulo": "O Plebeu",
+          "dur": "3:18"
+        },
+        {
+          "pos": "A6",
+          "titulo": "Taj Mahal",
+          "dur": "3:10"
+        },
+        {
+          "pos": "B1",
+          "titulo": "Xica Da Silva",
+          "dur": "4:00"
+        },
+        {
+          "pos": "B2",
+          "titulo": "A História De Jorge",
+          "dur": "3:53"
+        },
+        {
+          "pos": "B3",
+          "titulo": "Camisa 10 Da Gávea",
+          "dur": "4:18"
+        },
+        {
+          "pos": "B4",
+          "titulo": "Cavaleiro Do Cavalo Imaculado",
+          "dur": "4:43"
+        },
+        {
+          "pos": "B5",
+          "titulo": "África Brasil (Zumbi)",
+          "dur": "3:48"
+        }
+      ],
+      "videos": [
+        {
+          "ytId": "Kk3Bci3jVBs",
+          "titulo": "Ponta De Lança Africano"
+        },
+        {
+          "ytId": "m0Xf5iBLokw",
+          "titulo": "Hermes Trismegisto Escreveu"
+        },
+        {
+          "ytId": "NHAeAhgp--c",
+          "titulo": "O Filósofo"
+        },
+        {
+          "ytId": "toz2S0W201M",
+          "titulo": "Meus Filhos, Meu Tesouro"
+        },
+        {
+          "ytId": "2gUF1trx6nY",
+          "titulo": "O Plebeu"
+        },
+        {
+          "ytId": "c8AuG1W59ig",
+          "titulo": "Taj Mahal"
+        },
+        {
+          "ytId": "OIWZ_2VS1v8",
+          "titulo": "Xica Da Silva"
+        },
+        {
+          "ytId": "LYh0enUh47g",
+          "titulo": "A História De Jorge"
+        },
+        {
+          "ytId": "Lf9lyL36YwE",
+          "titulo": "Camisa 10 Da Gávea"
+        },
+        {
+          "ytId": "tEuLcEbpy3k",
+          "titulo": "Cavaleiro Do Cavalo Imaculado"
+        },
+        {
+          "ytId": "gV8V6IR-UI0",
+          "titulo": "África Brasil (Zumbi)"
+        },
+        {
+          "ytId": "Kk3Bci3jVBs",
+          "titulo": "Ponta De Lança Africano"
+        },
+        {
+          "ytId": "m0Xf5iBLokw",
+          "titulo": "Hermes Trismegisto Escreveu"
+        },
+        {
+          "ytId": "NHAeAhgp--c",
+          "titulo": "O Filósofo"
+        },
+        {
+          "ytId": "toz2S0W201M",
+          "titulo": "Meus Filhos, Meu Tesouro"
+        },
+        {
+          "ytId": "2gUF1trx6nY",
+          "titulo": "O Plebeu"
+        },
+        {
+          "ytId": "c8AuG1W59ig",
+          "titulo": "Taj Mahal"
+        },
+        {
+          "ytId": "OIWZ_2VS1v8",
+          "titulo": "Xica Da Silva"
+        },
+        {
+          "ytId": "LYh0enUh47g",
+          "titulo": "A História De Jorge"
+        },
+        {
+          "ytId": "Lf9lyL36YwE",
+          "titulo": "Camisa 10 Da Gávea"
+        },
+        {
+          "ytId": "tEuLcEbpy3k",
+          "titulo": "Cavaleiro Do Cavalo Imaculado"
+        },
+        {
+          "ytId": "gV8V6IR-UI0",
+          "titulo": "África Brasil (Zumbi)"
+        }
+      ],
+      "notas": "First brazilian press.\nCompare to subsequent reissues like [r10447257],\nthis version has \"Industria Brasileira\" on labels, below the matrix code.\n\nCatalogue Number:\n- 6349.187 on cover\n- 6349 187 on labels\n",
+      "discogsUrl": "https://www.discogs.com/release/726944-Jorge-Ben-África-Brasil",
+      "status": "esgotado",
+      "preco": null,
+      "destaque": true,
+      "novo": false,
+      "comentario": "O disco que define o samba-funk. Prensagem original de 1976 é lendária.",
+      "adicionadoEm": "2026-09-24T14:00:00.000Z",
+      "secao": "Brasil",
+      "ordem": 1
+    },
+    {
+      "id": 2968639,
+      "masterId": 158757,
+      "artista": "Arthur Verocai",
+      "titulo": "Arthur Verocai",
+      "ano": 1972,
+      "pais": "Brazil",
+      "selo": "Continental",
+      "catno": "SLP-10.079",
+      "formatoTipo": "LP",
+      "formatoLabel": "Vinil LP",
+      "cor": null,
+      "edicao": "Gatefold",
+      "generos": [
+        "Jazz",
+        "Latin",
+        "Funk / Soul"
+      ],
+      "estilos": [
+        "MPB",
+        "Jazz-Funk"
+      ],
+      "capa": "https://i.discogs.com/-1nPkTHIH-SOF7bhgF-ivu3MmnLaRrF4F3yOh8gmJ-s/rs:fit/g:sm/q:90/h:596/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTI5Njg2/MzktMTU5Mzc3ODcz/OC01MDQwLmpwZWc.jpeg",
+      "faixas": [
+        {
+          "pos": "A1",
+          "titulo": "Caboclo",
+          "dur": "2:48"
+        },
+        {
+          "pos": "A2",
+          "titulo": "Pelas Sombras",
+          "dur": "2:13"
+        },
+        {
+          "pos": "A3",
+          "titulo": "Sylvia",
+          "dur": "2:59"
+        },
+        {
+          "pos": "A4",
+          "titulo": "Presente Grego",
+          "dur": "2:29"
+        },
+        {
+          "pos": "A5",
+          "titulo": "Dedicada A Ela",
+          "dur": "3:30"
+        },
+        {
+          "pos": "B1",
+          "titulo": "Seriado",
+          "dur": "1:40"
+        },
+        {
+          "pos": "B2",
+          "titulo": "Na Boca Do Sol",
+          "dur": "2:52"
+        },
+        {
+          "pos": "B3",
+          "titulo": "Velho Parente",
+          "dur": "2:17"
+        },
+        {
+          "pos": "B4",
+          "titulo": "O Mapa",
+          "dur": "2:38"
+        },
+        {
+          "pos": "B5",
+          "titulo": "Karina (Domingo No Grajaú)",
+          "dur": "5:14"
+        }
+      ],
+      "videos": [
+        {
+          "ytId": "kSKdtk0LAGw",
+          "titulo": "ARTHUR VEROCAI - PRESENTE GREGO (SLP-10.079)"
+        },
+        {
+          "ytId": "kSKdtk0LAGw",
+          "titulo": "ARTHUR VEROCAI - PRESENTE GREGO (SLP-10.079)"
+        },
+        {
+          "ytId": "JjuHB5AfKMc",
+          "titulo": "Arthur Verocai – Caboclo"
+        },
+        {
+          "ytId": "W1yHk2YmUps",
+          "titulo": "Arthur Verocai – Pelas sombras"
+        },
+        {
+          "ytId": "eeAbvQc6BXk",
+          "titulo": "Arthur Verocai – Sylvia"
+        },
+        {
+          "ytId": "NBNb18_GDN4",
+          "titulo": "Arthur Verocai – Presente Grego"
+        },
+        {
+          "ytId": "_VzptulHvEA",
+          "titulo": "Arthur Verocai – Dedicada a Ela"
+        },
+        {
+          "ytId": "rjHJ_sdtUkU",
+          "titulo": "Arthur Verocai – Seriado"
+        },
+        {
+          "ytId": "vEanu1D1CFc",
+          "titulo": "Arthur Verocai – Na Boca do sol"
+        },
+        {
+          "ytId": "hLpgjIXeA5s",
+          "titulo": "Arthur Verocai – O Velho Parente"
+        },
+        {
+          "ytId": "hW2RrqQQCqk",
+          "titulo": "Arthur Verocai – O Mapa"
+        },
+        {
+          "ytId": "f0yTVUG1wus",
+          "titulo": "Arthur Verocai – Karina"
+        }
+      ],
+      "notas": "Gatefold sleeve",
+      "discogsUrl": "https://www.discogs.com/release/2968639-Arthur-Verocai-Arthur-Verocai",
+      "status": "esgotado",
+      "preco": null,
+      "destaque": true,
+      "novo": false,
+      "comentario": null,
+      "adicionadoEm": "2026-09-24T14:00:00.000Z",
+      "secao": "Brasil",
+      "ordem": 4
+    },
+    {
+      "id": 242785,
+      "masterId": 8554,
+      "artista": "MF DOOM & Madlib & Madvillain",
+      "titulo": "Madvillainy",
+      "ano": 2004,
+      "pais": "US",
+      "selo": "Stones Throw Records",
+      "catno": "STH2065",
+      "formatoTipo": "2LP",
+      "formatoLabel": "Vinil 2LP",
+      "cor": null,
+      "edicao": null,
+      "generos": [
+        "Hip Hop"
+      ],
+      "estilos": [
+        "Jazzy Hip-Hop",
+        "Experimental",
+        "Leftfield",
+        "Boom Bap"
+      ],
+      "capa": "https://i.discogs.com/nqGrV-wr5XpxWHm39LPr164FSBTgRDMDDpkNzGpEv-Q/rs:fit/g:sm/q:90/h:597/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTI0Mjc4/NS0xNjYyMjA3MDQx/LTc0NjcuanBlZw.jpeg",
+      "faixas": [
+        {
+          "pos": "1A",
+          "titulo": "The Illest Villains",
+          "dur": "1:55"
+        },
+        {
+          "pos": "2A",
+          "titulo": "Accordion",
+          "dur": "1:58"
+        },
+        {
+          "pos": "3A",
+          "titulo": "Meat Grinder",
+          "dur": "2:11"
+        },
+        {
+          "pos": "4A",
+          "titulo": "Bistro",
+          "dur": "1:08"
+        },
+        {
+          "pos": "5A",
+          "titulo": "Raid",
+          "dur": "2:35"
+        },
+        {
+          "pos": "1B",
+          "titulo": "America's Most Blunted",
+          "dur": "3:54"
+        },
+        {
+          "pos": "2B",
+          "titulo": "Sickfit (Inst.)",
+          "dur": "1:21"
+        },
+        {
+          "pos": "3B",
+          "titulo": "Rainbows",
+          "dur": "2:51"
+        },
+        {
+          "pos": "4B",
+          "titulo": "Curls",
+          "dur": "1:33"
+        },
+        {
+          "pos": "5B",
+          "titulo": "Do Not Fire! (Inst.)",
+          "dur": "0:52"
+        },
+        {
+          "pos": "6B",
+          "titulo": "Money Folder",
+          "dur": "2:41"
+        },
+        {
+          "pos": "1C",
+          "titulo": "Scene Two (Voice Skit)",
+          "dur": "0:20"
+        },
+        {
+          "pos": "2C",
+          "titulo": "Shadows Of Tomorrow",
+          "dur": "2:36"
+        },
+        {
+          "pos": "3C",
+          "titulo": "Operation Lifesaver AKA Mint Test",
+          "dur": "1:30"
+        },
+        {
+          "pos": "4C",
+          "titulo": "Figaro",
+          "dur": "2:25"
+        },
+        {
+          "pos": "5C",
+          "titulo": "Hardcore Hustle",
+          "dur": "1:21"
+        },
+        {
+          "pos": "6C",
+          "titulo": "Strange Ways",
+          "dur": "1:23"
+        },
+        {
+          "pos": "1D",
+          "titulo": "(Intro)",
+          "dur": "0:29"
+        },
+        {
+          "pos": "2D",
+          "titulo": "Fancy Clown",
+          "dur": "1:55"
+        },
+        {
+          "pos": "3D",
+          "titulo": "Eye",
+          "dur": "1:57"
+        },
+        {
+          "pos": "4D",
+          "titulo": "Supervillain Theme (Inst.)",
+          "dur": "0:52"
+        },
+        {
+          "pos": "5D",
+          "titulo": "All Caps",
+          "dur": "2:10"
+        },
+        {
+          "pos": "6D",
+          "titulo": "Great Day",
+          "dur": "2:16"
+        },
+        {
+          "pos": "7D",
+          "titulo": "Rhinestone Cowboy",
+          "dur": "4:00"
+        }
+      ],
+      "videos": [
+        {
+          "ytId": "ru2IrTY2UG0",
+          "titulo": "Madvillain (MF DOOM & Madlib) - Accordion [Official Music Video - 4k Remaster]"
+        },
+        {
+          "ytId": "gSJeHDlhYls",
+          "titulo": "Madvillain - All Caps"
+        },
+        {
+          "ytId": "lWpRJK_z08I",
+          "titulo": "Madvillain (MF DOOM & Madlib) - Rhinestone Cowboy [Official Music Video - 4k Remaster]"
+        },
+        {
+          "ytId": "ru2IrTY2UG0",
+          "titulo": "Madvillain (MF DOOM & Madlib) - Accordion [Official Music Video - 4k Remaster]"
+        },
+        {
+          "ytId": "gSJeHDlhYls",
+          "titulo": "Madvillain - All Caps"
+        },
+        {
+          "ytId": "lWpRJK_z08I",
+          "titulo": "Madvillain (MF DOOM & Madlib) - Rhinestone Cowboy [Official Music Video - 4k Remaster]"
+        }
+      ],
+      "notas": "Produced [...] for Madlib Invazion\nPublishing: D. Dumile (Lord Dihoo Music ASCAP), O. Jackson Jr. (Madlib Invazion, BMI), [5C] J. Brown (KRB Music, BMI)\n\"Accordion\" contains a sample from \"Experience\" by [a=Daedelus], used courtesy of Plug Research.\nMixed and Mastered at Bionic, Los Angeles.\nRecorded at Bionic, The Bomb Shelter in Los Angeles and DOOM's Crib in Atlanta.\n\n© 2004 Stones Throw Records\nManufactured and Distributed by Fat Beats Distribution\n\nRim text, Side A: Written in cold blood with a tooth pick\nRim text, Side C: Songs lit in the booth with the best host / doing bong hits on the roof within the west coast\n\nTracklisting as displayed on labels.\n\nOn 5A, featuring artist appears as M.E.D. Aka Medaphoar\n",
+      "discogsUrl": "https://www.discogs.com/release/242785-Doom-And-Madlib-Madvillain-Madvillainy",
+      "status": "esgotado",
+      "preco": null,
+      "destaque": true,
+      "novo": true,
+      "comentario": null,
+      "adicionadoEm": "2026-09-24T14:00:00.000Z",
+      "secao": "Hip Hop",
+      "ordem": 27
+    }
+  ]
+}
