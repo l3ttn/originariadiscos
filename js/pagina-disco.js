@@ -1,6 +1,6 @@
 // Lógica de disco.html?id=... — ficha completa, ou "Disco não encontrado".
 import { NOME_LOJA, INSTAGRAM } from './config.js';
-import { linkAviseMe, linkEncontrePraMim, linkProcuraGenerica } from './whatsapp.js';
+import { linkSolicitar, linkProcuraGenerica } from './whatsapp.js';
 import { porId } from './catalogo.js';
 import { thumbUrl, embedUrl, dedupeVideos } from './youtube.js';
 import { atualizarContadorHeader } from './carrinho.js';
@@ -10,6 +10,12 @@ const ROTULOS_STATUS = {
   disponivel: 'Disponível',
   encomenda: 'Sob encomenda',
   esgotado: 'Esgotado',
+};
+
+const TEXTO_CTA_SOLICITAR = {
+  disponivel: 'Disponível! Peça o seu pelo WhatsApp',
+  encomenda: 'Sob encomenda? Solicite o seu aqui agora mesmo!',
+  esgotado: 'Esgotado? Solicite o seu aqui agora mesmo!',
 };
 
 function ligarCabecalhoRodape() {
@@ -45,7 +51,7 @@ function renderNaoEncontrado(container) {
   a.target = '_blank';
   a.rel = 'noopener';
   a.href = linkProcuraGenerica();
-  a.textContent = 'Encontre pra mim';
+  a.textContent = 'Fale comigo';
   div.appendChild(a);
   container.appendChild(div);
 }
@@ -155,29 +161,22 @@ function renderFicha(container, disco) {
 
   info.appendChild(el('p', 'ficha__preco', disco.preco != null ? `R$ ${disco.preco}` : 'Sob consulta'));
 
+  const ctas = el('div', 'ficha__ctas');
+
   const btnAdicionar = document.createElement('button');
   btnAdicionar.type = 'button';
-  btnAdicionar.className = 'btn btn--primary btn--bloco';
+  btnAdicionar.className = 'btn btn--primary';
   btnAdicionar.textContent = 'Adicionar ao carrinho';
   btnAdicionar.addEventListener('click', () => adicionarAoCarrinho(disco.id));
-  info.appendChild(btnAdicionar);
+  ctas.appendChild(btnAdicionar);
 
-  const ctas = el('div', 'ficha__ctas');
-  const ctaAviseMe = document.createElement('a');
-  ctaAviseMe.className = 'btn btn--whatsapp';
-  ctaAviseMe.target = '_blank';
-  ctaAviseMe.rel = 'noopener';
-  ctaAviseMe.href = linkAviseMe(disco);
-  ctaAviseMe.textContent = 'Avise-me quando chegar';
-  ctas.appendChild(ctaAviseMe);
-
-  const ctaEncontre = document.createElement('a');
-  ctaEncontre.className = 'btn btn--primary';
-  ctaEncontre.target = '_blank';
-  ctaEncontre.rel = 'noopener';
-  ctaEncontre.href = linkEncontrePraMim(disco);
-  ctaEncontre.textContent = 'Encontre pra mim';
-  ctas.appendChild(ctaEncontre);
+  const ctaSolicitar = document.createElement('a');
+  ctaSolicitar.className = 'btn btn--whatsapp cta-solicitar';
+  ctaSolicitar.target = '_blank';
+  ctaSolicitar.rel = 'noopener';
+  ctaSolicitar.href = linkSolicitar(disco);
+  ctaSolicitar.textContent = TEXTO_CTA_SOLICITAR[disco.status] || TEXTO_CTA_SOLICITAR.disponivel;
+  ctas.appendChild(ctaSolicitar);
 
   info.appendChild(ctas);
 

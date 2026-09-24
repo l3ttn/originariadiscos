@@ -822,6 +822,12 @@ section > .container > h2 {
   margin: 0.5rem 0 1rem;
 }
 
+.cta-solicitar {
+  font-size: 1rem;
+  font-weight: 800;
+  box-shadow: var(--sombra);
+}
+
 .ficha__ctas {
   display: grid;
   grid-template-columns: 1fr;

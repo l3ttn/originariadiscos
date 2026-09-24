@@ -103,7 +103,7 @@ async function main() {
     a.target = '_blank';
     a.rel = 'noopener';
     a.href = linkProcuraGenerica(estado.q);
-    a.textContent = 'Encontre pra mim';
+    a.textContent = 'Fale comigo';
     div.appendChild(a);
     grid.appendChild(div);
   }
