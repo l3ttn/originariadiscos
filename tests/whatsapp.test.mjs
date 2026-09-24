@@ -1,6 +1,6 @@
 import { test, describe } from 'node:test';
 import assert from 'node:assert/strict';
-import { montarLink, linkAviseMe, linkEncontrePraMim, linkProcuraGenerica } from '../js/whatsapp.js';
+import { montarLink, linkSolicitar, linkProcuraGenerica } from '../js/whatsapp.js';
 import { WHATSAPP } from '../js/config.js';
 
 // Disco no formato da fixture data/catalogo.json (Jorge Ben – África Brasil).
@@ -38,38 +38,51 @@ describe('montarLink', () => {
   });
 });
 
-for (const [nome, gerar] of [
-  ['linkAviseMe', linkAviseMe],
-  ['linkEncontrePraMim', linkEncontrePraMim],
-]) {
-  describe(nome, () => {
-    test('com cor e ano: href e conteúdo decodificado corretos', () => {
-      const href = gerar(discoComCorEAno);
+describe('linkSolicitar', () => {
+  for (const status of ['esgotado', 'encomenda']) {
+    test(`status ${status}: primeira linha de disco indisponível`, () => {
+      const href = linkSolicitar({ ...discoComCorEAno, status });
       assert.ok(href.startsWith(`https://wa.me/${WHATSAPP}?text=`));
       const texto = textoDoLink(href);
-      assert.ok(texto.includes('Jorge Ben'));
-      assert.ok(texto.includes('África Brasil'));
-      assert.ok(texto.includes('1976'));
-      assert.ok(texto.includes('Vinil LP'));
-      assert.ok(texto.includes('Red'));
-      assert.ok(texto.includes('Philips'));
-      assert.ok(texto.includes('6349 187'));
-      assert.ok(texto.includes(discoComCorEAno.discogsUrl));
+      assert.ok(
+        texto.startsWith('Olá! Vi que este disco está esgotado no site e quero solicitar o meu:')
+      );
     });
+  }
 
-    test('sem cor e sem ano: omite os dois, sem deixar buracos estranhos', () => {
-      const href = gerar(discoSemCorSemAno);
-      const texto = textoDoLink(href);
-      assert.ok(texto.includes('Arthur Verocai'));
-      assert.ok(!texto.includes('()')); // ano ausente não deixa parênteses vazios
-      assert.ok(!texto.includes(' · null'));
-      assert.ok(!/·\s*·/.test(texto)); // cor ausente não deixa "·" duplicado
-      assert.ok(texto.includes('Vinil 2LP'));
-      assert.ok(texto.includes('Continental'));
-      assert.ok(texto.includes(discoSemCorSemAno.discogsUrl));
-    });
+  test('status disponivel: primeira linha "Quero este disco"', () => {
+    const href = linkSolicitar({ ...discoComCorEAno, status: 'disponivel' });
+    assert.ok(href.startsWith(`https://wa.me/${WHATSAPP}?text=`));
+    const texto = textoDoLink(href);
+    assert.ok(texto.startsWith('Olá! Quero este disco:'));
   });
-}
+
+  test('com cor e ano: artista, título, ano, formato, selo, catno e Discogs presentes', () => {
+    const href = linkSolicitar({ ...discoComCorEAno, status: 'disponivel' });
+    const texto = textoDoLink(href);
+    assert.ok(texto.includes('Jorge Ben'));
+    assert.ok(texto.includes('África Brasil'));
+    assert.ok(texto.includes('1976'));
+    assert.ok(texto.includes('Vinil LP'));
+    assert.ok(texto.includes('Red'));
+    assert.ok(texto.includes('Philips'));
+    assert.ok(texto.includes('6349 187'));
+    assert.ok(texto.includes(discoComCorEAno.discogsUrl));
+    assert.ok(texto.includes('Pode me passar disponibilidade, prazo e valor?'));
+  });
+
+  test('sem cor e sem ano: omite os dois, sem deixar buracos estranhos', () => {
+    const href = linkSolicitar({ ...discoSemCorSemAno, status: 'esgotado' });
+    const texto = textoDoLink(href);
+    assert.ok(texto.includes('Arthur Verocai'));
+    assert.ok(!texto.includes('()')); // ano ausente não deixa parênteses vazios
+    assert.ok(!texto.includes(' · null'));
+    assert.ok(!/·\s*·/.test(texto)); // cor ausente não deixa "·" duplicado
+    assert.ok(texto.includes('Vinil 2LP'));
+    assert.ok(texto.includes('Continental'));
+    assert.ok(texto.includes(discoSemCorSemAno.discogsUrl));
+  });
+});
 
 describe('linkProcuraGenerica', () => {
   test('com termo de busca', () => {
