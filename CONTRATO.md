@@ -106,3 +106,32 @@ Cada item de `discos`:
 ## Deploy `.github/workflows/build-deploy.yml`
 
 `on: push (main) · schedule '0 */6 * * *' · workflow_dispatch`. `permissions: contents: write, pages: write, id-token: write`. `concurrency: { group: pages, cancel-in-progress: false }`. Passos: `actions/checkout@v4` → `actions/setup-node@v4` (node 22) → `node scripts/build-catalogo.mjs` (env `DISCOGS_TOKEN: ${{ secrets.DISCOGS_TOKEN }}`) → commit de `data/catalogo.json data/resolvidos.json data/pendentes.txt` **só se mudou ignorando a linha `geradoEm`** (`git diff -I '"geradoEm"' --quiet -- data || commit+push`, com `git pull --rebase` antes; `continue-on-error: true`) → `actions/configure-pages@v5` → `actions/upload-pages-artifact@v3` (`path: .`) → `actions/deploy-pages@v4`.
+
+## Carrinho (v2) — pedido com vários discos pelo WhatsApp
+
+Sem pagamento. O carrinho vive em `localStorage` (chave `originaria.carrinho.v1`, JSON `{ itens: [{ id, qtd }], obs }`) e o pedido inteiro vai na mensagem do WhatsApp.
+
+- **`js/carrinho.js`**: funções **puras** e testáveis (`adicionar(estado, id)`, `remover(estado, id)`, `definirQtd(estado, id, qtd)` com qtd entre 1 e 9, `total(estado, catalogo)` → `{ valor, temSemPreco }`, `mensagemPedido(estado, catalogo, nomeLoja)`), mais a camada de I/O (`carregar()`, `salvar(estado)`, ambos com try/catch: localStorage indisponível → carrinho vazio em memória). Evento `CustomEvent('carrinho:mudou')` no `document` a cada salvar.
+- **Botão nos cards** (`js/card.js`): o card deixa de ser um `<a>` inteiro; vira `<article class="card">` com `<a>` na capa e no título e um `<button class="card__add" type="button" data-id="…">Adicionar ao carrinho</button>` fora do link. Clique: adiciona, mostra toast "Adicionado ao carrinho" (2 s, `aria-live="polite"`), atualiza o contador do header. Não navega.
+- **Ficha** (`disco.html`): botão primário "Adicionar ao carrinho" e, abaixo, **um único** link WhatsApp (`.cta-solicitar`, `target="_blank" rel="noopener"`) no lugar dos dois CTAs antigos ("Avise-me quando chegar" e "Encontre pra mim" saem de todas as páginas). Texto por status: `esgotado` → `Esgotado? Solicite o seu aqui agora mesmo!`; `encomenda` → `Sob encomenda? Solicite o seu aqui agora mesmo!`; `disponivel` → `Disponível! Peça o seu pelo WhatsApp`. Mensagem `linkSolicitar(disco)`: primeira linha `Olá! Vi que este disco está esgotado no site e quero solicitar o meu:` (esgotado/encomenda) ou `Olá! Quero este disco:` (disponivel), depois `\n\n{artista} – {titulo} ({ano})\n{formatoLabel}{ · cor} · {selo} {catno}\nDiscogs: {discogsUrl}\n\nPode me passar disponibilidade, prazo e valor?`. `linkProcura` (busca genérica) continua no index e na busca sem resultado.
+- **Header** (nos 4 HTML): link `carrinho.html` com texto "Carrinho" e `<span class="header__contador" data-contador>0</span>`; o contador soma as quantidades e se atualiza no carregamento e no evento `carrinho:mudou`.
+- **`carrinho.html` + `js/pagina-carrinho.js`**: lista dos itens (capa 64px, artista, `Título – Vinil LP`, selo · catno, preço `R$ 220` ou `Sob consulta`, controle de quantidade − / +, botão "Remover"); `<textarea>` "Observação (opcional)" persistida no estado; linha de total: `Total: R$ 440` ou `Total: sob consulta (N item(ns) sem preço)`; botão primário `<a id="btn-pedir" target="_blank" rel="noopener">Pedir pelo WhatsApp</a>` cujo `href` é regenerado a cada mudança; botão "Esvaziar carrinho" (confirm nativo); carrinho vazio → texto "Seu carrinho está vazio" + link "Ver catálogo". Item cujo `id` não existe mais no catálogo é descartado silenciosamente ao carregar.
+- **Mensagem** (`mensagemPedido`, também exposta por `js/whatsapp.js` como `linkPedido(estado, catalogo)`), com `\n` real:
+
+```
+Olá! Quero fazer um pedido na Originária Discos:
+
+1. Jorge Ben – África Brasil (1976) · Vinil LP · Philips 6349 187 · 2 un.
+   discogs.com/release/726944
+2. Arthur Verocai – Arthur Verocai (1972) · Vinil LP · Continental SLP-10.079 · 1 un.
+   discogs.com/release/2968639
+
+Total: R$ 440            ← ou "Total: sob consulta (1 item sem preço)"
+Observação: {obs}        ← linha só se obs não vazia
+
+Pode me passar disponibilidade, prazo e valor?
+```
+
+  `(ano)` só se houver; `· N un.` só se `qtd > 1`; a linha do Discogs é `discogs.com/release/{id}` (sem slug, mais curta no WhatsApp); preço formatado `R$ 220` sem centavos; itens na ordem em que foram adicionados.
+- **Regras**: zero deps, ES modules, `WHATSAPP` só de `js/config.js`; tudo relativo (subpath do Pages); textos pt-BR; mobile 360 px sem scroll horizontal; `carrinho.html` tem o mesmo header/footer estático dos outros (com "Data provided by Discogs").
+- **Testes** `tests/carrinho.test.mjs`: adicionar (novo → qtd 1; repetido → qtd 2), remover, definirQtd com limites 1–9, total com e sem preço, mensagem com 2 itens (bate com o modelo acima, literalmente), item de id inexistente ignorado.

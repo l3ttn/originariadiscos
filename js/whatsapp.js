@@ -1,5 +1,6 @@
 // Monta links wa.me. O número nunca é hardcoded aqui — vem de js/config.js.
-import { WHATSAPP } from './config.js';
+import { WHATSAPP, NOME_LOJA } from './config.js';
+import { mensagemPedido } from './carrinho.js';
 
 /** Link wa.me com a mensagem já codificada. */
 export function montarLink(msg) {
@@ -16,21 +17,16 @@ function linhaAnoTitulo(disco) {
   return `${disco.artista} – ${disco.titulo}${ano}`;
 }
 
-/** "Avise-me quando chegar", para um disco específico. */
-export function linkAviseMe(disco) {
+/** CTA único da ficha: mensagem varia conforme o status do disco. */
+export function linkSolicitar(disco) {
+  const linha1 =
+    disco.status === 'disponivel'
+      ? 'Olá! Quero este disco:'
+      : 'Olá! Vi que este disco está esgotado no site e quero solicitar o meu:';
   const msg =
-    `Olá! Quero ser avisado(a) quando este disco chegar na Originária Discos:\n\n` +
+    `${linha1}\n\n` +
     `${linhaAnoTitulo(disco)}\n${linhaFormato(disco)}\nDiscogs: ${disco.discogsUrl}\n\n` +
-    `Meu nome: `;
-  return montarLink(msg);
-}
-
-/** "Encontre pra mim", para um disco específico. */
-export function linkEncontrePraMim(disco) {
-  const msg =
-    `Olá! Quero que você encontre este disco pra mim:\n\n` +
-    `${linhaAnoTitulo(disco)}\n${linhaFormato(disco)}\nDiscogs: ${disco.discogsUrl}\n\n` +
-    `Pode me passar prazo e valor?`;
+    `Pode me passar disponibilidade, prazo e valor?`;
   return montarLink(msg);
 }
 
@@ -40,4 +36,9 @@ export function linkProcuraGenerica(q = '') {
     `Olá! Estou procurando um disco que não encontrei no site da Originária Discos:\n\n` +
     `Artista / título: ${q}\nEdição ou prensagem (se souber): \n\nVocê consegue pra mim?`;
   return montarLink(msg);
+}
+
+/** Link "Pedir pelo WhatsApp" do carrinho, com a mensagem inteira do pedido. */
+export function linkPedido(estado, catalogo) {
+  return montarLink(mensagemPedido(estado, catalogo, NOME_LOJA));
 }

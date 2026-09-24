@@ -3,6 +3,7 @@ import { INSTAGRAM } from './config.js';
 import { linkProcuraGenerica } from './whatsapp.js';
 import { destaques, novidades, secoes } from './catalogo.js';
 import { criarCard } from './card.js';
+import { atualizarContadorHeader } from './carrinho.js';
 
 function ligarCabecalhoRodape() {
   const linkProcura = linkProcuraGenerica();
@@ -15,6 +16,8 @@ function ligarCabecalhoRodape() {
     instagram.href = `https://instagram.com/${INSTAGRAM}`;
     instagram.textContent = `Instagram @${INSTAGRAM}`;
   }
+  atualizarContadorHeader();
+  document.addEventListener('carrinho:mudou', atualizarContadorHeader);
 }
 
 function renderEstadoVazio(container, mensagem) {
