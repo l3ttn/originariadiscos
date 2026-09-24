@@ -72,14 +72,26 @@ export function encontrarFormatoVinil(formats) {
 }
 
 /** formatoTipo a partir de formats[] (regra do CONTRATO.md). */
+/**
+ * "Álbum" pelas descriptions: tem 'Album' ou 'LP' explícito. Discogs tagueia disco de
+ * house/eletrônico como "12", 33 ⅓ RPM, Album" — 12"/10"/7" com Album/LP junto é álbum,
+ * não compacto; só sem esse tag é que o tamanho decide.
+ */
+function ehAlbumOuLP(descricoesLower) {
+  return descricoesLower.includes('album') || descricoesLower.includes('lp');
+}
+
 export function derivarFormatoTipo(formats) {
   const vinil = encontrarFormatoVinil(formats);
   if (!vinil) return null;
   const descricoes = Array.isArray(vinil.descriptions) ? vinil.descriptions : [];
-  if (descricoes.includes('7"')) return '7"';
-  if (descricoes.includes('10"')) return '10"';
-  if (descricoes.includes('12"')) return '12"';
-  if (descricoes.includes('Box Set')) return 'Box';
+  const descricoesLower = descricoes.map((d) => String(d).toLowerCase());
+  if (descricoesLower.includes('box set')) return 'Box';
+  if (!ehAlbumOuLP(descricoesLower)) {
+    if (descricoes.includes('7"')) return '7"';
+    if (descricoes.includes('10"')) return '10"';
+    if (descricoes.includes('12"')) return '12"';
+  }
   const qty = Number(vinil.qty);
   if (Number.isFinite(qty) && qty > 1) return `${qty}LP`;
   return 'LP';
@@ -252,18 +264,84 @@ export function prepararLinhas(conteudo) {
 }
 
 /**
- * Regra de casamento do resultado de busca: o primeiro resultado cujo título
- * normalizado termina com " - " + tituloNorm e contém artistaNorm.
+ * Regra de casamento do resultado de busca: título normalizado termina com
+ * " - " + tituloNorm e contém artistaNorm. Devolve TODOS os candidatos que
+ * casam (não só o primeiro) — o desempate entre eles é trabalho de
+ * escolherMelhorCandidato, porque títulos iguais podem apontar para edições
+ * bem diferentes (álbum original vs. compacto, vs. compilação).
+ */
+export function filtrarCandidatosQueCasam(resultados, artistaNorm, tituloNorm) {
+  if (!Array.isArray(resultados)) return [];
+  return resultados.filter((r) => {
+    const tituloResultadoNorm = normalizarTexto(r?.title ?? '');
+    return tituloResultadoNorm.endsWith(` - ${tituloNorm}`) && tituloResultadoNorm.includes(artistaNorm);
+  });
+}
+
+/**
+ * Regra de casamento do resultado de busca: entre os candidatos cujo título
+ * casa, o de melhor pontuação (derivarPontuacaoFormato). Mantido para
+ * compatibilidade — devolve só o candidato escolhido, sem a pontuação.
  */
 export function casarResultadoBusca(resultados, artistaNorm, tituloNorm) {
-  if (!Array.isArray(resultados)) return null;
-  for (const r of resultados) {
-    const tituloResultadoNorm = normalizarTexto(r?.title ?? '');
-    if (tituloResultadoNorm.endsWith(` - ${tituloNorm}`) && tituloResultadoNorm.includes(artistaNorm)) {
-      return r;
+  const candidatos = filtrarCandidatosQueCasam(resultados, artistaNorm, tituloNorm);
+  if (candidatos.length === 0) return null;
+  return escolherMelhorCandidato(candidatos).candidato;
+}
+
+/** `format` vem como array (busca) ou string "LP, Album" (versions) — normaliza pros dois casos. */
+export function listaFormato(formatoField) {
+  if (Array.isArray(formatoField)) return formatoField.map((f) => String(f));
+  if (typeof formatoField === 'string') return formatoField.split(',').map((f) => f.trim()).filter(Boolean);
+  return [];
+}
+
+const TERMOS_NEGATIVOS = new Set(['compilation', 'unofficial release', 'promo', 'single', 'ep', 'mixed', 'transcription']);
+const TAMANHOS_PEQUENOS = new Set(['7"', '10"', '12"']);
+
+/**
+ * Pontua um candidato de busca pelo campo `format`: +3 'Album', +1 'LP',
+ * −4 Compilation/Unofficial Release/Promo/Single/EP/Mixed/Transcription,
+ * −2 se for 7"/10"/12". Maior pontuação = mais parecido com o álbum original.
+ */
+export function pontuarCandidato(candidato) {
+  const formatos = listaFormato(candidato?.format);
+  const formatosLower = formatos.map((f) => f.toLowerCase());
+  let pontos = 0;
+  if (formatosLower.includes('album')) pontos += 3;
+  if (formatosLower.includes('lp')) pontos += 1;
+  if (formatosLower.some((f) => TERMOS_NEGATIVOS.has(f))) pontos -= 4;
+  if (formatos.some((f) => TAMANHOS_PEQUENOS.has(f))) pontos -= 2;
+  return pontos;
+}
+
+/**
+ * Escolhe o candidato de maior pontuação (derivarPontuacaoFormato); empate
+ * vai para o de menor `year` (a edição original). Devolve { candidato, pontos }.
+ */
+export function escolherMelhorCandidato(candidatos) {
+  if (!Array.isArray(candidatos) || candidatos.length === 0) {
+    return { candidato: null, pontos: -Infinity };
+  }
+  let melhor = candidatos[0];
+  let melhorPontos = pontuarCandidato(melhor);
+  for (const c of candidatos.slice(1)) {
+    const pontos = pontuarCandidato(c);
+    if (pontos > melhorPontos) {
+      melhor = c;
+      melhorPontos = pontos;
+      continue;
+    }
+    if (pontos === melhorPontos) {
+      const anoMelhor = Number(melhor?.year);
+      const anoCandidato = Number(c?.year);
+      if (Number.isFinite(anoCandidato) && (!Number.isFinite(anoMelhor) || anoCandidato < anoMelhor)) {
+        melhor = c;
+        melhorPontos = pontos;
+      }
     }
   }
-  return null;
+  return { candidato: melhor, pontos: melhorPontos };
 }
 
 // ---------------------------------------------------------------------------
@@ -362,7 +440,7 @@ async function buscarDiscogs(artista, titulo, tipo) {
     release_title: titulo,
     type: tipo,
     format: 'Vinyl',
-    per_page: '5',
+    per_page: '10',
   });
   const data = await chamarDiscogs(
     `https://api.discogs.com/database/search?${params.toString()}`,
@@ -377,7 +455,7 @@ async function buscarDiscogsLivre(artista, titulo, tipo) {
     q: `${artista} ${titulo}`,
     type: tipo,
     format: 'Vinyl',
-    per_page: '5',
+    per_page: '10',
   });
   const data = await chamarDiscogs(
     `https://api.discogs.com/database/search?${params.toString()}`,
@@ -388,12 +466,17 @@ async function buscarDiscogsLivre(artista, titulo, tipo) {
 
 /**
  * Tenta, em ordem: type=master (artist+release_title) → type=release (idem) → busca
- * livre (q=) com type=master. Cada tentativa só roda se a anterior deu ZERO resultados
- * (não "sem casamento" — nesse caso já usa o 1º + VERIFICAR e para). Aplica a regra de
- * casamento em cada uma. O `tipo` devolvido diz de qual busca veio o id vencedor —
- * quando é "master", o id devolvido pela API de busca é um master id (não um release
- * id) e precisa passar por /masters/{id} → main_release antes de virar um
- * GET /releases/{id} válido.
+ * livre (q=) com type=master. Cada tentativa roda se a anterior não achou um candidato
+ * de confiança (pontos > 0) — resultado bruto vazio OU nenhum título casou OU o melhor
+ * candidato que casou tem pontuação <= 0 não fecham a busca sozinhos: guarda o melhor
+ * visto até agora e tenta a próxima tentativa, na esperança de achar algo melhor (ex.:
+ * a busca livre acha o álbum quando artist+release_title só acha bootleg/compacto).
+ * Só para de vez quando acha algo com pontos > 0, ou depois de esgotar as 3 tentativas
+ * (aí usa o melhor visto, com `verificar: true`; sem nada em nenhuma, `erro: true`).
+ *
+ * O `tipo` devolvido diz de qual busca veio o id vencedor — quando é "master", o id
+ * devolvido pela API de busca é um master id (não um release id) e precisa passar por
+ * /masters/{id} → main_release antes de virar um GET /releases/{id} válido.
  */
 async function buscarEResolverTexto(artista, titulo) {
   const artistaNorm = normalizarTexto(artista);
@@ -403,17 +486,33 @@ async function buscarEResolverTexto(artista, titulo) {
     { tipo: 'release', buscar: () => buscarDiscogs(artista, titulo, 'release') },
     { tipo: 'master', buscar: () => buscarDiscogsLivre(artista, titulo, 'master') },
   ];
+  let melhorAteAgora = null; // { id, tipo, pontos, url } de menor confiança, caso nada bata pontos > 0
   for (const tentativa of tentativas) {
     const resultados = await tentativa.buscar();
     if (resultados.length === 0) continue;
-    const match = casarResultadoBusca(resultados, artistaNorm, tituloNorm);
-    const escolhido = match || resultados[0];
-    return {
-      id: escolhido.id,
-      tipo: tentativa.tipo,
-      verificar: !match,
-      url: escolhido.resource_url || escolhido.uri || '',
-    };
+    const candidatos = filtrarCandidatosQueCasam(resultados, artistaNorm, tituloNorm);
+    if (candidatos.length === 0) {
+      if (!melhorAteAgora) {
+        const escolhido = resultados[0];
+        melhorAteAgora = {
+          id: escolhido.id,
+          tipo: tentativa.tipo,
+          pontos: -Infinity,
+          url: escolhido.resource_url || escolhido.uri || '',
+        };
+      }
+      continue;
+    }
+    const { candidato, pontos } = escolherMelhorCandidato(candidatos);
+    if (pontos > 0) {
+      return { id: candidato.id, tipo: tentativa.tipo, verificar: false, url: candidato.resource_url || candidato.uri || '' };
+    }
+    if (!melhorAteAgora || pontos > melhorAteAgora.pontos) {
+      melhorAteAgora = { id: candidato.id, tipo: tentativa.tipo, pontos, url: candidato.resource_url || candidato.uri || '' };
+    }
+  }
+  if (melhorAteAgora) {
+    return { id: melhorAteAgora.id, tipo: melhorAteAgora.tipo, verificar: true, url: melhorAteAgora.url };
   }
   return { erro: true };
 }
@@ -455,11 +554,36 @@ async function resolverId(linha, resolvidos) {
   return { chave, id: r.id, verificarInfo };
 }
 
+/** descriptions do formato Vinyl de um release já buscado, pra pontuar com pontuarCandidato. */
+function formatoComoLista(release) {
+  const vinil = encontrarFormatoVinil(release?.formats);
+  if (!vinil) return [];
+  return Array.isArray(vinil.descriptions) ? vinil.descriptions.map(String) : [];
+}
+
 /**
- * Para linhas resolvidas via master: garante que o release final tem formato Vinyl,
- * com /masters/{id}/versions?format=Vinyl como fallback — tanto quando main_release
- * não tem formato Vinyl quanto quando o GET desse release falha (ex.: 404, main_release
- * inválido/orfão).
+ * O release resolvido é um compacto/EP em vez de álbum? Regra: tem descrição
+ * Single/EP, OU tem 7"/10"/12" SEM 'Album'/'LP' junto (com Album/LP junto, tamanho não
+ * importa — é o álbum prensado em 12", igual A Love Supreme ou Silentintroduction).
+ */
+function releaseEhFormatoPequeno(release) {
+  const vinil = encontrarFormatoVinil(release?.formats);
+  if (!vinil) return false; // sem Vinyl algum é tratado à parte (ver chamador)
+  const descricoes = Array.isArray(vinil.descriptions) ? vinil.descriptions.map(String) : [];
+  const descricoesLower = descricoes.map((d) => d.toLowerCase());
+  if (descricoesLower.includes('single') || descricoesLower.includes('ep')) return true;
+  if (ehAlbumOuLP(descricoesLower)) return false;
+  return descricoes.some((d) => TAMANHOS_PEQUENOS.has(d));
+}
+
+/**
+ * Para linhas resolvidas via master: garante que o release final é um álbum em Vinyl.
+ * Dois fallbacks em /masters/{id}/versions:
+ *  - sem formato Vinyl algum (ou o GET do main_release falhou, ex. 404) → format=Vinyl,
+ *    pega a 1ª versão; sem nenhuma → PendenteError (linha não entra no catálogo).
+ *  - tem Vinyl mas é 7"/10"/12"/Single/EP → format=LP, pega a 1ª versão cujo `format`
+ *    contenha "LP" ou "Album"; sem nenhuma, mantém o que tem e sinaliza VERIFICAR
+ *    (não lança — o disco entra no catálogo do jeito que achou).
  */
 async function garantirVinil(masterId, id, force) {
   let release = null;
@@ -469,17 +593,52 @@ async function garantirVinil(masterId, id, force) {
     release = null; // cai para o fallback de versions abaixo
   }
   const temVinil = Boolean(release) && Array.isArray(release.formats) && release.formats.some((f) => f?.name === 'Vinyl');
-  if (temVinil) return { id, release };
-  const versoes = await chamarDiscogs(
-    `https://api.discogs.com/masters/${masterId}/versions?format=Vinyl&per_page=1`,
-    `masters/${masterId}/versions`,
-  );
-  const primeira = versoes.versions?.[0];
-  if (!primeira) {
-    throw new PendenteError(`SEM RESULTADO (master ${masterId}: main_release inválido e sem versão em vinil)`);
+
+  if (!temVinil) {
+    const versoes = await chamarDiscogs(
+      `https://api.discogs.com/masters/${masterId}/versions?format=Vinyl&per_page=1`,
+      `masters/${masterId}/versions(Vinyl)`,
+    );
+    const primeira = versoes.versions?.[0];
+    if (!primeira) {
+      throw new PendenteError(`SEM RESULTADO (master ${masterId}: main_release inválido e sem versão em vinil)`);
+    }
+    const releaseFinal = await obterRelease(primeira.id, force);
+    return { id: primeira.id, release: releaseFinal, motivoVerificar: null };
   }
-  const releaseFinal = await obterRelease(primeira.id, force);
-  return { id: primeira.id, release: releaseFinal };
+
+  if (releaseEhFormatoPequeno(release)) {
+    // format=LP como filtro de servidor exclui versão só tagueada "Album" (sem o
+    // token "LP" junto) — busca as versões em Vinyl sem esse filtro e pontua
+    // client-side com a mesma regra de pontuarCandidato, só troca se achar algo
+    // estritamente melhor que o que já tem.
+    const versoes = await chamarDiscogs(
+      `https://api.discogs.com/masters/${masterId}/versions?format=Vinyl&per_page=20`,
+      `masters/${masterId}/versions(Vinyl,todas)`,
+    );
+    const candidatas = Array.isArray(versoes.versions) ? versoes.versions : [];
+    const pontosAtual = pontuarCandidato({ format: formatoComoLista(release) });
+    let melhorVersao = null;
+    let melhorPontos = pontosAtual;
+    for (const v of candidatas) {
+      const pontos = pontuarCandidato({ format: v?.format });
+      if (pontos > melhorPontos) {
+        melhorVersao = v;
+        melhorPontos = pontos;
+      }
+    }
+    if (melhorVersao) {
+      const releaseFinal = await obterRelease(melhorVersao.id, force);
+      return { id: melhorVersao.id, release: releaseFinal, motivoVerificar: null };
+    }
+    return {
+      id,
+      release,
+      motivoVerificar: `main_release do master ${masterId} é 7"/10"/12"/Single/EP e não achei versão melhor em /masters/${masterId}/versions`,
+    };
+  }
+
+  return { id, release, motivoVerificar: null };
 }
 
 function construirEntrada(release, id, opts, ordem, adicionadoEm) {
@@ -561,11 +720,13 @@ async function main() {
     }
 
     let release;
+    let motivoVerificar = null;
     try {
       if (precisaValidarVinil) {
         const garantido = await garantirVinil(masterId, id, force);
         id = garantido.id;
         release = garantido.release;
+        motivoVerificar = garantido.motivoVerificar;
       } else {
         release = await obterRelease(id, force);
       }
@@ -609,6 +770,7 @@ async function main() {
     resolvidos[chave] = { id, adicionadoEm };
     discosFinal.push(entrada);
     if (verificarInfo) pendentesLinhas.push(verificarInfo);
+    if (motivoVerificar) pendentesLinhas.push(`VERIFICAR: ${linha.bruta} → ${motivoVerificar}`);
   }
 
   await fs.mkdir(DATA_DIR, { recursive: true });

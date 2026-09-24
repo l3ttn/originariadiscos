@@ -10,6 +10,10 @@ import {
   derivarEdicao,
   derivarArtista,
   casarResultadoBusca,
+  filtrarCandidatosQueCasam,
+  listaFormato,
+  pontuarCandidato,
+  escolherMelhorCandidato,
 } from '../scripts/build-catalogo.mjs';
 
 // --- parseLinha -------------------------------------------------------
@@ -116,9 +120,19 @@ test('derivarFormatoTipo: qty > 1 vira NLP', () => {
   assert.equal(derivarFormatoTipo(formats), '2LP');
 });
 
-test('derivarFormatoTipo: descriptions com 12" tem prioridade sobre qty', () => {
+test('derivarFormatoTipo: 12" sem Album/LP junto é mesmo compacto', () => {
   const formats = [{ name: 'Vinyl', qty: '1', text: '', descriptions: ['12"', 'Maxi-Single'] }];
   assert.equal(derivarFormatoTipo(formats), '12"');
+});
+
+test('derivarFormatoTipo: 12" COM Album junto é álbum, não compacto (casa como house/eletrônico no Discogs)', () => {
+  const formats = [{ name: 'Vinyl', qty: '2', text: '', descriptions: ['12"', '33 ⅓ RPM', 'Album'] }];
+  assert.equal(derivarFormatoTipo(formats), '2LP');
+});
+
+test('derivarFormatoTipo: 7" com LP junto (raro, mas a regra é a mesma) vira LP, não 7"', () => {
+  const formats = [{ name: 'Vinyl', qty: '1', text: '', descriptions: ['7"', 'LP'] }];
+  assert.equal(derivarFormatoTipo(formats), 'LP');
 });
 
 test('derivarFormatoTipo: Box Set vira Box', () => {
@@ -190,4 +204,61 @@ test('casarResultadoBusca: nenhum casa retorna null', () => {
   const resultados = [{ id: 1, title: 'Outra Coisa - Totalmente Diferente' }];
   const match = casarResultadoBusca(resultados, normalizarTexto('Madvillain'), normalizarTexto('Madvillainy'));
   assert.equal(match, null);
+});
+
+// --- listaFormato / pontuarCandidato / escolherMelhorCandidato -----------
+
+test('listaFormato: aceita array (busca) e string "LP, Album" (versions)', () => {
+  assert.deepEqual(listaFormato(['Vinyl', 'LP', 'Album']), ['Vinyl', 'LP', 'Album']);
+  assert.deepEqual(listaFormato('LP, Album, Test Pressing'), ['LP', 'Album', 'Test Pressing']);
+  assert.deepEqual(listaFormato(undefined), []);
+});
+
+test('pontuarCandidato: +3 Album, +1 LP, soma', () => {
+  assert.equal(pontuarCandidato({ format: ['Vinyl', 'LP', 'Album', 'Stereo'] }), 4);
+});
+
+test('pontuarCandidato: -4 Compilation e -2 tamanho pequeno', () => {
+  assert.equal(pontuarCandidato({ format: ['Vinyl', 'LP', 'Compilation'] }), -3);
+  assert.equal(pontuarCandidato({ format: ['Vinyl', '7"', 'Single'] }), -6);
+});
+
+test('escolherMelhorCandidato: caso real de A Love Supreme — Compilation 1991 perde pra Album 1965', () => {
+  const candidatos = [
+    { id: 1121130, format: ['Vinyl', 'LP', 'Compilation'], year: 1991 },
+    { id: 32287, format: ['Vinyl', 'LP', 'Album', 'Stereo'], year: 1965 },
+  ];
+  const { candidato, pontos } = escolherMelhorCandidato(candidatos);
+  assert.equal(candidato.id, 32287);
+  assert.equal(pontos, 4);
+});
+
+test('escolherMelhorCandidato: empate de pontuação vai para o de menor year', () => {
+  const candidatos = [
+    { id: 1, format: ['Vinyl', 'LP', 'Album'], year: 2015 },
+    { id: 2, format: ['Vinyl', 'LP', 'Album'], year: 1975 },
+  ];
+  const { candidato } = escolherMelhorCandidato(candidatos);
+  assert.equal(candidato.id, 2);
+});
+
+test('escolherMelhorCandidato: sem pontuação > 0 ainda assim escolhe o melhor disponível', () => {
+  const candidatos = [
+    { id: 1, format: ['Vinyl', '7"', 'Single'], year: 1980 },
+    { id: 2, format: ['Vinyl', '12"', 'EP'], year: 1980 },
+  ];
+  const { candidato, pontos } = escolherMelhorCandidato(candidatos);
+  assert.equal(candidato.id, 1); // -6 empata em tamanho negativo, mas -6 > -6... desempate por year igual mantém o 1º
+  assert.ok(pontos <= 0);
+});
+
+test('filtrarCandidatosQueCasam: devolve todos os que casam, não só o primeiro', () => {
+  const resultados = [
+    { id: 1, title: 'Alice Coltrane & Pharoah Sanders - Journey In Satchidananda' },
+    { id: 2, title: 'Alice Coltrane - Journey In Satchidananda' },
+    { id: 3, title: 'Outra Coisa - Totalmente Diferente' },
+  ];
+  const candidatos = filtrarCandidatosQueCasam(resultados, normalizarTexto('Alice Coltrane'), normalizarTexto('Journey In Satchidananda'));
+  assert.equal(candidatos.length, 2);
+  assert.deepEqual(candidatos.map((c) => c.id), [1, 2]);
 });

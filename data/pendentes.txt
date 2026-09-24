@@ -1,4 +1,2 @@
-SEM RESULTADO: Elis Regina & Tom Jobim – Elis & Tom | novo
-VERIFICAR: Augustus Pablo – King Tubbys Meets Rockers Uptown → https://api.discogs.com/masters/131443
-VERIFICAR: Lee Perry & The Upsetters – Super Ape | novo → https://api.discogs.com/releases/36389014
-VERIFICAR: Kraftwerk – Trans-Europe Express → https://api.discogs.com/masters/283971
+VERIFICAR: Elis Regina & Tom Jobim – Elis & Tom | novo → https://api.discogs.com/masters/96344
+VERIFICAR: Lee Perry & The Upsetters – Super Ape | novo → https://api.discogs.com/releases/36566941
