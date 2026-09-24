@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Catálogo | Originária Discos</title>
+  <meta name="description" content="Catálogo completo de vinil da Originária Discos: filtre por seção, gênero, formato e status.">
+  <link rel="stylesheet" href="css/estilo.css">
+</head>
+<body>
+  <header class="header">
+    <div class="header__inner container">
+      <a class="header__logo" href="index.html">
+        <img src="img/logo.svg" alt="Originária Discos" width="170" height="32">
+      </a>
+      <nav class="header__nav" aria-label="Navegação principal">
+        <a href="catalogo.html">Catálogo</a>
+        <a href="index.html#colecoes">Coleções</a>
+        <a href="index.html#novidades">Novidades</a>
+        <a href="index.html#como-funciona">Como funciona</a>
+      </nav>
+      <a class="btn btn--whatsapp" id="whatsapp-header" href="#" target="_blank" rel="noopener">Fale no WhatsApp</a>
+    </div>
+  </header>
+
+  <main>
+    <section>
+      <div class="container">
+        <h1>Catálogo</h1>
+
+        <form class="toolbar" id="form-filtros" onsubmit="return false">
+          <div class="campo toolbar__busca">
+            <label for="campo-busca">Buscar</label>
+            <input type="search" id="campo-busca" name="q" placeholder="Artista, título ou selo…" autocomplete="off">
+          </div>
+          <div class="toolbar__grade">
+            <div class="campo">
+              <label for="campo-secao">Seção</label>
+              <select id="campo-secao" name="secao"></select>
+            </div>
+            <div class="campo">
+              <label for="campo-genero">Gênero</label>
+              <select id="campo-genero" name="genero"></select>
+            </div>
+            <div class="campo">
+              <label for="campo-formato">Formato</label>
+              <select id="campo-formato" name="formato"></select>
+            </div>
+            <div class="campo">
+              <label for="campo-status">Status</label>
+              <select id="campo-status" name="status"></select>
+            </div>
+          </div>
+          <div class="campo">
+            <label for="campo-ordem">Ordenar por</label>
+            <select id="campo-ordem" name="ordem"></select>
+          </div>
+        </form>
+
+        <p id="resultado-info" class="resultado-info" role="status">Carregando catálogo…</p>
+        <div id="grid-catalogo"></div>
+
+        <div class="paginacao" id="paginacao" hidden>
+          <button type="button" class="btn btn--ghost" id="pagina-anterior">Anterior</button>
+          <span class="paginacao__info" id="pagina-info"></span>
+          <button type="button" class="btn btn--ghost" id="pagina-proxima">Próxima</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer__inner container">
+      <p class="footer__loja">Originária Discos</p>
+      <nav class="footer__links" aria-label="Redes e contato">
+        <a id="instagram-footer" href="#" target="_blank" rel="noopener">Instagram</a>
+        <a id="whatsapp-footer" href="#" target="_blank" rel="noopener">WhatsApp</a>
+      </nav>
+      <p class="footer__atribuicao"><a href="https://www.discogs.com" target="_blank" rel="noopener">Data provided by Discogs</a>. Não afiliado ao Discogs.</p>
+    </div>
+  </footer>
+
+  <script type="module" src="js/pagina-catalogo.js"></script>
+</body>
+</html>
