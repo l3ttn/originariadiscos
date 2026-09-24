@@ -1,5 +1,5 @@
 {
-  "geradoEm": "2026-09-24T14:50:01.832Z",
+  "geradoEm": "2026-09-24T15:19:15.756Z",
   "fonte": "Discogs",
   "discos": [
     {
@@ -182,7 +182,7 @@
       "destaque": true,
       "novo": false,
       "comentario": "O disco que define o samba-funk. Prensagem original de 1976 é lendária.",
-      "adicionadoEm": "2026-09-24T14:27:49.285Z",
+      "adicionadoEm": "2026-09-24T15:12:16.106Z",
       "ordem": 1
     },
     {
@@ -299,7 +299,7 @@
       "destaque": false,
       "novo": false,
       "comentario": null,
-      "adicionadoEm": "2026-09-24T14:27:56.674Z",
+      "adicionadoEm": "2026-09-24T15:12:21.324Z",
       "ordem": 2
     },
     {
@@ -491,7 +491,7 @@
       "destaque": false,
       "novo": true,
       "comentario": null,
-      "adicionadoEm": "2026-09-24T14:28:04.476Z",
+      "adicionadoEm": "2026-09-24T15:12:26.543Z",
       "ordem": 3
     },
     {
@@ -627,7 +627,7 @@
       "destaque": true,
       "novo": false,
       "comentario": null,
-      "adicionadoEm": "2026-09-24T14:28:12.288Z",
+      "adicionadoEm": "2026-09-24T15:12:31.790Z",
       "ordem": 4
     },
     {
@@ -774,7 +774,7 @@
       "destaque": false,
       "novo": false,
       "comentario": null,
-      "adicionadoEm": "2026-09-24T14:28:20.132Z",
+      "adicionadoEm": "2026-09-24T15:12:36.973Z",
       "ordem": 5
     },
     {
@@ -926,7 +926,7 @@
       "destaque": false,
       "novo": false,
       "comentario": null,
-      "adicionadoEm": "2026-09-24T14:28:28.099Z",
+      "adicionadoEm": "2026-09-24T15:12:42.153Z",
       "ordem": 6
     },
     {
@@ -1106,7 +1106,7 @@
       "destaque": false,
       "novo": false,
       "comentario": null,
-      "adicionadoEm": "2026-09-24T14:28:35.753Z",
+      "adicionadoEm": "2026-09-24T15:12:47.345Z",
       "ordem": 7
     },
     {
@@ -1337,7 +1337,7 @@
       "destaque": false,
       "novo": true,
       "comentario": "Elis & Tom (1974). No Discogs o artista é \"Elis* & Tom*\", por isso a linha usa o link direto.",
-      "adicionadoEm": "2026-09-24T14:50:01.810Z",
+      "adicionadoEm": "2026-09-24T15:19:10.689Z",
       "ordem": 8
     },
     {
@@ -1499,7 +1499,7 @@
       "destaque": false,
       "novo": false,
       "comentario": null,
-      "adicionadoEm": "2026-09-24T14:28:48.672Z",
+      "adicionadoEm": "2026-09-24T15:13:02.999Z",
       "ordem": 9
     },
     {
@@ -1600,7 +1600,7 @@
       "destaque": false,
       "novo": false,
       "comentario": null,
-      "adicionadoEm": "2026-09-24T14:28:56.485Z",
+      "adicionadoEm": "2026-09-24T15:13:08.119Z",
       "ordem": 10
     },
     {
@@ -1700,116 +1700,190 @@
       "destaque": false,
       "novo": false,
       "comentario": null,
-      "adicionadoEm": "2026-09-24T14:29:04.292Z",
+      "adicionadoEm": "2026-09-24T15:13:13.584Z",
       "ordem": 11
     },
     {
-      "id": 9274031,
-      "masterId": 1121130,
+      "id": 6890747,
+      "masterId": 32287,
       "artista": "John Coltrane",
       "titulo": "A Love Supreme",
-      "ano": 1991,
-      "pais": "Italy",
-      "selo": "DeAgostini",
-      "catno": "MJ 1067-2",
+      "ano": 1965,
+      "pais": "US",
+      "selo": "Impulse!",
+      "catno": "AS-77",
       "formatoTipo": "LP",
       "formatoLabel": "Vinil LP",
       "cor": null,
-      "edicao": "Compilation",
+      "edicao": "Gatefold",
       "generos": [
         "Jazz"
       ],
       "estilos": [
-        "Hard Bop"
+        "Avant-garde Jazz",
+        "Post Bop",
+        "Modal"
       ],
-      "capa": "https://i.discogs.com/exzP-ythLv4zO0C9yJE6CdFKHSHLAHnrrRjCT9izH8Y/rs:fit/g:sm/q:90/h:600/w:593/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTkyNzQw/MzEtMTYwMDY2ODM3/OC04MDc2LmpwZWc.jpeg",
+      "capa": "https://i.discogs.com/fGpBfJZOBOXcombzBDMfneERKusKwmEO03qCaTid4sY/rs:fit/g:sm/q:90/h:598/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTY4OTA3/NDctMTQyODg4ODc4/NC00ODEzLmpwZWc.jpeg",
       "faixas": [
         {
           "pos": "A1",
-          "titulo": "The Inch Worm",
-          "dur": "9:12"
+          "titulo": "Part I - Acknowledgement",
+          "dur": "7:39"
         },
         {
           "pos": "A2",
-          "titulo": "\tA Love Supreme Parte I",
-          "dur": "19:18"
+          "titulo": "Part II - Resolution",
+          "dur": "7:15"
         },
         {
-          "pos": "B1",
-          "titulo": "A Love Supreme Parte II",
-          "dur": "19:24"
-        },
-        {
-          "pos": "B2",
-          "titulo": "AfroBlue",
-          "dur": "10:49"
+          "pos": "B",
+          "titulo": "Part III - Pursuance / Part IV - Psalm",
+          "dur": "17:40"
         }
       ],
-      "videos": [],
-      "notas": "Track A1: Live, \"Teatro dell'Arte\", Milano, 2 Dicembre 1962\nTrack A2 & B1: Live, Juan Les  Pins, Francia, 26 Luglio 1965\nTrack B2: Live, \"Salle Pleyel\", Parigi, 28 Luglio 1965\n\nRelease not for sale, attached to the fasc. 67 Vol. V of \"I Maestri del Jazz\".\nIncludes a 16 page booklet.",
-      "discogsUrl": "https://www.discogs.com/release/9274031-John-Coltrane-A-Love-Supreme",
+      "videos": [
+        {
+          "ytId": "gta2GOqvjVE",
+          "titulo": "A Love Supreme, Pt. IV - Psalm"
+        },
+        {
+          "ytId": "hIZFqMR1cuM",
+          "titulo": "A Love Supreme, Pt. II -  Resolution"
+        },
+        {
+          "ytId": "aGT7AFCTpzU",
+          "titulo": "A Love Supreme, Pt. III - Pursuance"
+        },
+        {
+          "ytId": "gta2GOqvjVE",
+          "titulo": "A Love Supreme, Pt. IV - Psalm"
+        },
+        {
+          "ytId": "hIZFqMR1cuM",
+          "titulo": "A Love Supreme, Pt. II -  Resolution"
+        },
+        {
+          "ytId": "aGT7AFCTpzU",
+          "titulo": "A Love Supreme, Pt. III - Pursuance"
+        },
+        {
+          "ytId": "vMCHDC2Lurk",
+          "titulo": "A Love Supreme, Pt. I – Acknowledgement"
+        },
+        {
+          "ytId": "hIZFqMR1cuM",
+          "titulo": "A Love Supreme, Pt. II - Resolution"
+        },
+        {
+          "ytId": "aGT7AFCTpzU",
+          "titulo": "A Love Supreme, Pt. III - Pursuance"
+        },
+        {
+          "ytId": "gta2GOqvjVE",
+          "titulo": "A Love Supreme, Pt. IV - Psalm"
+        }
+      ],
+      "notas": "This release is a first press and differs from others as the label lists the sides as AS-77, not AS-77-A and AS-77-B. \nEverything else appears the same.\nOn cover: A-77\n\nLaminated gatefold sleeve, thick cardboard. Includes black & blue company inner sleeve promoting other ABC Paramount releases (last promoted record is A-57).\n\nRecorded December 9th, 1964\nJohn Coltrane plays a Selmer saxophone\n\nPrinted in U.S.A.\n\n\n",
+      "discogsUrl": "https://www.discogs.com/release/6890747-John-Coltrane-A-Love-Supreme",
       "status": "esgotado",
       "preco": null,
       "secao": "Jazz",
       "destaque": false,
       "novo": false,
       "comentario": null,
-      "adicionadoEm": "2026-09-24T14:29:12.130Z",
+      "adicionadoEm": "2026-09-24T15:13:18.629Z",
       "ordem": 12
     },
     {
-      "id": 5681377,
-      "masterId": 826883,
+      "id": 549847,
+      "masterId": 59538,
       "artista": "Alice Coltrane & Pharoah Sanders",
       "titulo": "Journey In Satchidananda",
-      "ano": null,
+      "ano": 1971,
       "pais": "US",
       "selo": "Impulse!",
-      "catno": "IMP-279",
-      "formatoTipo": "7\"",
-      "formatoLabel": "Vinil 7\"",
+      "catno": "AS 9203",
+      "formatoTipo": "LP",
+      "formatoLabel": "Vinil LP",
       "cor": null,
-      "edicao": "7\", 45 RPM",
+      "edicao": "Gatefold",
       "generos": [
         "Jazz"
       ],
-      "estilos": [],
-      "capa": "https://i.discogs.com/LMpF2D-GcSJoYSFuqelNavkgn79y9GZU1aG2NFWBExs/rs:fit/g:sm/q:90/h:399/w:400/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTU2ODEz/NzctMTM5OTc4MDIy/MS04MzQ1LmpwZWc.jpeg",
+      "estilos": [
+        "Avant-garde Jazz",
+        "Modal",
+        "Post Bop",
+        "Spiritual Jazz"
+      ],
+      "capa": "https://i.discogs.com/8PlWWg5fFoKeAw40SFTFoa0fOT50IuCFMcfNggOq27M/rs:fit/g:sm/q:90/h:600/w:596/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTU0OTg0/Ny0xNjU4NTYwMzE4/LTkyOTQuanBlZw.jpeg",
       "faixas": [
         {
-          "pos": "A",
-          "titulo": "Journey In Satchidananda (Part One)",
-          "dur": "2:58"
+          "pos": "A1",
+          "titulo": "Journey In Satchidananda",
+          "dur": "6:33"
         },
         {
-          "pos": "B",
-          "titulo": "Journey In Satchidananda (Part Two)",
-          "dur": "2:59"
+          "pos": "A2",
+          "titulo": "Shiva-Loka",
+          "dur": "6:33"
+        },
+        {
+          "pos": "A3",
+          "titulo": "Stopover Bombay",
+          "dur": "2:50"
+        },
+        {
+          "pos": "B1",
+          "titulo": "Something About John Coltrane",
+          "dur": "10:40"
+        },
+        {
+          "pos": "B2",
+          "titulo": "Isis And Osiris",
+          "dur": "11:32"
         }
       ],
       "videos": [
         {
-          "ytId": "yWlcHVvDDG8",
-          "titulo": "Alice Coltrane - Journey In Satchidananda (Impulse 91170)"
+          "ytId": "NxPMKgY_8qk",
+          "titulo": "Alice Coltrane - Journey in Satchidananda (1971) [Full Album]"
+        },
+        {
+          "ytId": "NxPMKgY_8qk",
+          "titulo": "Alice Coltrane - Journey in Satchidananda (1971) [Full Album]"
         },
         {
           "ytId": "TQtEFdyhgdE",
           "titulo": "Alice Coltrane ft. Pharoah Sanders - Journey In Satchidananda"
         },
         {
-          "ytId": "yWlcHVvDDG8",
-          "titulo": "Alice Coltrane - Journey In Satchidananda (Impulse 91170)"
+          "ytId": "EPzozPT5V0o",
+          "titulo": "Shiva-Loka"
+        },
+        {
+          "ytId": "DNrfL6hs0yQ",
+          "titulo": "Stopover Bombay"
+        },
+        {
+          "ytId": "DjUhlcqsfvM",
+          "titulo": "Something About John Coltrane"
+        },
+        {
+          "ytId": "cdHrCAIE7XM",
+          "titulo": "Isis And Osiris (Live At Village Gate, NY, 1970)"
         }
       ],
-      "notas": "The title cut from the the LP \"[m=59538]\" divided into parts 1 and 2.",
-      "discogsUrl": "https://www.discogs.com/release/5681377-Alice-Coltrane-Featuring-Pharoah-Sanders-Journey-In-Satchidananda",
+      "notas": "Original pressing with red & black Impulse/ABC labels. \nText along bottom edge: A Product of ABC Records, Inc. New York, N.Y. 10019 • Made in USA\n\nA Product of ABC/Dunhill Records, 8255 Beverly Blvd., Los Angeles, Calif. 90048 / 1330 Ave. of the Americas, New York, N.Y. 10019.\n\nOriginally recorded November 8, 1970, Dix Hills, New York.\nTrack B2 was recorded July 4, 1970, in performance at The Village Gate, New York City.\n\nA Product of ABC/Dunhill Records\n© MCMLXXI, ABC/Dunhill Records. Printed in USA.\n\nGatefold jacket.\n\nSpelling variations:\nRashied Ali inside gatefold / Rashid Ali on back cover\nChuck Stewart inside gatefold / Charles Stewart on back cover\n\nAS 9203 appears on front cover, spine, and inner gatefold\nAS-9203 appears on inner labels\n",
+      "discogsUrl": "https://www.discogs.com/release/549847-Alice-Coltrane-Featuring-Pharoah-Sanders-Journey-In-Satchidananda",
       "status": "esgotado",
       "preco": null,
       "secao": "Jazz",
       "destaque": false,
       "novo": true,
       "comentario": null,
-      "adicionadoEm": "2026-09-24T14:29:19.871Z",
+      "adicionadoEm": "2026-09-24T15:13:23.722Z",
       "ordem": 13
     },
     {
@@ -1866,7 +1940,7 @@
       "destaque": false,
       "novo": false,
       "comentario": null,
-      "adicionadoEm": "2026-09-24T14:29:27.709Z",
+      "adicionadoEm": "2026-09-24T15:13:28.918Z",
       "ordem": 14
     },
     {
@@ -1989,7 +2063,7 @@
       "destaque": false,
       "novo": false,
       "comentario": null,
-      "adicionadoEm": "2026-09-24T14:29:35.658Z",
+      "adicionadoEm": "2026-09-24T15:13:34.142Z",
       "ordem": 15
     },
     {
@@ -2182,7 +2256,7 @@
       "destaque": false,
       "novo": false,
       "comentario": null,
-      "adicionadoEm": "2026-09-24T14:30:43.588Z",
+      "adicionadoEm": "2026-09-24T15:13:39.364Z",
       "ordem": 16
     },
     {
@@ -2244,7 +2318,7 @@
       "destaque": false,
       "novo": false,
       "comentario": null,
-      "adicionadoEm": "2026-09-24T14:30:51.504Z",
+      "adicionadoEm": "2026-09-24T15:13:44.593Z",
       "ordem": 17
     },
     {
@@ -2323,129 +2397,250 @@
       "destaque": false,
       "novo": false,
       "comentario": null,
-      "adicionadoEm": "2026-09-24T14:30:59.163Z",
+      "adicionadoEm": "2026-09-24T15:13:49.778Z",
       "ordem": 18
     },
     {
-      "id": 4586592,
-      "masterId": 1420033,
+      "id": 13286331,
+      "masterId": 86466,
       "artista": "Stevie Wonder",
       "titulo": "Innervisions",
       "ano": 1973,
-      "pais": "Brazil",
-      "selo": "Tamla",
-      "catno": "CD-M 25",
-      "formatoTipo": "7\"",
-      "formatoLabel": "Vinil 7\"",
-      "cor": null,
-      "edicao": "7\", EP, 33 ⅓ RPM",
-      "generos": [
-        "Funk / Soul",
-        "Pop"
-      ],
-      "estilos": [
-        "Soul"
-      ],
-      "capa": "https://i.discogs.com/Oyn1yyEZfKYh50TS1r-EKLGBxW61gsmWaFSKS1z3fGo/rs:fit/g:sm/q:90/h:495/w:500/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTQ1ODY1/OTItMTM2OTkyOTgw/Mi0xOTk4LmpwZWc.jpeg",
-      "faixas": [
-        {
-          "pos": "A1",
-          "titulo": "All In Love Is Fair",
-          "dur": ""
-        },
-        {
-          "pos": "A2",
-          "titulo": "Higher Ground",
-          "dur": ""
-        },
-        {
-          "pos": "B1",
-          "titulo": "Don't You Worry",
-          "dur": ""
-        },
-        {
-          "pos": "B2",
-          "titulo": "Too High",
-          "dur": ""
-        }
-      ],
-      "videos": [],
-      "notas": null,
-      "discogsUrl": "https://www.discogs.com/release/4586592-Stevie-Wonder-Innervisions",
-      "status": "esgotado",
-      "preco": null,
-      "secao": "Soul / Funk",
-      "destaque": false,
-      "novo": false,
-      "comentario": null,
-      "adicionadoEm": "2026-09-24T14:31:06.957Z",
-      "ordem": 19
-    },
-    {
-      "id": 702350,
-      "masterId": 138593,
-      "artista": "Curtis Mayfield",
-      "titulo": "Superfly",
-      "ano": 1972,
       "pais": "US",
-      "selo": "Curtom",
-      "catno": "CR 1978",
-      "formatoTipo": "7\"",
-      "formatoLabel": "Vinil 7\"",
+      "selo": "Tamla",
+      "catno": "T 326L",
+      "formatoTipo": "LP",
+      "formatoLabel": "Vinil LP",
       "cor": null,
-      "edicao": "7\", 45 RPM, Single, Styrene, Pitman Pressing",
+      "edicao": "Hollywood Press, Gatefold",
       "generos": [
-        "Funk / Soul",
-        "Stage & Screen"
+        "Funk / Soul"
       ],
       "estilos": [
         "Soul",
         "Funk"
       ],
-      "capa": "https://i.discogs.com/SyQgcLiDC0MA2_Oa3B6kxDaVwF3_CbDxjKTarGzzXn4/rs:fit/g:sm/q:90/h:596/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTcwMjM1/MC0xNDc0MTU3MjQ5/LTE1MzEuanBlZw.jpeg",
+      "capa": "https://i.discogs.com/kTmxkCOqgTjlBMskbS8Fb3IcZDlFYsv4PsVZTiZCbEM/rs:fit/g:sm/q:90/h:600/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTEzMjg2/MzMxLTE1NTE0MDA5/MTYtNDE2OS5qcGVn.jpeg",
       "faixas": [
         {
-          "pos": "A",
-          "titulo": "Superfly",
-          "dur": "3:10"
+          "pos": "A1",
+          "titulo": "Too High",
+          "dur": "4:37"
         },
         {
-          "pos": "B",
-          "titulo": "Love To Keep You In My Mind",
-          "dur": "3:48"
+          "pos": "A2",
+          "titulo": "Visions",
+          "dur": "5:17"
+        },
+        {
+          "pos": "A3",
+          "titulo": "Living For The City",
+          "dur": "7:26"
+        },
+        {
+          "pos": "A4",
+          "titulo": "Golden Lady",
+          "dur": "5:00"
+        },
+        {
+          "pos": "B1",
+          "titulo": "Higher Ground",
+          "dur": "3:54"
+        },
+        {
+          "pos": "B2",
+          "titulo": "Jesus Children Of America",
+          "dur": "4:04"
+        },
+        {
+          "pos": "B3",
+          "titulo": "All In Love Is Fair",
+          "dur": "3:45"
+        },
+        {
+          "pos": "B4",
+          "titulo": "Don't You Worry 'Bout A Thing",
+          "dur": "4:55"
+        },
+        {
+          "pos": "B5",
+          "titulo": "He's Misstra Know-It-All",
+          "dur": "6:06"
         }
       ],
       "videos": [
         {
-          "ytId": "TbT10i4iCu0",
-          "titulo": "Love to Keep You in My Mind"
+          "ytId": "wi5kA7QOCI4",
+          "titulo": "S̲t̲evie W̲o̲nder - In̲n̲ervision̲s (Full Album) 1973"
         },
         {
-          "ytId": "TbT10i4iCu0",
-          "titulo": "Love to Keep You in My Mind"
+          "ytId": "UvtYEdYjkJM",
+          "titulo": "Too High"
         },
         {
-          "ytId": "vTWZ2e0sLaQ",
-          "titulo": "Superfly"
+          "ytId": "fy4fMlLj_B8",
+          "titulo": "Visions"
         },
         {
-          "ytId": "tL_FKAo2V5M",
-          "titulo": "Give Me Your Love (Love Song)"
+          "ytId": "ghLWjyOOLno",
+          "titulo": "Living For The City"
         },
         {
-          "ytId": "bsG9km3TuUA",
-          "titulo": "Eddie You Should Know Better"
+          "ytId": "CXCTjAMR3eA",
+          "titulo": "Golden Lady"
+        },
+        {
+          "ytId": "1esf0efHbjM",
+          "titulo": "Higher Ground"
+        },
+        {
+          "ytId": "8o8FVoib92w",
+          "titulo": "Jesus Children Of America"
+        },
+        {
+          "ytId": "1surYguNfEg",
+          "titulo": "All In Love Is Fair"
+        },
+        {
+          "ytId": "RxsBc5p-dPU",
+          "titulo": "Don't You Worry 'Bout A Thing"
+        },
+        {
+          "ytId": "uivvYGyQiow",
+          "titulo": "He's Misstra Know-It-All"
+        },
+        {
+          "ytId": "wi5kA7QOCI4",
+          "titulo": "S̲t̲evie W̲o̲nder - In̲n̲ervision̲s (Full Album) 1973"
+        },
+        {
+          "ytId": "UvtYEdYjkJM",
+          "titulo": "Too High"
+        },
+        {
+          "ytId": "fy4fMlLj_B8",
+          "titulo": "Visions"
+        },
+        {
+          "ytId": "ghLWjyOOLno",
+          "titulo": "Living For The City"
+        },
+        {
+          "ytId": "CXCTjAMR3eA",
+          "titulo": "Golden Lady"
+        },
+        {
+          "ytId": "1esf0efHbjM",
+          "titulo": "Higher Ground"
+        },
+        {
+          "ytId": "8o8FVoib92w",
+          "titulo": "Jesus Children Of America"
+        },
+        {
+          "ytId": "1surYguNfEg",
+          "titulo": "All In Love Is Fair"
+        },
+        {
+          "ytId": "RxsBc5p-dPU",
+          "titulo": "Don't You Worry 'Bout A Thing"
+        },
+        {
+          "ytId": "uivvYGyQiow",
+          "titulo": "He's Misstra Know-It-All"
         }
       ],
-      "notas": "℗ 1972 by Buddah Records, Inc. All Rights Reserved\nA) From the Motion Picture Soundtrack LP \"Superfly\" CRS 8014ST\nB) From The LP \"Roots\" CRS 8009\nExclusively Distributed by Buddha Records 1650 Broadway, N.Y.C.",
-      "discogsUrl": "https://www.discogs.com/release/702350-Curtis-Mayfield-Superfly",
+      "notas": "[l=RCA Records Pressing Plant, Hollywood] pressing denoted by \"H\" stamp in runouts. Gatefold packaging.\nThis RCA, Hollywood pressing has the original Catalog number, T 326L, on cover, spine and labels. Matrix numbers indicate mastering (plating) done at [l=RCA Studios, Hollywood].\n\nRecorded at Record Plant, Los Angeles and Media Sound, Inc., New York\nMastered at The Cutting Room, New York\n\nProduced And Arranged By Stevie Wonder For Taurus Productions, Inc.\n",
+      "discogsUrl": "https://www.discogs.com/release/13286331-Stevie-Wonder-Innervisions",
       "status": "esgotado",
       "preco": null,
       "secao": "Soul / Funk",
       "destaque": false,
       "novo": false,
       "comentario": null,
-      "adicionadoEm": "2026-09-24T14:31:14.747Z",
+      "adicionadoEm": "2026-09-24T15:13:55.003Z",
+      "ordem": 19
+    },
+    {
+      "id": 23757107,
+      "masterId": 126717,
+      "artista": "Curtis Mayfield",
+      "titulo": "Superfly",
+      "ano": 2022,
+      "pais": "US",
+      "selo": "Curtom",
+      "catno": "R1 524044",
+      "formatoTipo": "LP",
+      "formatoLabel": "Vinil LP",
+      "cor": "Gold, Die Cut Jacket",
+      "edicao": "Limited Edition, Reissue",
+      "generos": [
+        "Funk / Soul",
+        "Stage & Screen"
+      ],
+      "estilos": [
+        "Soundtrack",
+        "Soul",
+        "Funk"
+      ],
+      "capa": "https://i.discogs.com/3MYq2UR0zXEm87miV7HPW21FDwSBLECYSUSEdOQ8ZNY/rs:fit/g:sm/q:90/h:593/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTIzNzU3/MTA3LTE2NjA1MDcz/MzUtMjQ0Ny5qcGVn.jpeg",
+      "faixas": [
+        {
+          "pos": "A1",
+          "titulo": "Little Child Running Wild",
+          "dur": "5:15"
+        },
+        {
+          "pos": "A2",
+          "titulo": "Pusherman",
+          "dur": "4:59"
+        },
+        {
+          "pos": "A3",
+          "titulo": "Freddie's Dead",
+          "dur": "5:08"
+        },
+        {
+          "pos": "A4",
+          "titulo": "Junkie Chase (Instrumental)",
+          "dur": "1:52"
+        },
+        {
+          "pos": "B1",
+          "titulo": "Give Me Your Love (Love Song)",
+          "dur": "4:15"
+        },
+        {
+          "pos": "B2",
+          "titulo": "Eddie You Should Know Better",
+          "dur": "2:14"
+        },
+        {
+          "pos": "B3",
+          "titulo": "No Thing On Me (Cocaine Song)",
+          "dur": "4:52"
+        },
+        {
+          "pos": "B4",
+          "titulo": "Think (Instrumental)",
+          "dur": "3:44"
+        },
+        {
+          "pos": "B5",
+          "titulo": "Superfly",
+          "dur": "3:51"
+        }
+      ],
+      "videos": [],
+      "notas": "Super Fly Original Motion Picture Soundtrack. \nDie-Cut Jacket. Walmart Limited Edition Exclusive Gold Vinyl.\nSticker Label RCD1 524044 / 081227879983\nDie Cut  reverse side  is blank compared to similar [r3328948]\n\n",
+      "discogsUrl": "https://www.discogs.com/release/23757107-Curtis-Mayfield-Superfly",
+      "status": "esgotado",
+      "preco": null,
+      "secao": "Soul / Funk",
+      "destaque": false,
+      "novo": false,
+      "comentario": null,
+      "adicionadoEm": "2026-09-24T15:14:02.768Z",
       "ordem": 20
     },
     {
@@ -2652,63 +2847,128 @@
       "destaque": false,
       "novo": true,
       "comentario": null,
-      "adicionadoEm": "2026-09-24T14:31:22.654Z",
+      "adicionadoEm": "2026-09-24T15:14:07.947Z",
       "ordem": 21
     },
     {
-      "id": 292268,
-      "masterId": 482209,
+      "id": 202658,
+      "masterId": 43655,
       "artista": "Erykah Badu",
       "titulo": "Baduizm",
       "ano": 1997,
-      "pais": "UK",
-      "selo": "Universal Records",
-      "catno": "BADU 1",
-      "formatoTipo": "12\"",
-      "formatoLabel": "Vinil 12\"",
+      "pais": "US",
+      "selo": "Kedar Entertainment",
+      "catno": "U-53027",
+      "formatoTipo": "LP",
+      "formatoLabel": "Vinil LP",
       "cor": null,
-      "edicao": "12\"",
+      "edicao": null,
       "generos": [
-        "Hip Hop",
         "Funk / Soul"
       ],
       "estilos": [
-        "Contemporary R&B",
-        "Neo Soul"
+        "Neo Soul",
+        "Contemporary R&B"
       ],
-      "capa": "https://i.discogs.com/6sh2q3JOt798rc-daCvWGjPfg0GuqkYGLAVfznGrvTY/rs:fit/g:sm/q:90/h:317/w:320/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTI5MjI2/OC0xMjMyMTUxNTU5/LmpwZWc.jpeg",
+      "capa": "https://i.discogs.com/PL5wRGdvC7rTRwWjGmmLD5TFXdhV0PXGm9HwiaT72A4/rs:fit/g:sm/q:90/h:529/w:529/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTIwMjY1/OC0xMTc4NzMxODc5/LmpwZWc.jpeg",
       "faixas": [
         {
           "pos": "A1",
-          "titulo": "On & On",
-          "dur": ""
+          "titulo": "Rimshot (Intro)",
+          "dur": "1:56"
         },
         {
           "pos": "A2",
-          "titulo": "Next Lifetime",
-          "dur": ""
+          "titulo": "On & On",
+          "dur": "3:45"
+        },
+        {
+          "pos": "A3",
+          "titulo": "Appletree",
+          "dur": "4:25"
+        },
+        {
+          "pos": "A4",
+          "titulo": "Sometimes (Mix #9)",
+          "dur": "0:44"
+        },
+        {
+          "pos": "A5",
+          "titulo": "Next Lifetime (Radio Edit)",
+          "dur": "4:44"
         },
         {
           "pos": "B1",
-          "titulo": "Appletree",
-          "dur": ""
+          "titulo": "4 Leaf Clover",
+          "dur": "4:34"
         },
         {
           "pos": "B2",
-          "titulo": "4 Leaf Clover",
-          "dur": ""
+          "titulo": "No Love",
+          "dur": "5:08"
+        },
+        {
+          "pos": "B3",
+          "titulo": "Sometimes",
+          "dur": "4:10"
+        },
+        {
+          "pos": "B4",
+          "titulo": "Certainly (Flipped It)",
+          "dur": "5:26"
         }
       ],
-      "videos": [],
-      "notas": "Limited Edition.",
-      "discogsUrl": "https://www.discogs.com/release/292268-Erykah-Badu-Baduizm",
+      "videos": [
+        {
+          "ytId": "OTfa4RQhU4Y",
+          "titulo": "Rim Shot (Intro)"
+        },
+        {
+          "ytId": "TW28iWV7nxE",
+          "titulo": "On & On"
+        },
+        {
+          "ytId": "bfinmhaDCzA",
+          "titulo": "4 Leaf Clover"
+        },
+        {
+          "ytId": "Nujt--zPa70",
+          "titulo": "Appletree"
+        },
+        {
+          "ytId": "SWf6M467OsQ",
+          "titulo": "Certainly"
+        },
+        {
+          "ytId": "Mco-DRNcHw8",
+          "titulo": "Sometimes"
+        },
+        {
+          "ytId": "73aLNB0pPuQ",
+          "titulo": "Drama"
+        },
+        {
+          "ytId": "xXEFuMNOn2g",
+          "titulo": "No Love"
+        },
+        {
+          "ytId": "qIkwXlPPNeI",
+          "titulo": "Certainly (Flipped It)"
+        },
+        {
+          "ytId": "Z0ewsRlKAPc",
+          "titulo": "Rim Shot (Outro)"
+        }
+      ],
+      "notas": "On the jacket: \n℗ & © 1997 [l=Universal Records]\n\nOn the labels:\n℗ & © 1997 [l=Universal Records Inc.]\n\nThis version can be distinguished from the [url=http://www.discogs.com/Erykah-Badu-Baduizm/release/3394938]1998 reissued version[/url] by the copyright date, which is for 1997 on this version, whereas on the [url=http://www.discogs.com/Erykah-Badu-Baduizm/release/3394938]other version[/url], it is for 1998. \n\nCopies are known to exist with an unprinted yellow label on side B.\n\nRunouts are hand-etched.",
+      "discogsUrl": "https://www.discogs.com/release/202658-Erykah-Badu-Baduizm",
       "status": "esgotado",
       "preco": null,
       "secao": "Soul / Funk",
       "destaque": false,
       "novo": false,
       "comentario": null,
-      "adicionadoEm": "2026-09-24T14:31:30.354Z",
+      "adicionadoEm": "2026-09-24T15:14:15.773Z",
       "ordem": 22
     },
     {
@@ -2901,198 +3161,257 @@
       "destaque": false,
       "novo": false,
       "comentario": null,
-      "adicionadoEm": "2026-09-24T14:31:38.175Z",
+      "adicionadoEm": "2026-09-24T15:14:20.947Z",
       "ordem": 23
     },
     {
-      "id": 25934755,
-      "masterId": 3915940,
+      "id": 2028398,
+      "masterId": 118092,
       "artista": "Roy Ayers Ubiquity",
       "titulo": "Everybody Loves The Sunshine",
-      "ano": 2023,
+      "ano": 1976,
       "pais": "US",
       "selo": "Polydor",
-      "catno": "PD D580",
-      "formatoTipo": "12\"",
-      "formatoLabel": "Vinil 12\"",
+      "catno": "PD-1-6070",
+      "formatoTipo": "LP",
+      "formatoLabel": "Vinil LP",
       "cor": null,
-      "edicao": "12\", Maxi-Single",
+      "edicao": "All Disc Pressing",
       "generos": [
+        "Jazz",
         "Funk / Soul"
       ],
-      "estilos": [],
-      "capa": "https://i.discogs.com/LBjWfw2QYulSpRlJhcjqubye5uwczQkhuaqxQ1Af_CM/rs:fit/g:sm/q:90/h:560/w:561/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTI1OTM0/NzU1LTE2OTcxMzE0/NTItNzQ5OC5qcGVn.jpeg",
+      "estilos": [
+        "Jazz-Funk",
+        "Funk"
+      ],
+      "capa": "https://i.discogs.com/5e9bchJN_tRTrSYyS5BFcTwad255LNdRPSkPNOFTnto/rs:fit/g:sm/q:90/h:600/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTIwMjgz/OTgtMTY3NTAyMDk2/NC0yMDM1LmpwZWc.jpeg",
       "faixas": [
         {
           "pos": "A1",
+          "titulo": "Hey Uh-What You Say Come On",
+          "dur": "3:45"
+        },
+        {
+          "pos": "A2",
+          "titulo": "The Golden Rod",
+          "dur": "3:03"
+        },
+        {
+          "pos": "A3",
+          "titulo": "Keep On Walking",
+          "dur": "3:46"
+        },
+        {
+          "pos": "A4",
+          "titulo": "You And Me My Love",
+          "dur": "3:11"
+        },
+        {
+          "pos": "A5",
+          "titulo": "The Third Eye",
+          "dur": "6:21"
+        },
+        {
+          "pos": "B1",
+          "titulo": "It Ain't Your Sign It's Your Mind",
+          "dur": "3:28"
+        },
+        {
+          "pos": "B2",
+          "titulo": "People And The World",
+          "dur": "4:48"
+        },
+        {
+          "pos": "B3",
           "titulo": "Everybody Loves The Sunshine",
           "dur": "4:01"
         },
         {
-          "pos": "A2",
-          "titulo": "Searching",
-          "dur": "4:10"
+          "pos": "B4",
+          "titulo": "Tongue Power",
+          "dur": "3:02"
         },
         {
-          "pos": "B",
-          "titulo": "Gotta Find A Lover",
-          "dur": "7:10"
+          "pos": "B5",
+          "titulo": "Lonesome Cowboy",
+          "dur": "4:03"
         }
       ],
       "videos": [
         {
+          "ytId": "RbjONfRaMDs",
+          "titulo": "Hey, Uh, What You Say Come On"
+        },
+        {
+          "ytId": "BYU7_Pu0mQQ",
+          "titulo": "The Golden Rod"
+        },
+        {
+          "ytId": "ohkwqnEZUJc",
+          "titulo": "Keep On Walking"
+        },
+        {
+          "ytId": "ce8H_UFGIIM",
+          "titulo": "You And Me My Love"
+        },
+        {
+          "ytId": "Qqy89qMkcFU",
+          "titulo": "Roy Ayers - The Third Eye"
+        },
+        {
+          "ytId": "9uI8st8mtPE",
+          "titulo": "It Ain't Your Sign It's Your Mind"
+        },
+        {
+          "ytId": "I0PHnYzzZj8",
+          "titulo": "People And The World"
+        },
+        {
           "ytId": "nC9dQOnUyao",
           "titulo": "Everybody Loves The Sunshine - Roy Ayers Ubiquity (1976)"
         },
         {
-          "ytId": "vc48ITjETAk",
-          "titulo": "Searching"
+          "ytId": "cNHlv-0xMXc",
+          "titulo": "Tongue Power"
         },
         {
-          "ytId": "MaAP7cmwY-o",
-          "titulo": "Gotta Find A Lover"
+          "ytId": "wNnS6cfRqtc",
+          "titulo": "Roy Ayers - Lonesome Cowboy"
         },
         {
-          "ytId": "XI9hn2y4plE",
-          "titulo": "We Live In Brooklyn, Baby"
+          "ytId": "RbjONfRaMDs",
+          "titulo": "Hey, Uh, What You Say Come On"
         },
         {
-          "ytId": "EwOU0OY89Wo",
-          "titulo": "Gotta Find A Lover"
+          "ytId": "BYU7_Pu0mQQ",
+          "titulo": "The Golden Rod"
+        },
+        {
+          "ytId": "ohkwqnEZUJc",
+          "titulo": "Keep On Walking"
+        },
+        {
+          "ytId": "ce8H_UFGIIM",
+          "titulo": "You And Me My Love"
+        },
+        {
+          "ytId": "Qqy89qMkcFU",
+          "titulo": "Roy Ayers - The Third Eye"
+        },
+        {
+          "ytId": "9uI8st8mtPE",
+          "titulo": "It Ain't Your Sign It's Your Mind"
+        },
+        {
+          "ytId": "I0PHnYzzZj8",
+          "titulo": "People And The World"
         },
         {
           "ytId": "nC9dQOnUyao",
           "titulo": "Everybody Loves The Sunshine - Roy Ayers Ubiquity (1976)"
         },
         {
-          "ytId": "vc48ITjETAk",
-          "titulo": "Searching"
+          "ytId": "cNHlv-0xMXc",
+          "titulo": "Tongue Power"
         },
         {
-          "ytId": "MaAP7cmwY-o",
-          "titulo": "Gotta Find A Lover"
-        },
-        {
-          "ytId": "XI9hn2y4plE",
-          "titulo": "We Live In Brooklyn, Baby"
-        },
-        {
-          "ytId": "EwOU0OY89Wo",
-          "titulo": "Gotta Find A Lover"
+          "ytId": "wNnS6cfRqtc",
+          "titulo": "Roy Ayers - Lonesome Cowboy"
         }
       ],
-      "notas": "Promotional Use Only",
-      "discogsUrl": "https://www.discogs.com/release/25934755-Roy-Ayers-Ubiquity-Everybody-Loves-The-Sunshine",
+      "notas": "℗ 1976 Polydor Incorporated\nMade and Printed in U.S.A.\nRecorded at Electric Lady Studio, and Larrabee Studio \nAlbum Design- Beverly Parker-A.G.I.\nPublisher- · © 1976 Roy Ayers Ubiquity (ASCAP)\nPublisher- [A1] · © 1976 Roy Ayers Ubiquity (BMI)\n©℗ 1976 Polydor Incorporated, Manufactured and Distributed by Polydor Incorporated, 810 Seventh Avenue,New York, N.Y. 10019  \nAlso available on 8-Track (8T-1-6070) and cassette (CT-1-6070)\n\nPrinted in color cardboard inner sleeve, with photos and credits.\n\n\"Produced [..] for Ro-Ayer Productions \" on labels\n\"Produced [..] for Ro-Ayer Production Co.\" on inner sleeve.\n\nOn sleeve: \n\"Special thanks to:\nCalvin Brown. Greg Phillinganes, William Allen, \nByron Miller, Ricky Lawson, Dennis Davis, Justo Almario, \nLew Soloff, Diana Hayes, Edna Holt, Wayne Garfield\"\n \n Lacquer Cut made  at Frankford/Wayne Mastering Labs, New York City, by Stuart J. Romaine",
+      "discogsUrl": "https://www.discogs.com/release/2028398-Roy-Ayers-Ubiquity-Everybody-Loves-The-Sunshine",
       "status": "esgotado",
       "preco": null,
       "secao": "Soul / Funk",
       "destaque": false,
       "novo": false,
       "comentario": null,
-      "adicionadoEm": "2026-09-24T14:31:45.942Z",
+      "adicionadoEm": "2026-09-24T15:14:26.128Z",
       "ordem": 24
     },
     {
-      "id": 25251232,
+      "id": 94800,
       "masterId": 45922,
       "artista": "A Tribe Called Quest",
       "titulo": "The Low End Theory",
-      "ano": 2022,
-      "pais": "US",
-      "selo": "Get On Down",
-      "catno": "GET56045-7",
-      "formatoTipo": "7\"",
-      "formatoLabel": "Vinil 7\"",
-      "cor": "Red & Green Split Transparent",
-      "edicao": "7\", 45 RPM",
+      "ano": 1991,
+      "pais": "Europe",
+      "selo": "Jive",
+      "catno": "ZL 74940",
+      "formatoTipo": "LP",
+      "formatoLabel": "Vinil LP",
+      "cor": null,
+      "edicao": null,
       "generos": [
         "Hip Hop"
       ],
       "estilos": [
-        "Jazzy Hip-Hop",
-        "Conscious"
+        "Conscious",
+        "Jazzy Hip-Hop"
       ],
-      "capa": "https://i.discogs.com/3fi1yqNbs7keeZej9cAfRrwGgSET2KqdP1z03b39s2I/rs:fit/g:sm/q:90/h:576/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTI1MjUx/MjMyLTE2Nzc0OTgx/NTctMTE4MS5qcGVn.jpeg",
+      "capa": "https://i.discogs.com/dbn9VOXQ_3bDfjAsC5XJXQg8EOyTlshrVOyvendjPd0/rs:fit/g:sm/q:90/h:592/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTk0ODAw/LTE3NDA3NTE5NTMt/NTQzMi5qcGVn.jpeg",
       "faixas": [
         {
-          "pos": "1-A",
+          "pos": "A1",
           "titulo": "Excursions",
           "dur": "3:53"
         },
         {
-          "pos": "1-B",
+          "pos": "A2",
           "titulo": "Buggin' Out",
           "dur": "3:38"
         },
         {
-          "pos": "2-C",
-          "titulo": "Rap Promoter",
-          "dur": "2:13"
-        },
-        {
-          "pos": "2-D",
+          "pos": "A3",
           "titulo": "Butter",
           "dur": "3:39"
         },
         {
-          "pos": "3-E",
+          "pos": "A4",
           "titulo": "Verses From The Abstract",
           "dur": "3:59"
         },
         {
-          "pos": "3-F",
-          "titulo": "Show Business",
-          "dur": "3:53"
-        },
-        {
-          "pos": "4-G",
-          "titulo": "Vibes And Stuff",
-          "dur": "4:18"
-        },
-        {
-          "pos": "4-H",
-          "titulo": "The Infamous Date Rape",
-          "dur": "2:54"
-        },
-        {
-          "pos": "5-I",
-          "titulo": "Check The Rhime",
-          "dur": "3:36"
-        },
-        {
-          "pos": "5-J",
-          "titulo": "Everything Is Fair",
-          "dur": "2:59"
-        },
-        {
-          "pos": "6-K",
-          "titulo": "Jazz (We've Got)",
-          "dur": "4:09"
-        },
-        {
-          "pos": "6-L",
-          "titulo": "Jazz (We've Got) (Re-Recording)",
-          "dur": "4:19"
-        },
-        {
-          "pos": "7-M",
-          "titulo": "Skypager",
+          "pos": "A5",
+          "titulo": "Rap Promoter",
           "dur": "2:13"
         },
         {
-          "pos": "7-N",
-          "titulo": "What?",
-          "dur": "2:29"
-        },
-        {
-          "pos": "8-O",
+          "pos": "A6",
           "titulo": "Scenario",
           "dur": "4:10"
         },
         {
-          "pos": "8-P",
-          "titulo": "Scenario (Remix)",
-          "dur": "5:15"
+          "pos": "B1",
+          "titulo": "The Infamous Date Rape",
+          "dur": "2:54"
+        },
+        {
+          "pos": "B2",
+          "titulo": "Check The Rhime",
+          "dur": "3:36"
+        },
+        {
+          "pos": "B3",
+          "titulo": "Everything Is Fair",
+          "dur": "2:59"
+        },
+        {
+          "pos": "B4",
+          "titulo": "Jazz (We've Got)",
+          "dur": "4:09"
+        },
+        {
+          "pos": "B5",
+          "titulo": "Show Business",
+          "dur": "3:53"
+        },
+        {
+          "pos": "B6",
+          "titulo": "What?",
+          "dur": "2:29"
         }
       ],
       "videos": [
@@ -3153,15 +3472,15 @@
           "titulo": "A Tribe Called Quest - Everything Is Fair"
         }
       ],
-      "notas": "30th anniversary \nFive of the 7\" records are housed in custom picture sleeves that form the iconic album cover along with 3 replicas of the original 12-inch singles that were released. \nThe 7\" collection is housed in a deluxe, fabric-wrapped 45 singles carrying case, with 360-degree original album art and custom inner wrapped ATCQ logo graphics and group photo.\nLimited to 3,000 units worldwide. 2,000 in North America and 1,000 in Europe.",
-      "discogsUrl": "https://www.discogs.com/release/25251232-A-Tribe-Called-Quest-The-Low-End-Theory",
+      "notas": "A1, A4 and B6 written by J.Davis\r\nA2, A3, B1, B2 and B4 written by J.Davis/A.Muhammad/M.Taylor\r\nA6 written by P.Jackson/T.Smith/B.Higgins/J.Davis/A.Muhammad/M.Taylor\r\n\r\nB5 written by S.Anselm/J.Davis/A.Muhammad/M.Taylor\r\nB2 written by S.Anselm/D.Murphy/L.Dechalus/J.Kirkland/J.Davis/A.Muhammad/M.Taylor\r\n\r\nWritten, arranged & produced by A Tribe Called Quest\r\n\r\nRecorded & mixed by Bob Power and A Tribe Called Quest at Battery, Greene St. \r\n& Soundtrack Studios except B2 produced by Skeff Anselm for Skeffington Productions and co-produced by A Tribe Called Quest\r\n\r\n℗ & © 1991 Zomba Recording Corporation\r\n\r\nDistributed in the UK by BMG Records\r\nDistribué in Europe par BMG Ariola\r\nVertrieb in Europa durch BMG Ariola\r\nA Bertelsmann Music Group Company \r\n\r\nPrinted in Germany [back sleeve]\r\nMade in W. Germany [labels]\r\n",
+      "discogsUrl": "https://www.discogs.com/release/94800-A-Tribe-Called-Quest-The-Low-End-Theory",
       "status": "esgotado",
       "preco": null,
       "secao": "Hip Hop",
       "destaque": false,
       "novo": false,
       "comentario": null,
-      "adicionadoEm": "2026-09-24T14:31:53.815Z",
+      "adicionadoEm": "2026-09-24T15:14:31.346Z",
       "ordem": 25
     },
     {
@@ -3349,7 +3668,7 @@
       "destaque": false,
       "novo": false,
       "comentario": null,
-      "adicionadoEm": "2026-09-24T14:32:01.699Z",
+      "adicionadoEm": "2026-09-24T15:14:36.663Z",
       "ordem": 26
     },
     {
@@ -3531,7 +3850,7 @@
       "destaque": true,
       "novo": false,
       "comentario": null,
-      "adicionadoEm": "2026-09-24T14:32:09.377Z",
+      "adicionadoEm": "2026-09-24T15:14:41.772Z",
       "ordem": 27
     },
     {
@@ -3642,7 +3961,7 @@
       "destaque": false,
       "novo": false,
       "comentario": null,
-      "adicionadoEm": "2026-09-24T14:32:17.151Z",
+      "adicionadoEm": "2026-09-24T15:14:46.911Z",
       "ordem": 28
     },
     {
@@ -3938,7 +4257,7 @@
       "destaque": false,
       "novo": true,
       "comentario": null,
-      "adicionadoEm": "2026-09-24T14:32:25.003Z",
+      "adicionadoEm": "2026-09-24T15:14:52.157Z",
       "ordem": 29
     },
     {
@@ -4085,7 +4404,7 @@
       "destaque": false,
       "novo": false,
       "comentario": null,
-      "adicionadoEm": "2026-09-24T14:32:32.903Z",
+      "adicionadoEm": "2026-09-24T15:14:57.373Z",
       "ordem": 30
     },
     {
@@ -4247,7 +4566,7 @@
       "destaque": false,
       "novo": false,
       "comentario": null,
-      "adicionadoEm": "2026-09-24T14:32:40.586Z",
+      "adicionadoEm": "2026-09-24T15:15:02.543Z",
       "ordem": 31
     },
     {
@@ -4413,30 +4732,29 @@
       "destaque": false,
       "novo": false,
       "comentario": null,
-      "adicionadoEm": "2026-09-24T14:32:48.388Z",
+      "adicionadoEm": "2026-09-24T15:15:07.779Z",
       "ordem": 32
     },
     {
-      "id": 1789565,
+      "id": 3942811,
       "masterId": 131443,
       "artista": "Augustus Pablo",
       "titulo": "King Tubbys Meets Rockers Uptown",
-      "ano": 1976,
-      "pais": "Jamaica",
-      "selo": "Yard Music",
-      "catno": "none",
+      "ano": 2012,
+      "pais": "Canada",
+      "selo": "Clocktower Records",
+      "catno": "CTLP-0085",
       "formatoTipo": "LP",
       "formatoLabel": "Vinil LP",
-      "cor": null,
-      "edicao": null,
+      "cor": "Multicolored",
+      "edicao": "Misprint, Repress",
       "generos": [
         "Reggae"
       ],
       "estilos": [
-        "Dub",
-        "Roots Reggae"
+        "Dub"
       ],
-      "capa": "https://i.discogs.com/SXLV60bcr1huQHpfY6_xctvaM4cX_B5gxruF99o23AE/rs:fit/g:sm/q:90/h:600/w:595/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE3ODk1/NjUtMTI0MzQzOTE4/OC5qcGVn.jpeg",
+      "capa": "https://i.discogs.com/aVuam7YzQJO2jWmTKT5ADrHkO7ECtPG_a6Yoa5gWa9Y/rs:fit/g:sm/q:90/h:500/w:500/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM5NDI4/MTEtMTQ0NjY4OTQw/NC03ODU0LmpwZWc.jpeg",
       "faixas": [
         {
           "pos": "A1",
@@ -4455,7 +4773,7 @@
         },
         {
           "pos": "A4",
-          "titulo": "Each One Dub",
+          "titulo": "Each On Dub",
           "dur": ""
         },
         {
@@ -4480,7 +4798,7 @@
         },
         {
           "pos": "B3",
-          "titulo": "Say So",
+          "titulo": "Say No",
           "dur": ""
         },
         {
@@ -4549,54 +4867,6 @@
           "titulo": "Satta"
         },
         {
-          "ytId": "XlUuCMqbS6c",
-          "titulo": "Keep On Dubbing"
-        },
-        {
-          "ytId": "WkPCfNxFnTI",
-          "titulo": "Stop Them Jah"
-        },
-        {
-          "ytId": "n-UZTMz-cw4",
-          "titulo": "Young Generation Dub"
-        },
-        {
-          "ytId": "tNuWMFEmjMk",
-          "titulo": "Each One Dub"
-        },
-        {
-          "ytId": "vWd3Etn87BY",
-          "titulo": "555 Dub Street"
-        },
-        {
-          "ytId": "6ARYFKytqT0",
-          "titulo": "Braces Tower Dub"
-        },
-        {
-          "ytId": "NoXYJkOeYSM",
-          "titulo": "King Tubby's Meets Rockers Uptown"
-        },
-        {
-          "ytId": "Q7ydmQho7oU",
-          "titulo": "Corner Crew Dub"
-        },
-        {
-          "ytId": "F590FLdEJVM",
-          "titulo": "Say So"
-        },
-        {
-          "ytId": "22x2tCy2ajs",
-          "titulo": "Skanking Dub"
-        },
-        {
-          "ytId": "yuBLaFYl1_M",
-          "titulo": "Frozen Dub"
-        },
-        {
-          "ytId": "hKUD4ipo94A",
-          "titulo": "Satta"
-        },
-        {
           "ytId": "n-gvKTeRY28",
           "titulo": "Augustus Pablo - King Tubby Meets Rockers Uptown"
         },
@@ -4605,30 +4875,30 @@
           "titulo": "Agustus Pablo King Tubbys Meets Rockers Uptown LP Vinyl Rip/ DSR 3570/3571 GEOVANNI JAMAICA YARD DUB"
         }
       ],
-      "notas": "The tracklistings on both the cover and the labels are wrong. Above is the correct tracklisting.\r\n\r\nMixed at King Tubby's Studio\r\nPublished by PABLO MUSIC\r\nRockers Production\r\n",
-      "discogsUrl": "https://www.discogs.com/release/1789565-Agustus-Pablo-King-Tubbys-Meets-Rockers-Uptown",
+      "notas": "Cat# on the spine is LPCT 085\nCat# on front cover is CT:085\nCat. No. on label is CTLP-085 \n\nThe label is misprinted - the correct tracklist is above. The labels show the below as the tracklist:\nA1 Keep On Dubbing\nA2 Stop Them Jah\nA3 Young Generation Dub\nA4 Each One Dub\nA5 555 Dub Street\nB1 Braces Tower Dub\nB2 King Tubby Meets Rockers Uptown\nB3 Corner Crew Dub\nB4 Say So\nB5 Skanking Dub\nB6 Frozen Dub ",
+      "discogsUrl": "https://www.discogs.com/release/3942811-Augustus-Pablo-King-Tubbys-Meets-Rockers-Uptown",
       "status": "esgotado",
       "preco": null,
       "secao": "Reggae / Dub",
       "destaque": false,
       "novo": false,
       "comentario": null,
-      "adicionadoEm": "2026-09-24T14:32:56.185Z",
+      "adicionadoEm": "2026-09-24T15:15:15.588Z",
       "ordem": 33
     },
     {
-      "id": 36389014,
-      "masterId": null,
-      "artista": "Lee Perry & The Upsetters",
-      "titulo": "Return Of The Super Ape",
-      "ano": 2026,
-      "pais": "US",
-      "selo": "Goldenlane Records",
-      "catno": "CLO2362",
+      "id": 6401859,
+      "masterId": 129942,
+      "artista": "The Upsetters",
+      "titulo": "Super Ape",
+      "ano": 1976,
+      "pais": "UK",
+      "selo": "Island Records",
+      "catno": "ILPS 9417",
       "formatoTipo": "LP",
       "formatoLabel": "Vinil LP",
-      "cor": "Yellow Red Green ",
-      "edicao": "Reissue",
+      "cor": null,
+      "edicao": null,
       "generos": [
         "Reggae"
       ],
@@ -4636,130 +4906,315 @@
         "Dub",
         "Roots Reggae"
       ],
-      "capa": "https://i.discogs.com/doRPtzSLBHj--99yTknfuwC7SD_Hdb8w8OFB6Jcpaiw/rs:fit/g:sm/q:90/h:599/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM2Mzg5/MDE0LTE3NzAwNjA1/MjMtNTM4NC5qcGVn.jpeg",
+      "capa": "https://i.discogs.com/9fNTd88wcakZsN0RRIIxR8fupQY1CC-F4UvYNNh1CzA/rs:fit/g:sm/q:90/h:600/w:596/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTY0MDE4/NTktMTQzMTE1NzU4/My0yODI0LmpwZWc.jpeg",
       "faixas": [
         {
           "pos": "A1",
-          "titulo": "Dyon - Anaswa",
+          "titulo": "Zions Blood",
           "dur": ""
         },
         {
           "pos": "A2",
-          "titulo": "Return Of The Super Ape",
+          "titulo": "Croaking Lizard",
           "dur": ""
         },
         {
           "pos": "A3",
-          "titulo": "Tell Me Something Good",
+          "titulo": "Black Vest",
           "dur": ""
         },
         {
           "pos": "A4",
-          "titulo": "Bird In Hand",
+          "titulo": "Underground",
           "dur": ""
         },
         {
           "pos": "A5",
-          "titulo": "Crab Yars",
+          "titulo": "Curly Dub",
           "dur": ""
         },
         {
           "pos": "B1",
-          "titulo": "Jah Jah Ah Natty Dread",
+          "titulo": "Dread Lion",
           "dur": ""
         },
         {
           "pos": "B2",
-          "titulo": "Psyche & Trim",
+          "titulo": "Three In One",
           "dur": ""
         },
         {
           "pos": "B3",
-          "titulo": "The Lion",
+          "titulo": "Patience",
           "dur": ""
         },
         {
           "pos": "B4",
-          "titulo": "Huzza A Hana",
+          "titulo": "Dub Along",
           "dur": ""
         },
         {
           "pos": "B5",
-          "titulo": "High Rankin Sammy",
+          "titulo": "Super Ape",
           "dur": ""
         }
       ],
-      "videos": [],
-      "notas": null,
-      "discogsUrl": "https://www.discogs.com/release/36389014-Lee-Scratch-Perry-The-Upsetters-Return-Of-The-Super-Ape",
+      "videos": [
+        {
+          "ytId": "e1dt57Uq2hU",
+          "titulo": "Lee Perry and The Upsetters - Super Ape - 01 - Zion's Blood"
+        },
+        {
+          "ytId": "hIa4zFOb7o0",
+          "titulo": "Lee Perry and The Upsetters - Super Ape - 02 - Croaking Lizard"
+        },
+        {
+          "ytId": "lbfvN5H1J_E",
+          "titulo": "Lee Perry and The Upsetters - Super Ape - 03 - Black Vest"
+        },
+        {
+          "ytId": "hNr8gQqScoA",
+          "titulo": "Lee Perry and The Upsetters - Super Ape - 04 - Underground"
+        },
+        {
+          "ytId": "qwUF6IqTI0c",
+          "titulo": "Lee Perry and The Upsetters - Super Ape - 05 - Curly Dub"
+        },
+        {
+          "ytId": "EJL6B6GSazA",
+          "titulo": "Lee Perry & The Upsetters - Super Ape (1976) - 06 - Dread Lion"
+        },
+        {
+          "ytId": "n2oB4_6WVhM",
+          "titulo": "Lee Perry and The Upsetters - Super Ape - 07 - Three In One"
+        },
+        {
+          "ytId": "SAA0vrIX6S0",
+          "titulo": "Lee Perry and The Upsetters - Super Ape - 08 - Patience"
+        },
+        {
+          "ytId": "cyVvR66W0YE",
+          "titulo": "Lee Perry and The Upsetters - Super Ape - 09 - Dub Along"
+        },
+        {
+          "ytId": "IJErlguYAZ8",
+          "titulo": "Lee Perry and The Upsetters - Super Ape - 10 - Super Ape"
+        },
+        {
+          "ytId": "H3l6IlfKLFs",
+          "titulo": "DREAD LION ⬥The Upsetters featuring The Heptones⬥"
+        },
+        {
+          "ytId": "QQ00YbFBRR8",
+          "titulo": "Zion Blood (feat. The Heptones)"
+        },
+        {
+          "ytId": "PXK3StHpHXI",
+          "titulo": "Three in One (feat. The Heptones)"
+        },
+        {
+          "ytId": "7Ag2kDJTS8M",
+          "titulo": "CURLEY DUB ⬥Scratch & The Upsetters⬥"
+        },
+        {
+          "ytId": "FX20FUbtHvg",
+          "titulo": "Patience Dub (feat. The Heptones)"
+        },
+        {
+          "ytId": "56un8WPogCQ",
+          "titulo": "Super Ape (feat. The Heptones)"
+        },
+        {
+          "ytId": "PxjDREkCP6k",
+          "titulo": "Croaking Lizard (feat. The Heptones)"
+        },
+        {
+          "ytId": "g2buJTPfo2Q",
+          "titulo": "Black Vest (feat. The Heptones)"
+        },
+        {
+          "ytId": "XwHCU2I9rO0",
+          "titulo": "Underground Root (Jamaican Mix)"
+        },
+        {
+          "ytId": "Q3uBNWR707Y",
+          "titulo": "Dub Along (feat. The Full Experience)"
+        },
+        {
+          "ytId": "AxQQWQSCV9w",
+          "titulo": "UPSETTER ~ Zion's Blood"
+        },
+        {
+          "ytId": "gfCjAXA4mSc",
+          "titulo": "UPSETTER ~ Croaking Lizard"
+        },
+        {
+          "ytId": "ATg83shwbyc",
+          "titulo": "UPSETTER ~ Black Vest"
+        },
+        {
+          "ytId": "UMhbPdXVeeI",
+          "titulo": "UPSETTER ~ Underground"
+        },
+        {
+          "ytId": "Nb39ZBAsh8I",
+          "titulo": "UPSETTER ~ Curly Dub"
+        },
+        {
+          "ytId": "cJMW9ulUYwg",
+          "titulo": "UPSETTER ~ Dread Lion"
+        },
+        {
+          "ytId": "LosfRKE7U9w",
+          "titulo": "UPSETTER ~ Three In One"
+        }
+      ],
+      "notas": "Recorded at Lee Perry Studio.\n\nPalm Tree label without info on the rim. The labels states main artist as \"Scratch & The Upsetters\".\n\nPublished by Blue Mountain Music Ltd.\n\n℗ 1976 Island Records Ltd.\n\nRunouts are etched except for '1' and STERLING which is stamped.",
+      "discogsUrl": "https://www.discogs.com/release/6401859-The-Upsetters-Super-Ape",
       "status": "esgotado",
       "preco": null,
       "secao": "Reggae / Dub",
       "destaque": false,
       "novo": true,
-      "comentario": null,
-      "adicionadoEm": "2026-09-24T14:33:03.995Z",
+      "comentario": "Super Ape (1976). No Discogs o crédito é \"The Upsetters\", por isso a linha usa o link direto.",
+      "adicionadoEm": "2026-09-24T15:19:15.749Z",
       "ordem": 34
     },
     {
-      "id": 11341382,
-      "masterId": 108157,
+      "id": 135352,
+      "masterId": 108153,
       "artista": "Burning Spear",
       "titulo": "Marcus Garvey",
-      "ano": 1974,
-      "pais": "Jamaica",
-      "selo": "Fox",
-      "catno": "none",
-      "formatoTipo": "7\"",
-      "formatoLabel": "Vinil 7\"",
-      "cor": "Yellow Label",
-      "edicao": "7\", 45 RPM, Single",
+      "ano": 1975,
+      "pais": "UK",
+      "selo": "Island Records",
+      "catno": "ILPS 9377",
+      "formatoTipo": "LP",
+      "formatoLabel": "Vinil LP",
+      "cor": null,
+      "edicao": null,
       "generos": [
         "Reggae"
       ],
       "estilos": [
         "Roots Reggae"
       ],
-      "capa": "https://i.discogs.com/lJTG-tg7_hh7ZvbcNEWra-MfKP7rlrrAPD6T1ix-qzI/rs:fit/g:sm/q:90/h:317/w:338/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTExMzQx/MzgyLTE1MTQ1Njky/MTctNDMzNi5wbmc.jpeg",
+      "capa": "https://i.discogs.com/JnwKi_Do35vr2lxmXxK-ooMw9RxS0_Q9ivZFJQzxbiA/rs:fit/g:sm/q:90/h:590/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTEzNTM1/Mi0xNTg1NzY1MDU5/LTQzOTUubXBv.jpeg",
       "faixas": [
         {
-          "pos": "A",
+          "pos": "A1",
           "titulo": "Marcus Garvey",
-          "dur": ""
+          "dur": "3:24"
         },
         {
-          "pos": "B",
-          "titulo": "Marcus Garvey (Version)",
-          "dur": ""
+          "pos": "A2",
+          "titulo": "Slavery Days",
+          "dur": "3:37"
+        },
+        {
+          "pos": "A3",
+          "titulo": "The Invasion",
+          "dur": "3:17"
+        },
+        {
+          "pos": "A4",
+          "titulo": "Live Good",
+          "dur": "3:10"
+        },
+        {
+          "pos": "A5",
+          "titulo": "Give Me",
+          "dur": "3:05"
+        },
+        {
+          "pos": "B1",
+          "titulo": "Old Marcus Garvey",
+          "dur": "3:59"
+        },
+        {
+          "pos": "B2",
+          "titulo": "Tradition",
+          "dur": "3:28"
+        },
+        {
+          "pos": "B3",
+          "titulo": "Jordan River",
+          "dur": "2:55"
+        },
+        {
+          "pos": "B4",
+          "titulo": "Red, Gold & Green",
+          "dur": "3:10"
+        },
+        {
+          "pos": "B5",
+          "titulo": "Resting Place",
+          "dur": "3:06"
         }
       ],
       "videos": [
         {
-          "ytId": "qd7j-2dZEms",
-          "titulo": "BURNING SPEAR  - TRADITION (2000 YEARS)"
+          "ytId": "6JCGioGsvtE",
+          "titulo": "Burning Spear - Tradition, Island Records-1975"
         },
         {
-          "ytId": "XshR3EGCzeM",
-          "titulo": "Burning Spear - Marcus Garvey"
+          "ytId": "6JCGioGsvtE",
+          "titulo": "Burning Spear - Tradition, Island Records-1975"
         },
         {
-          "ytId": "UxV7TWrVXC4",
-          "titulo": "Burning Spear  - Tradition / 2000 Years 12\""
+          "ytId": "BzhJ_JuqNGs",
+          "titulo": "Burning Spear  - Red , Gold & Green- Wolf Version 1975"
         },
         {
-          "ytId": "FVuvL0-Couk",
-          "titulo": "Burning Spear - Marcus Garvey / The Ghost 12\""
+          "ytId": "oGN3R49-CAE",
+          "titulo": "Burning Spear - Marcus Garvey - 01 - Marcus Garvey"
+        },
+        {
+          "ytId": "naCebkLdAx8",
+          "titulo": "Burning Spear - Marcus Garvey - 02 - Slavery Days"
+        },
+        {
+          "ytId": "29GaTM4qxB0",
+          "titulo": "Burning Spear - Marcus Garvey - 03 - Invasion"
+        },
+        {
+          "ytId": "RnEr2hht9OQ",
+          "titulo": "Burning Spear - Marcus Garvey - 04 - Live Good"
+        },
+        {
+          "ytId": "rJDtTS7tPY0",
+          "titulo": "Burning Spear - Marcus Garvey - 05 - Give Me"
+        },
+        {
+          "ytId": "VUA9ptxvdr4",
+          "titulo": "Burning Spear - Marcus Garvey - 06 - Old Marcus Garvey"
+        },
+        {
+          "ytId": "8V-7wfDUmwY",
+          "titulo": "Burning Spear - Marcus Garvey - 07 - Tradition"
+        },
+        {
+          "ytId": "dPfqyFdmznQ",
+          "titulo": "Burning Spear - Marcus Garvey - 08 - Jordan River"
+        },
+        {
+          "ytId": "T6dB7jFixvE",
+          "titulo": "Burning Spear - Marcus Garvey - 09 - Red Gold and Green"
+        },
+        {
+          "ytId": "-aJCoT5k-Vw",
+          "titulo": "Burning Spear - Marcus Garvey - 10 - Resting Place"
         }
       ],
-      "notas": null,
-      "discogsUrl": "https://www.discogs.com/release/11341382-Burning-Spear-Marcus-Garvey",
+      "notas": "Orange background Island labels.\nMixed at Joe Gibbs Recording Studio, Retirement Crescent, Kingston, Jamaica, (W.I.)\n\nMarcus Garvey's face is a round sticker attached on cover.",
+      "discogsUrl": "https://www.discogs.com/release/135352-Burning-Spear-Marcus-Garvey",
       "status": "esgotado",
       "preco": null,
       "secao": "Reggae / Dub",
       "destaque": false,
       "novo": false,
       "comentario": null,
-      "adicionadoEm": "2026-09-24T14:33:11.785Z",
+      "adicionadoEm": "2026-09-24T15:15:28.570Z",
       "ordem": 35
     },
     {
@@ -4912,103 +5367,115 @@
       "destaque": false,
       "novo": false,
       "comentario": null,
-      "adicionadoEm": "2026-09-24T14:33:19.580Z",
+      "adicionadoEm": "2026-09-24T15:15:33.761Z",
       "ordem": 36
     },
     {
-      "id": 4958755,
-      "masterId": 1601601,
+      "id": 1078894,
+      "masterId": 65695,
       "artista": "Toots & The Maytals",
       "titulo": "Funky Kingston",
-      "ano": null,
-      "pais": "Japan",
-      "selo": "Trio Records",
-      "catno": "PA-6338",
+      "ano": 1973,
+      "pais": "UK",
+      "selo": "Dragon",
+      "catno": "DRLS 5002",
       "formatoTipo": "LP",
       "formatoLabel": "Vinil LP",
       "cor": null,
-      "edicao": "Compilation",
+      "edicao": null,
       "generos": [
-        "Reggae"
+        "Reggae",
+        "Funk / Soul"
       ],
       "estilos": [
-        "Roots Reggae",
-        "Ska",
-        "Rocksteady"
+        "Reggae"
       ],
-      "capa": "https://i.discogs.com/1S89Ao4P1Btpq1ix248lNdDLzrWHWjIEyMQuCy9WhG8/rs:fit/g:sm/q:90/h:500/w:500/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTQ5NTg3/NTUtMTM4MDU5MjMx/OC04MzQ4LmpwZWc.jpeg",
+      "capa": "https://i.discogs.com/6lHBaof9XfM0tPNZv-awah5rmQOt87FiR_oK7ubMNFY/rs:fit/g:sm/q:90/h:575/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTEwNzg4/OTQtMTI5MjAwODc1/NS5qcGVn.jpeg",
       "faixas": [
         {
           "pos": "A1",
-          "titulo": "Funky Kingston",
-          "dur": ""
+          "titulo": "Sit Right Down",
+          "dur": "4:42"
         },
         {
           "pos": "A2",
-          "titulo": "Redemption Song",
-          "dur": ""
+          "titulo": "Pomp And Pride",
+          "dur": "4:30"
         },
         {
           "pos": "A3",
-          "titulo": "Sit Right Down",
-          "dur": ""
+          "titulo": "Louie Louie",
+          "dur": "5:45"
         },
         {
           "pos": "A4",
-          "titulo": "Louie Louie",
-          "dur": ""
-        },
-        {
-          "pos": "A5",
           "titulo": "I Can't Believe",
-          "dur": ""
-        },
-        {
-          "pos": "A6",
-          "titulo": "It Was Written Down",
-          "dur": ""
+          "dur": "3:29"
         },
         {
           "pos": "B1",
-          "titulo": "9 O'clock",
-          "dur": ""
+          "titulo": "Redemption Song",
+          "dur": "4:12"
         },
         {
           "pos": "B2",
-          "titulo": "Koo Koo",
-          "dur": ""
+          "titulo": "Daddy's Home",
+          "dur": "5:44"
         },
         {
           "pos": "B3",
-          "titulo": "Thy Kingston Come",
-          "dur": ""
+          "titulo": "Funky Kingston",
+          "dur": "4:55"
         },
         {
           "pos": "B4",
-          "titulo": "Got To Feel",
-          "dur": ""
-        },
-        {
-          "pos": "B5",
-          "titulo": "Pee Pee Cluck Cluck",
-          "dur": ""
-        },
-        {
-          "pos": "B6",
-          "titulo": "Daddy's Home",
-          "dur": ""
+          "titulo": "It Was Written Down",
+          "dur": "3:40"
         }
       ],
-      "videos": [],
-      "notas": null,
-      "discogsUrl": "https://www.discogs.com/release/4958755-Toots-The-Maytals-Funky-Kingston",
+      "videos": [
+        {
+          "ytId": "EQ27Vfmy6Js",
+          "titulo": "Sit Right Down"
+        },
+        {
+          "ytId": "kbO0gRq9T8Y",
+          "titulo": "Pomps & Pride"
+        },
+        {
+          "ytId": "lvGqpQ-7fCE",
+          "titulo": "Louie Louie"
+        },
+        {
+          "ytId": "4RAsmMalXeU",
+          "titulo": "I Can't Believe"
+        },
+        {
+          "ytId": "Woj3UbsBnH4",
+          "titulo": "Redemption Song"
+        },
+        {
+          "ytId": "VDZucP4UImw",
+          "titulo": "Daddy's Home"
+        },
+        {
+          "ytId": "wPh5U2Rc-ZY",
+          "titulo": "Funky Kingston"
+        },
+        {
+          "ytId": "shsoVKIlctY",
+          "titulo": "It Was Written Down"
+        }
+      ],
+      "notas": "℗ Dragon Records Ltd. 1973\n\nRecorded at Dynamic Sounds Studio, Kingston, Jamaica and Island Studios, London.\n\n“Manufactured and distributed by Island Records Ltd”  is printed on the rear sleeve as opposed to “Marketed by B&C Records Ltd, 37 Soho Square, London W.1” which is printed on other U.K. variations of this release. \n\nThe labels on Side A and Side B do not include “Marketed by B&C Records“ whereas some other U.K. variations do.",
+      "discogsUrl": "https://www.discogs.com/release/1078894-Toots-The-Maytals-Funky-Kingston",
       "status": "esgotado",
       "preco": null,
       "secao": "Reggae / Dub",
       "destaque": false,
       "novo": false,
       "comentario": null,
-      "adicionadoEm": "2026-09-24T14:33:27.378Z",
+      "adicionadoEm": "2026-09-24T15:15:38.979Z",
       "ordem": 37
     },
     {
@@ -5284,7 +5751,7 @@
       "destaque": false,
       "novo": false,
       "comentario": null,
-      "adicionadoEm": "2026-09-24T14:33:35.461Z",
+      "adicionadoEm": "2026-09-24T15:15:44.201Z",
       "ordem": 38
     },
     {
@@ -5902,18 +6369,18 @@
       "destaque": false,
       "novo": false,
       "comentario": null,
-      "adicionadoEm": "2026-09-24T14:33:42.990Z",
+      "adicionadoEm": "2026-09-24T15:15:49.358Z",
       "ordem": 39
     },
     {
-      "id": 1790544,
+      "id": 13314830,
       "masterId": 565,
       "artista": "Aphex Twin",
       "titulo": "Selected Ambient Works 85-92",
-      "ano": null,
+      "ano": 1992,
       "pais": "Belgium",
       "selo": "Apollo",
-      "catno": "AMBLP 3902",
+      "catno": "AMB LP 3922",
       "formatoTipo": "2LP",
       "formatoLabel": "Vinil 2LP",
       "cor": null,
@@ -5922,13 +6389,13 @@
         "Electronic"
       ],
       "estilos": [
-        "IDM",
         "Techno",
+        "IDM",
         "Electro",
         "Experimental",
         "Ambient"
       ],
-      "capa": "https://i.discogs.com/A6GG5s9QTJ51gflae_j6-51AxCCTVcwToLg_7dp4C78/rs:fit/g:sm/q:90/h:585/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE3OTA1/NDQtMTU1NjM4Njc2/Ny02NjcxLmpwZWc.jpeg",
+      "capa": "https://i.discogs.com/SU4JHKCshFCFMtGlptnznwsoPDnaH45Kc36EHxd7-r0/rs:fit/g:sm/q:90/h:594/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTEzMzE0/ODMwLTE1NTY1MjEx/NDctOTcyOS5qcGVn.jpeg",
       "faixas": [
         {
           "pos": "A1",
@@ -5981,17 +6448,17 @@
           "dur": "7:12"
         },
         {
-          "pos": "C4",
+          "pos": "D1",
           "titulo": "Hedphelym",
           "dur": "6:02"
         },
         {
-          "pos": "D1",
+          "pos": "D2",
           "titulo": "Delphium",
           "dur": "5:36"
         },
         {
-          "pos": "D2",
+          "pos": "D3",
           "titulo": "Actium",
           "dur": "7:35"
         }
@@ -6010,74 +6477,118 @@
           "titulo": "Aphex Twin - Selected Ambient Works 85-92"
         }
       ],
-      "notas": "No barcode or catalogue numbers to be found, cat# taken from the run-outs.\r\nThere's a mistake on back cover : Track marked \"D1 : Hedphelym\" is pressed on C4 position.\r\nThe etchings on sides B and C are truncated by the center label.",
-      "discogsUrl": "https://www.discogs.com/release/1790544-Aphex-Twin-Selected-Ambient-Works-85-92",
+      "notas": "Early pressing, possibly part of the first batch, with no barcode on the sleeve, no catalog number on sleeve or labels, same matrix codes as [r=32662] and containing 3 tracks each on sides C & D. The only difference noticeable is slightly different sleeve art, namely that the R&S logo on the rear, instead of being in the far right bottom corner, is placed 2cm to the left, below the word 'Manufactured' and to the right of 'Belgium'.\n\nLater pressings:\nSame sleeve & labels but different matrix codes: [r=6379671].\nSame sleeve & labels but different matrix codes; plays 4 tracks on side C and 2 on side D: [r=1790544].\nWith barcode on lower right of back cover: [r=4852926].\nWith barcode on upper right of back cover: [r=1138729].\n",
+      "discogsUrl": "https://www.discogs.com/release/13314830-Aphex-Twin-Selected-Ambient-Works-85-92",
       "status": "esgotado",
       "preco": null,
       "secao": "Eletrônico",
       "destaque": false,
       "novo": false,
       "comentario": null,
-      "adicionadoEm": "2026-09-24T14:33:50.784Z",
+      "adicionadoEm": "2026-09-24T15:15:54.550Z",
       "ordem": 40
     },
     {
-      "id": 437933,
-      "masterId": 283971,
-      "artista": "Kraftwerk & Soulsonic Force",
-      "titulo": "Trans-Europe Express / Planet Rock",
-      "ano": null,
+      "id": 5750709,
+      "masterId": 2877,
+      "artista": "Kraftwerk",
+      "titulo": "Trans-Europe Express",
+      "ano": 1977,
       "pais": "US",
-      "selo": "Master Cuts",
-      "catno": "MC-6028",
-      "formatoTipo": "12\"",
-      "formatoLabel": "Vinil 12\"",
-      "cor": null,
-      "edicao": "12\", Unofficial Release",
+      "selo": "Capitol Records",
+      "catno": "SW 11603",
+      "formatoTipo": "LP",
+      "formatoLabel": "Vinil LP",
+      "cor": "Winchester Pressing, Purple Labels",
+      "edicao": "Partially Mixed",
       "generos": [
-        "Hip Hop"
+        "Electronic"
       ],
       "estilos": [
-        "Electro"
+        "Electro",
+        "Synth-pop"
       ],
-      "capa": "https://i.discogs.com/v5c8MrDGTDEAwWBdefnza9iVDNFUnworBtj_9SlE910/rs:fit/g:sm/q:90/h:586/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTQzNzkz/My0xNTk1NjcwMzI2/LTE3NDQuanBlZw.jpeg",
+      "capa": "https://i.discogs.com/qaSqX45TBF3C0f-aaJUQnY3vt3r_5lbQJ4r5-32bP8Q/rs:fit/g:sm/q:90/h:600/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTU3NTA3/MDktMTY3NTMxMTY3/OS0xOTc3LmpwZWc.jpeg",
       "faixas": [
         {
           "pos": "A1",
-          "titulo": "Trans-Europe Express",
-          "dur": ""
+          "titulo": "Europe Endless",
+          "dur": "9:35"
         },
         {
           "pos": "A2",
-          "titulo": "Numbers",
-          "dur": ""
+          "titulo": "The Hall Of Mirrors",
+          "dur": "7:50"
+        },
+        {
+          "pos": "A3",
+          "titulo": "Showroom Dummies",
+          "dur": "6:10"
         },
         {
           "pos": "B1",
-          "titulo": "Planet Rock (Vocal Mix)",
-          "dur": ""
+          "titulo": "Trans-Europe Express",
+          "dur": "6:40"
         },
         {
           "pos": "B2",
-          "titulo": "Planet Rock (Bonus Beats)",
-          "dur": ""
+          "titulo": "Metal On Metal",
+          "dur": "6:52"
         },
         {
           "pos": "B3",
-          "titulo": "Planet Rock (Instrumental)",
-          "dur": ""
+          "titulo": "Franz Schubert",
+          "dur": "4:25"
+        },
+        {
+          "pos": "B4",
+          "titulo": "Endless Endless",
+          "dur": "0:55"
         }
       ],
-      "videos": [],
-      "notas": "Has DM-1255 edged in run out vinyl.",
-      "discogsUrl": "https://www.discogs.com/release/437933-Kraftwerk-Soulsonic-Force-Trans-Europe-Express-Planet-Rock",
+      "videos": [
+        {
+          "ytId": "Ms6kC-3yq0k",
+          "titulo": "Europe Endless (2009 Remaster)"
+        },
+        {
+          "ytId": "_TPAySIthMo",
+          "titulo": "The Hall of Mirrors (2009 Remaster)"
+        },
+        {
+          "ytId": "q47EltFPHUU",
+          "titulo": "Showroom Dummies (2009 Remaster)"
+        },
+        {
+          "ytId": "i_85fUIRlmU",
+          "titulo": "Trans-Europe Express (2009 Remaster)"
+        },
+        {
+          "ytId": "fyLh7vFMqL0",
+          "titulo": "Metal on Metal (2009 Remaster)"
+        },
+        {
+          "ytId": "5bl9cYEbFgU",
+          "titulo": "Abzug (2009 Remaster)"
+        },
+        {
+          "ytId": "twlZ9t4Gg1E",
+          "titulo": "Franz Schubert (2009 Remaster)"
+        },
+        {
+          "ytId": "jwwWMkUpfsk",
+          "titulo": "Endless Endless (2009 Remaster)"
+        }
+      ],
+      "notas": "This is a pressing plant & label variation with slight differences to the other U.S. release with purple labels.\nThis one has: \"Produced by Ralf Hütter & Florian Schneider\" all on one line rather than split on two lines. \n\nAnother Winchester pressing exists with [url=https://www.discogs.com/release/6417507]orange center labels[/url], as well as other purple labeled U.S. pressings from other pressing plants.\n\nKlingklang Studio Düsseldorf\nRüssl Studio Hamburg\nThe Record Plant Hollywood\nAll selections published by Famous Music Corporation/ASCAP.\nManufactured by Capitol Records, Inc. a subsidiary of Capitol Industries-EMI, Inc.\nFactories: Los Angeles, California; Jacksonville, Illinois; Winchester, Virginia.\nPersonal Management: Mr.I.Mouse Ltd.\n©℗1977 Capitol Records, Inc.\nRecorded in Germany.\nMade In U.S.A.\n\nThere is a small Capitol® logo to the left of the fine print on the bottom of the back cover, there is also a small EMI logo to the right of the fine print on the bottom of the back cover.\n\nThe 'Matten + Wiechers, Bonn' note on the inner sleeve is to credit the designer and supplier of the aforementioned equipment.\n\nTracks B1+B2 and B3+B4 are segued. The printed duration of track B4 is 0:45.",
+      "discogsUrl": "https://www.discogs.com/release/5750709-Kraftwerk-Trans-Europe-Express",
       "status": "esgotado",
       "preco": null,
       "secao": "Eletrônico",
       "destaque": false,
       "novo": false,
       "comentario": null,
-      "adicionadoEm": "2026-09-24T14:33:58.573Z",
+      "adicionadoEm": "2026-09-24T15:16:02.398Z",
       "ordem": 41
     },
     {
@@ -6173,22 +6684,22 @@
       "destaque": false,
       "novo": true,
       "comentario": null,
-      "adicionadoEm": "2026-09-24T14:34:06.760Z",
+      "adicionadoEm": "2026-09-24T15:16:07.591Z",
       "ordem": 42
     },
     {
-      "id": 24422834,
+      "id": 1125096,
       "masterId": 11772,
       "artista": "Burial",
       "titulo": "Untrue",
-      "ano": 2010,
+      "ano": 2007,
       "pais": "UK",
       "selo": "Hyperdub",
       "catno": "HDBLP002",
-      "formatoTipo": "12\"",
-      "formatoLabel": "Vinil 12\"",
+      "formatoTipo": "2LP",
+      "formatoLabel": "Vinil 2LP",
       "cor": null,
-      "edicao": "12\", 33 ⅓ RPM, Reissue, Repress",
+      "edicao": "12\", Repress",
       "generos": [
         "Electronic"
       ],
@@ -6199,7 +6710,7 @@
         "Ambient",
         "Bass Music"
       ],
-      "capa": "https://i.discogs.com/vznSZW3W7ysHWtojpmRdWxgkX-XFmiakZ0N1Blb8zFY/rs:fit/g:sm/q:90/h:596/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTI0NDIy/ODM0LTE2NjIzOTc1/MjAtNjI3My5qcGVn.jpeg",
+      "capa": "https://i.discogs.com/BAIR9yqVqiC20Yms_6nnsZothGqlYwyQC52N-qDTajs/rs:fit/g:sm/q:90/h:600/w:597/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTExMjUw/OTYtMTE5NTUyMDg4/OS5qcGVn.jpeg",
       "faixas": [
         {
           "pos": "A1",
@@ -6301,15 +6812,15 @@
           "titulo": "Raver"
         }
       ],
-      "notas": "All tracks written and produced (2006-7) \nBurial published by Domino Publishing Ltd.\nManufactured and distributed by Cargo Records.\nMastered @transition-studio.co.uk\n\nTrack durations are not provided on the record.\n\nTrack \"Archangel\" samples \"One Wish\" by [a=Ray J]\n\nThe release date is determined according to the year of purchase, and also based on the release number scratched out in the runout of side D: HDBLP006 - [r2495994].",
-      "discogsUrl": "https://www.discogs.com/release/24422834-Burial-Untrue",
+      "notas": "3rd issue with corrected labels and sleeve, same run-outs as earlier issues\n\nAll tracks written and produced (2006-7) \nBurial published by Domino Publishing Ltd.\nManufactured and distributed by Cargo Records.\nMastered @transition-studio.co.uk\n\nTrack durations and BPM are not provided on the record.\nBPM:\nA1: 136 | A2: 135\nB1: 135-138 | B2: 127\nC1: 124 | C2: 131\nD1: 127 | D2: - | D3: -\n\nTrack \"Archangel\" samples \"One Wish\" by [a=Ray J].",
+      "discogsUrl": "https://www.discogs.com/release/1125096-Burial-Untrue",
       "status": "esgotado",
       "preco": null,
       "secao": "Eletrônico",
       "destaque": false,
       "novo": false,
       "comentario": null,
-      "adicionadoEm": "2026-09-24T14:34:14.178Z",
+      "adicionadoEm": "2026-09-24T15:16:12.761Z",
       "ordem": 43
     },
     {
@@ -6321,8 +6832,8 @@
       "pais": "US",
       "selo": "Planet E",
       "catno": "pe65234",
-      "formatoTipo": "12\"",
-      "formatoLabel": "Vinil 12\"",
+      "formatoTipo": "2LP",
+      "formatoLabel": "Vinil 2LP",
       "cor": null,
       "edicao": "12\", 33 ⅓ RPM",
       "generos": [
@@ -6483,7 +6994,7 @@
       "destaque": false,
       "novo": false,
       "comentario": null,
-      "adicionadoEm": "2026-09-24T14:34:22.027Z",
+      "adicionadoEm": "2026-09-24T15:16:17.996Z",
       "ordem": 44
     },
     {
@@ -6577,7 +7088,7 @@
       "destaque": false,
       "novo": false,
       "comentario": null,
-      "adicionadoEm": "2026-09-24T14:34:29.860Z",
+      "adicionadoEm": "2026-09-24T15:16:23.320Z",
       "ordem": 45
     },
     {
@@ -6697,7 +7208,7 @@
       "destaque": false,
       "novo": false,
       "comentario": null,
-      "adicionadoEm": "2026-09-24T14:34:37.630Z",
+      "adicionadoEm": "2026-09-24T15:16:28.391Z",
       "ordem": 46
     },
     {
@@ -6878,7 +7389,7 @@
       "destaque": false,
       "novo": false,
       "comentario": null,
-      "adicionadoEm": "2026-09-24T14:34:45.553Z",
+      "adicionadoEm": "2026-09-24T15:16:33.611Z",
       "ordem": 47
     },
     {
@@ -7100,7 +7611,7 @@
       "destaque": false,
       "novo": true,
       "comentario": null,
-      "adicionadoEm": "2026-09-24T14:34:53.200Z",
+      "adicionadoEm": "2026-09-24T15:16:38.895Z",
       "ordem": 48
     },
     {
@@ -7267,7 +7778,7 @@
       "destaque": false,
       "novo": false,
       "comentario": null,
-      "adicionadoEm": "2026-09-24T14:35:01.011Z",
+      "adicionadoEm": "2026-09-24T15:16:43.945Z",
       "ordem": 49
     },
     {
@@ -7372,7 +7883,7 @@
       "destaque": false,
       "novo": false,
       "comentario": null,
-      "adicionadoEm": "2026-09-24T14:35:08.907Z",
+      "adicionadoEm": "2026-09-24T15:16:49.215Z",
       "ordem": 50
     },
     {
@@ -7488,7 +7999,7 @@
       "destaque": false,
       "novo": false,
       "comentario": null,
-      "adicionadoEm": "2026-09-24T14:35:16.675Z",
+      "adicionadoEm": "2026-09-24T15:16:54.677Z",
       "ordem": 51
     }
   ]
