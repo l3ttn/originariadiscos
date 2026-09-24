@@ -1,0 +1,83 @@
+name: Build e Deploy
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Verifica atividade recente (cron para após 60 dias sem push)
+        id: atividade
+        run: |
+          ultimo=$(git log -1 --format=%ct)
+          agora=$(date +%s)
+          dias=$(( (agora - ultimo) / 86400 ))
+          echo "Último commit há $dias dia(s)."
+          if [ "${{ github.event_name }}" = "schedule" ] && [ "$dias" -gt 60 ]; then
+            echo "Sem push há mais de 60 dias — pulando execução agendada."
+            echo "continuar=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "continuar=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Setup Node
+        if: steps.atividade.outputs.continuar == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Gera catálogo (discos.txt → data/catalogo.json)
+        if: steps.atividade.outputs.continuar == 'true'
+        env:
+          DISCOGS_TOKEN: ${{ secrets.DISCOGS_TOKEN }}
+        run: node scripts/build-catalogo.mjs
+
+      - name: Commita catálogo se mudou
+        if: steps.atividade.outputs.continuar == 'true'
+        continue-on-error: true
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git pull --rebase
+          if git diff -I '"geradoEm"' --quiet -- data; then
+            echo "Catálogo sem mudança de conteúdo (fora de geradoEm) — não commita."
+          else
+            git add data/catalogo.json data/resolvidos.json data/pendentes.txt
+            git commit -m "Atualiza catálogo (build automático)"
+            git push
+          fi
+
+      - name: Configura Pages
+        if: steps.atividade.outputs.continuar == 'true'
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact do Pages
+        if: steps.atividade.outputs.continuar == 'true'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+
+      - name: Deploy no Pages
+        if: steps.atividade.outputs.continuar == 'true'
+        id: deploy
+        uses: actions/deploy-pages@v4
