@@ -6,8 +6,8 @@
   "description": "Originária Discos — vitrine de vinil com atendimento pelo WhatsApp",
   "scripts": {
     "catalogo": "node scripts/build-catalogo.mjs",
-    "test": "node --test tests/",
-    "lint": "for f in js/*.js scripts/*.mjs; do node --check \"$f\" || exit 1; done",
+    "test": "node --test tests/*.test.mjs",
+    "lint": "find js scripts \\( -name '*.js' -o -name '*.mjs' \\) 2>/dev/null | xargs -r -n1 node --check",
     "dev": "python3 -m http.server 8080"
   }
 }
