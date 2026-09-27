@@ -3,10 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
   <title>Carrinho | Originária Discos</title>
   <meta name="description" content="Revise seu pedido e finalize pelo WhatsApp com a Originária Discos.">
   <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap">
   <link rel="stylesheet" href="css/estilo.css">
+  <script type="module" src="js/intro.js"></script>
 </head>
 <body>
   <header class="header">
@@ -30,7 +35,10 @@
       <div class="container">
         <h1>Seu carrinho</h1>
         <div id="carrinho-root">
-          <div class="estado-vazio"><p>Carregando carrinho…</p></div>
+          <div class="carrinho-lista" aria-hidden="true">
+            <div class="skeleton-bloco" style="height: 96px; border-radius: var(--raio);"></div>
+            <div class="skeleton-bloco" style="height: 96px; border-radius: var(--raio);"></div>
+          </div>
         </div>
       </div>
     </section>
