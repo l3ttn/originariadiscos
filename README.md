@@ -48,6 +48,12 @@ releases em `data/cache/` e buscar tudo de novo.
 Preços observados manualmente (grupos de WhatsApp, lojas) entram em
 `data/precos-observados.csv` (`id,preco,fonte,data,link`, `id` = release id do Discogs).
 
+Como a loja vende novo/lacrado, a referência **não** usa o preço da prensagem original de
+colecionador — ela busca a reedição em vinil oficial mais recente de cada disco (a mais nova do
+Brasil e a mais nova no geral) e usa o menor anúncio dela; a prensagem original só entra na
+conta se nenhuma reedição tiver exemplar à venda. O relatório mostra as duas colunas lado a
+lado (`original` e `reedição`) para o dono comparar.
+
 ## Trocar WhatsApp / logo / Instagram
 
 - **WhatsApp, Instagram, nome da loja e URL do site**: `js/config.js`.
