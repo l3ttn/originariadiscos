@@ -364,7 +364,7 @@ async function espacarChamada() {
   ultimaChamadaEm = Date.now();
 }
 
-async function chamarDiscogs(url, contexto) {
+export async function chamarDiscogs(url, contexto) {
   for (let tentativa = 1; tentativa <= MAX_TENTATIVAS_429; tentativa += 1) {
     await espacarChamada();
     const headers = { 'User-Agent': USER_AGENT };
@@ -401,13 +401,13 @@ async function chamarDiscogs(url, contexto) {
   throw new Error(`falha em ${contexto}`);
 }
 
-async function escreverJsonAtomic(caminho, dados) {
+export async function escreverJsonAtomic(caminho, dados) {
   const tmp = `${caminho}.tmp-${process.pid}-${Date.now()}`;
   await fs.writeFile(tmp, `${JSON.stringify(dados, null, 2)}\n`, 'utf8');
   await fs.rename(tmp, caminho);
 }
 
-async function lerJsonSeExistir(caminho) {
+export async function lerJsonSeExistir(caminho) {
   try {
     const raw = await fs.readFile(caminho, 'utf8');
     return JSON.parse(raw);

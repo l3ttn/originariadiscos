@@ -1,0 +1,662 @@
+{
+  "consultadoEm": "2026-09-27T20:31:31.653Z",
+  "discos": {
+    "1025": {
+      "menorAnuncioBRL": 778.5,
+      "aVenda": 16,
+      "sugestaoMint": null,
+      "sugestaoNM": null,
+      "moeda": null,
+      "moedaDiferente": false,
+      "observados": [],
+      "referenciaBRL": 779,
+      "base": [
+        "discogs-menor"
+      ]
+    },
+    "2879": {
+      "menorAnuncioBRL": 235.91,
+      "aVenda": 121,
+      "sugestaoMint": null,
+      "sugestaoNM": null,
+      "moeda": null,
+      "moedaDiferente": false,
+      "observados": [],
+      "referenciaBRL": 236,
+      "base": [
+        "discogs-menor"
+      ]
+    },
+    "6530": {
+      "menorAnuncioBRL": 654.65,
+      "aVenda": 38,
+      "sugestaoMint": null,
+      "sugestaoNM": null,
+      "moeda": null,
+      "moedaDiferente": false,
+      "observados": [],
+      "referenciaBRL": 655,
+      "base": [
+        "discogs-menor"
+      ]
+    },
+    "11778": {
+      "menorAnuncioBRL": 850.34,
+      "aVenda": 10,
+      "sugestaoMint": null,
+      "sugestaoNM": null,
+      "moeda": null,
+      "moedaDiferente": false,
+      "observados": [],
+      "referenciaBRL": 850,
+      "base": [
+        "discogs-menor"
+      ]
+    },
+    "31381": {
+      "menorAnuncioBRL": 31.04,
+      "aVenda": 46,
+      "sugestaoMint": null,
+      "sugestaoNM": null,
+      "moeda": null,
+      "moedaDiferente": false,
+      "observados": [],
+      "referenciaBRL": 31,
+      "base": [
+        "discogs-menor"
+      ]
+    },
+    "94800": {
+      "menorAnuncioBRL": 465.92,
+      "aVenda": 7,
+      "sugestaoMint": null,
+      "sugestaoNM": null,
+      "moeda": null,
+      "moedaDiferente": false,
+      "observados": [],
+      "referenciaBRL": 466,
+      "base": [
+        "discogs-menor"
+      ]
+    },
+    "135352": {
+      "menorAnuncioBRL": 73.56,
+      "aVenda": 17,
+      "sugestaoMint": null,
+      "sugestaoNM": null,
+      "moeda": null,
+      "moedaDiferente": false,
+      "observados": [],
+      "referenciaBRL": 74,
+      "base": [
+        "discogs-menor"
+      ]
+    },
+    "170032": {
+      "menorAnuncioBRL": 589.77,
+      "aVenda": 20,
+      "sugestaoMint": null,
+      "sugestaoNM": null,
+      "moeda": null,
+      "moedaDiferente": false,
+      "observados": [],
+      "referenciaBRL": 590,
+      "base": [
+        "discogs-menor"
+      ]
+    },
+    "202658": {
+      "menorAnuncioBRL": 207.6,
+      "aVenda": 71,
+      "sugestaoMint": null,
+      "sugestaoNM": null,
+      "moeda": null,
+      "moedaDiferente": false,
+      "observados": [],
+      "referenciaBRL": 208,
+      "base": [
+        "discogs-menor"
+      ]
+    },
+    "216166": {
+      "menorAnuncioBRL": 68.85,
+      "aVenda": 169,
+      "sugestaoMint": null,
+      "sugestaoNM": null,
+      "moeda": null,
+      "moedaDiferente": false,
+      "observados": [],
+      "referenciaBRL": 69,
+      "base": [
+        "discogs-menor"
+      ]
+    },
+    "242785": {
+      "menorAnuncioBRL": 451.53,
+      "aVenda": 12,
+      "sugestaoMint": null,
+      "sugestaoNM": null,
+      "moeda": null,
+      "moedaDiferente": false,
+      "observados": [],
+      "referenciaBRL": 452,
+      "base": [
+        "discogs-menor"
+      ]
+    },
+    "268430": {
+      "menorAnuncioBRL": 989.89,
+      "aVenda": 43,
+      "sugestaoMint": null,
+      "sugestaoNM": null,
+      "moeda": null,
+      "moedaDiferente": false,
+      "observados": [],
+      "referenciaBRL": 990,
+      "base": [
+        "discogs-menor"
+      ]
+    },
+    "356592": {
+      "menorAnuncioBRL": 1297.5,
+      "aVenda": 25,
+      "sugestaoMint": null,
+      "sugestaoNM": null,
+      "moeda": null,
+      "moedaDiferente": false,
+      "observados": [],
+      "referenciaBRL": 1298,
+      "base": [
+        "discogs-menor"
+      ]
+    },
+    "392604": {
+      "menorAnuncioBRL": 657.85,
+      "aVenda": 11,
+      "sugestaoMint": null,
+      "sugestaoNM": null,
+      "moeda": null,
+      "moedaDiferente": false,
+      "observados": [],
+      "referenciaBRL": 658,
+      "base": [
+        "discogs-menor"
+      ]
+    },
+    "526351": {
+      "menorAnuncioBRL": 77.85,
+      "aVenda": 96,
+      "sugestaoMint": null,
+      "sugestaoNM": null,
+      "moeda": null,
+      "moedaDiferente": false,
+      "observados": [],
+      "referenciaBRL": 78,
+      "base": [
+        "discogs-menor"
+      ]
+    },
+    "549847": {
+      "menorAnuncioBRL": 259.5,
+      "aVenda": 27,
+      "sugestaoMint": null,
+      "sugestaoNM": null,
+      "moeda": null,
+      "moedaDiferente": false,
+      "observados": [],
+      "referenciaBRL": 260,
+      "base": [
+        "discogs-menor"
+      ]
+    },
+    "649184": {
+      "menorAnuncioBRL": 206.42,
+      "aVenda": 30,
+      "sugestaoMint": null,
+      "sugestaoNM": null,
+      "moeda": null,
+      "moedaDiferente": false,
+      "observados": [],
+      "referenciaBRL": 206,
+      "base": [
+        "discogs-menor"
+      ]
+    },
+    "726944": {
+      "menorAnuncioBRL": 150,
+      "aVenda": 36,
+      "sugestaoMint": null,
+      "sugestaoNM": null,
+      "moeda": null,
+      "moedaDiferente": false,
+      "observados": [],
+      "referenciaBRL": 150,
+      "base": [
+        "discogs-menor"
+      ]
+    },
+    "873261": {
+      "menorAnuncioBRL": 233.55,
+      "aVenda": 47,
+      "sugestaoMint": null,
+      "sugestaoNM": null,
+      "moeda": null,
+      "moedaDiferente": false,
+      "observados": [],
+      "referenciaBRL": 234,
+      "base": [
+        "discogs-menor"
+      ]
+    },
+    "1078894": {
+      "menorAnuncioBRL": 207.6,
+      "aVenda": 15,
+      "sugestaoMint": null,
+      "sugestaoNM": null,
+      "moeda": null,
+      "moedaDiferente": false,
+      "observados": [],
+      "referenciaBRL": 208,
+      "base": [
+        "discogs-menor"
+      ]
+    },
+    "1125096": {
+      "menorAnuncioBRL": 235.32,
+      "aVenda": 26,
+      "sugestaoMint": null,
+      "sugestaoNM": null,
+      "moeda": null,
+      "moedaDiferente": false,
+      "observados": [],
+      "referenciaBRL": 235,
+      "base": [
+        "discogs-menor"
+      ]
+    },
+    "1205173": {
+      "menorAnuncioBRL": 2000,
+      "aVenda": 7,
+      "sugestaoMint": null,
+      "sugestaoNM": null,
+      "moeda": null,
+      "moedaDiferente": false,
+      "observados": [],
+      "referenciaBRL": 2000,
+      "base": [
+        "discogs-menor"
+      ]
+    },
+    "1222672": {
+      "menorAnuncioBRL": 180,
+      "aVenda": 35,
+      "sugestaoMint": null,
+      "sugestaoNM": null,
+      "moeda": null,
+      "moedaDiferente": false,
+      "observados": [],
+      "referenciaBRL": 180,
+      "base": [
+        "discogs-menor"
+      ]
+    },
+    "1365302": {
+      "menorAnuncioBRL": 900,
+      "aVenda": 8,
+      "sugestaoMint": null,
+      "sugestaoNM": null,
+      "moeda": null,
+      "moedaDiferente": false,
+      "observados": [],
+      "referenciaBRL": 900,
+      "base": [
+        "discogs-menor"
+      ]
+    },
+    "1873013": {
+      "menorAnuncioBRL": 648.75,
+      "aVenda": 113,
+      "sugestaoMint": null,
+      "sugestaoNM": null,
+      "moeda": null,
+      "moedaDiferente": false,
+      "observados": [],
+      "referenciaBRL": 649,
+      "base": [
+        "discogs-menor"
+      ]
+    },
+    "2028398": {
+      "menorAnuncioBRL": 36.33,
+      "aVenda": 25,
+      "sugestaoMint": null,
+      "sugestaoNM": null,
+      "moeda": null,
+      "moedaDiferente": false,
+      "observados": [],
+      "referenciaBRL": 36,
+      "base": [
+        "discogs-menor"
+      ]
+    },
+    "2422289": {
+      "menorAnuncioBRL": 10400,
+      "aVenda": 3,
+      "sugestaoMint": null,
+      "sugestaoNM": null,
+      "moeda": null,
+      "moedaDiferente": false,
+      "observados": [],
+      "referenciaBRL": 10400,
+      "base": [
+        "discogs-menor"
+      ]
+    },
+    "2968639": {
+      "menorAnuncioBRL": null,
+      "aVenda": 0,
+      "sugestaoMint": null,
+      "sugestaoNM": null,
+      "moeda": null,
+      "moedaDiferente": false,
+      "observados": [],
+      "referenciaBRL": null,
+      "base": []
+    },
+    "3942811": {
+      "menorAnuncioBRL": 129.75,
+      "aVenda": 2,
+      "sugestaoMint": null,
+      "sugestaoNM": null,
+      "moeda": null,
+      "moedaDiferente": false,
+      "observados": [],
+      "referenciaBRL": 130,
+      "base": [
+        "discogs-menor"
+      ]
+    },
+    "4202979": {
+      "menorAnuncioBRL": null,
+      "aVenda": 0,
+      "sugestaoMint": null,
+      "sugestaoNM": null,
+      "moeda": null,
+      "moedaDiferente": false,
+      "observados": [],
+      "referenciaBRL": null,
+      "base": []
+    },
+    "4950798": {
+      "menorAnuncioBRL": 1038,
+      "aVenda": 31,
+      "sugestaoMint": null,
+      "sugestaoNM": null,
+      "moeda": null,
+      "moedaDiferente": false,
+      "observados": [],
+      "referenciaBRL": 1038,
+      "base": [
+        "discogs-menor"
+      ]
+    },
+    "5034045": {
+      "menorAnuncioBRL": 2491.2,
+      "aVenda": 8,
+      "sugestaoMint": null,
+      "sugestaoNM": null,
+      "moeda": null,
+      "moedaDiferente": false,
+      "observados": [],
+      "referenciaBRL": 2491,
+      "base": [
+        "discogs-menor"
+      ]
+    },
+    "5431106": {
+      "menorAnuncioBRL": 10.38,
+      "aVenda": 30,
+      "sugestaoMint": null,
+      "sugestaoNM": null,
+      "moeda": null,
+      "moedaDiferente": false,
+      "observados": [],
+      "referenciaBRL": 10,
+      "base": [
+        "discogs-menor"
+      ]
+    },
+    "5604009": {
+      "menorAnuncioBRL": 2422,
+      "aVenda": 2,
+      "sugestaoMint": null,
+      "sugestaoNM": null,
+      "moeda": null,
+      "moedaDiferente": false,
+      "observados": [],
+      "referenciaBRL": 2422,
+      "base": [
+        "discogs-menor"
+      ]
+    },
+    "5750709": {
+      "menorAnuncioBRL": 129.75,
+      "aVenda": 21,
+      "sugestaoMint": null,
+      "sugestaoNM": null,
+      "moeda": null,
+      "moedaDiferente": false,
+      "observados": [],
+      "referenciaBRL": 130,
+      "base": [
+        "discogs-menor"
+      ]
+    },
+    "6276183": {
+      "menorAnuncioBRL": 253.69,
+      "aVenda": 12,
+      "sugestaoMint": null,
+      "sugestaoNM": null,
+      "moeda": null,
+      "moedaDiferente": false,
+      "observados": [],
+      "referenciaBRL": 254,
+      "base": [
+        "discogs-menor"
+      ]
+    },
+    "6401859": {
+      "menorAnuncioBRL": 524.9,
+      "aVenda": 4,
+      "sugestaoMint": null,
+      "sugestaoNM": null,
+      "moeda": null,
+      "moedaDiferente": false,
+      "observados": [],
+      "referenciaBRL": 525,
+      "base": [
+        "discogs-menor"
+      ]
+    },
+    "6890747": {
+      "menorAnuncioBRL": 778.5,
+      "aVenda": 4,
+      "sugestaoMint": null,
+      "sugestaoNM": null,
+      "moeda": null,
+      "moedaDiferente": false,
+      "observados": [],
+      "referenciaBRL": 779,
+      "base": [
+        "discogs-menor"
+      ]
+    },
+    "7252111": {
+      "menorAnuncioBRL": 144.14,
+      "aVenda": 78,
+      "sugestaoMint": null,
+      "sugestaoNM": null,
+      "moeda": null,
+      "moedaDiferente": false,
+      "observados": [],
+      "referenciaBRL": 144,
+      "base": [
+        "discogs-menor"
+      ]
+    },
+    "7383499": {
+      "menorAnuncioBRL": 103.8,
+      "aVenda": 108,
+      "sugestaoMint": null,
+      "sugestaoNM": null,
+      "moeda": null,
+      "moedaDiferente": false,
+      "observados": [],
+      "referenciaBRL": 104,
+      "base": [
+        "discogs-menor"
+      ]
+    },
+    "8938725": {
+      "menorAnuncioBRL": 353.86,
+      "aVenda": 2,
+      "sugestaoMint": null,
+      "sugestaoNM": null,
+      "moeda": null,
+      "moedaDiferente": false,
+      "observados": [],
+      "referenciaBRL": 354,
+      "base": [
+        "discogs-menor"
+      ]
+    },
+    "9500449": {
+      "menorAnuncioBRL": 69.2,
+      "aVenda": 5,
+      "sugestaoMint": null,
+      "sugestaoNM": null,
+      "moeda": null,
+      "moedaDiferente": false,
+      "observados": [],
+      "referenciaBRL": 69,
+      "base": [
+        "discogs-menor"
+      ]
+    },
+    "11416588": {
+      "menorAnuncioBRL": 176.34,
+      "aVenda": 10,
+      "sugestaoMint": null,
+      "sugestaoNM": null,
+      "moeda": null,
+      "moedaDiferente": false,
+      "observados": [],
+      "referenciaBRL": 176,
+      "base": [
+        "discogs-menor"
+      ]
+    },
+    "12766539": {
+      "menorAnuncioBRL": 2984.25,
+      "aVenda": 4,
+      "sugestaoMint": null,
+      "sugestaoNM": null,
+      "moeda": null,
+      "moedaDiferente": false,
+      "observados": [],
+      "referenciaBRL": 2984,
+      "base": [
+        "discogs-menor"
+      ]
+    },
+    "13286331": {
+      "menorAnuncioBRL": 31.09,
+      "aVenda": 18,
+      "sugestaoMint": null,
+      "sugestaoNM": null,
+      "moeda": null,
+      "moedaDiferente": false,
+      "observados": [],
+      "referenciaBRL": 31,
+      "base": [
+        "discogs-menor"
+      ]
+    },
+    "13314830": {
+      "menorAnuncioBRL": 1297.5,
+      "aVenda": 1,
+      "sugestaoMint": null,
+      "sugestaoNM": null,
+      "moeda": null,
+      "moedaDiferente": false,
+      "observados": [],
+      "referenciaBRL": 1298,
+      "base": [
+        "discogs-menor"
+      ]
+    },
+    "13374934": {
+      "menorAnuncioBRL": 200,
+      "aVenda": 2,
+      "sugestaoMint": null,
+      "sugestaoNM": null,
+      "moeda": null,
+      "moedaDiferente": false,
+      "observados": [],
+      "referenciaBRL": 200,
+      "base": [
+        "discogs-menor"
+      ]
+    },
+    "14478692": {
+      "menorAnuncioBRL": 430,
+      "aVenda": 12,
+      "sugestaoMint": null,
+      "sugestaoNM": null,
+      "moeda": null,
+      "moedaDiferente": false,
+      "observados": [],
+      "referenciaBRL": 430,
+      "base": [
+        "discogs-menor"
+      ]
+    },
+    "15714043": {
+      "menorAnuncioBRL": null,
+      "aVenda": 0,
+      "sugestaoMint": null,
+      "sugestaoNM": null,
+      "moeda": null,
+      "moedaDiferente": false,
+      "observados": [],
+      "referenciaBRL": null,
+      "base": []
+    },
+    "23757107": {
+      "menorAnuncioBRL": 155.7,
+      "aVenda": 6,
+      "sugestaoMint": null,
+      "sugestaoNM": null,
+      "moeda": null,
+      "moedaDiferente": false,
+      "observados": [],
+      "referenciaBRL": 156,
+      "base": [
+        "discogs-menor"
+      ]
+    },
+    "26197826": {
+      "menorAnuncioBRL": 137,
+      "aVenda": 13,
+      "sugestaoMint": null,
+      "sugestaoNM": null,
+      "moeda": null,
+      "moedaDiferente": false,
+      "observados": [],
+      "referenciaBRL": 137,
+      "base": [
+        "discogs-menor"
+      ]
+    }
+  }
+}
