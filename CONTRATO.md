@@ -150,3 +150,23 @@ Objetivo: o site parecer um produto atual e leve, no padrão dos sites que a Ver
 **Não muda**: estrutura das páginas, ids/classes usados pelos módulos (`.card`, `button.card__add`, `[data-contador]`, `#btn-pedir`, `.cta-solicitar`, `[data-id]`), textos, mensagens do WhatsApp, `js/config.js`, testes existentes continuam verdes (ajustar só se o markup do card mudar de forma equivalente).
 
 Medição observável: em 360 px sem scroll horizontal; zero erro de console; `header` com `backdrop-filter`; overlay `.intro` existe logo após o load e **não existe** 3 s depois; `sessionStorage['originaria.intro'] === '1'` após a intro; com `prefers-reduced-motion: reduce` emulado, `.intro` nunca é criado; com `prefers-color-scheme: dark` emulado, `getComputedStyle(body).backgroundColor` é escuro (`rgb(0, 0, 0)`); todas as contagens anteriores (15 cards no index, 30 no catálogo, 4 links WhatsApp na ficha) iguais.
+
+## Preços de referência (v4) — `scripts/precos.mjs`
+
+Objetivo: o dono precificar com base no mercado real, disco a disco, sem inventar. Fontes, em ordem de confiança:
+
+1. **Discogs Marketplace, sem token** — `GET https://api.discogs.com/marketplace/stats/{id}?curr_abbr=BRL` (medido em 2026-09-27: responde `num_for_sale` e `lowest_price.value` em BRL para a prensagem exata; ex. 726944 → 36 à venda, menor R$ 150,00). Mesmo pacing (2,6 s), User-Agent, timeout e retry do `build-catalogo.mjs` (reaproveite as funções; se estiverem presas ao `main()`, exporte).
+2. **Discogs sugestão por condição, com token** — `GET /marketplace/price_suggestions/{id}` com `Authorization: Discogs token=…` (só se `DISCOGS_TOKEN` existir; sem token, pula em silêncio e registra `sugestao: null`). Devolve `{ "Mint (M)": {currency, value}, "Near Mint (NM or M-)": {...}, ... }` na moeda da conta do dono. Guardar `moeda` e os valores de `Mint (M)` e `Near Mint (NM or M-)`; se a moeda não for `BRL`, guardar mesmo assim e marcar `moedaDiferente: true` (não converter).
+3. **Preços observados manualmente** — `data/precos-observados.csv` (o dono preenche com o que vê em grupos de WhatsApp e lojas brasileiras), cabeçalho `id,preco,fonte,data,link` (`id` = release id do Discogs, `preco` inteiro em reais, `fonte` texto livre, `data` AAAA-MM-DD, `link` opcional). Linha inválida → ignorada com aviso.
+
+Saída `data/precos.json`: `{ consultadoEm, discos: { "<id>": { menorAnuncioBRL, aVenda, sugestaoMint, sugestaoNM, moeda, moedaDiferente, observados: [{preco, fonte, data}], referenciaBRL, base } } }`. `referenciaBRL` = mediana dos valores em BRL disponíveis entre `sugestaoMint` (se BRL), `menorAnuncioBRL` e os `observados`; `base` = lista das fontes que entraram (ex. `["discogs-menor", "observado"]`); nenhuma fonte → `referenciaBRL: null`. Arredondar a referência para inteiro.
+
+Relatório `data/precos-relatorio.md` (gerado): tabela `ordem | artista – título | à venda | menor anúncio (BRL) | sugestão M | observados | referência | preço atual em discos.txt`, ordenada por `ordem`, mais um rodapé com data, quantos discos têm referência e quantos não têm. É esse arquivo que o dono lê para decidir.
+
+Flag `--propor [--margem=1.00]`: escreve `discos.propostos.txt` = cópia de `discos.txt` em que cada linha **sem** `preco=` e **com** referência ganha `| preco=<referência × margem, arredondado para múltiplo de 5>`. Nunca sobrescreve `discos.txt`. Linhas que já têm `preco=` não mudam.
+
+`package.json`: `"precos": "node scripts/precos.mjs"`. README: seção "Como precificar" em 3 passos (rodar, ler o relatório, copiar as linhas do `discos.propostos.txt` que aprovar — ou criar o token do Discogs em Settings → Developers para ter a sugestão por condição). Workflow do Actions **não** muda nesta rodada (o dono roda local quando for precificar).
+
+Testes `tests/precos.test.mjs` (funções puras exportadas, sem rede): parse do CSV (linha válida, inválida, id inexistente), mediana com 1/2/3 fontes, `referenciaBRL` null sem fontes, `moedaDiferente` exclui a sugestão da mediana, arredondamento para múltiplo de 5 com margem, e a linha do relatório para um disco de exemplo.
+
+Medição observável: `node scripts/precos.mjs` termina com `OK <n> discos · com referência <r> · chamadas <c> · <tempo>`; `data/precos.json` válido com uma chave por disco do catálogo; para 4 ids fixos (726944, 242785, 6401859, 6276183) `menorAnuncioBRL` bate com um `curl` independente feito no mesmo momento (tolerância: igual) e `aVenda` bate ±2; `--propor` gera `discos.propostos.txt` com o mesmo número de linhas de `discos.txt` e `preco=` só nas linhas que não tinham.
