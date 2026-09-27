@@ -1,5 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Originária Discos">
-  <circle cx="32" cy="32" r="30" fill="#1c1a17"/>
+  <style>
+    .favicon-anel { fill: #111111; }
+    .favicon-fundo { fill: #fafafa; }
+    @media (prefers-color-scheme: dark) {
+      .favicon-anel { fill: #ededed; }
+      .favicon-fundo { fill: #000000; }
+    }
+  </style>
+  <circle cx="32" cy="32" r="30" class="favicon-anel"/>
   <circle cx="32" cy="32" r="12" fill="#c8481f"/>
-  <circle cx="32" cy="32" r="3" fill="#f7f4ec"/>
+  <circle cx="32" cy="32" r="3" class="favicon-fundo"/>
 </svg>

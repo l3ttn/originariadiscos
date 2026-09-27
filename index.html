@@ -3,10 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
   <title>Originária Discos — vinil novo e lacrado, atendimento pelo WhatsApp</title>
   <meta name="description" content="Originária Discos: vinil selecionado, catálogo com faixas e vídeos, atendimento direto pelo WhatsApp.">
   <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap">
   <link rel="stylesheet" href="css/estilo.css">
+  <script type="module" src="js/intro.js"></script>
 </head>
 <body>
   <header class="header">
@@ -34,7 +39,31 @@
           <a class="btn btn--primary" href="catalogo.html">Ver catálogo</a>
         </div>
         <div class="hero__destaques">
-          <div id="hero-destaques" class="estado-vazio"><p>Carregando destaques…</p></div>
+          <div id="hero-destaques">
+            <div class="grid-cards" aria-hidden="true">
+              <div class="skeleton-card">
+                <div class="skeleton-bloco skeleton-card__capa"></div>
+                <div class="skeleton-card__corpo">
+                  <div class="skeleton-bloco skeleton-card__linha skeleton-card__linha--curta"></div>
+                  <div class="skeleton-bloco skeleton-card__linha"></div>
+                </div>
+              </div>
+              <div class="skeleton-card">
+                <div class="skeleton-bloco skeleton-card__capa"></div>
+                <div class="skeleton-card__corpo">
+                  <div class="skeleton-bloco skeleton-card__linha skeleton-card__linha--curta"></div>
+                  <div class="skeleton-bloco skeleton-card__linha"></div>
+                </div>
+              </div>
+              <div class="skeleton-card">
+                <div class="skeleton-bloco skeleton-card__capa"></div>
+                <div class="skeleton-card__corpo">
+                  <div class="skeleton-bloco skeleton-card__linha skeleton-card__linha--curta"></div>
+                  <div class="skeleton-bloco skeleton-card__linha"></div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -42,14 +71,52 @@
     <section id="novidades">
       <div class="container">
         <h2>Novidades</h2>
-        <div id="novidades-grid" class="estado-vazio"><p>Carregando novidades…</p></div>
+        <div id="novidades-grid">
+          <div class="grid-cards" aria-hidden="true">
+            <div class="skeleton-card">
+              <div class="skeleton-bloco skeleton-card__capa"></div>
+              <div class="skeleton-card__corpo">
+                <div class="skeleton-bloco skeleton-card__linha skeleton-card__linha--curta"></div>
+                <div class="skeleton-bloco skeleton-card__linha"></div>
+              </div>
+            </div>
+            <div class="skeleton-card">
+              <div class="skeleton-bloco skeleton-card__capa"></div>
+              <div class="skeleton-card__corpo">
+                <div class="skeleton-bloco skeleton-card__linha skeleton-card__linha--curta"></div>
+                <div class="skeleton-bloco skeleton-card__linha"></div>
+              </div>
+            </div>
+            <div class="skeleton-card">
+              <div class="skeleton-bloco skeleton-card__capa"></div>
+              <div class="skeleton-card__corpo">
+                <div class="skeleton-bloco skeleton-card__linha skeleton-card__linha--curta"></div>
+                <div class="skeleton-bloco skeleton-card__linha"></div>
+              </div>
+            </div>
+            <div class="skeleton-card">
+              <div class="skeleton-bloco skeleton-card__capa"></div>
+              <div class="skeleton-card__corpo">
+                <div class="skeleton-bloco skeleton-card__linha skeleton-card__linha--curta"></div>
+                <div class="skeleton-bloco skeleton-card__linha"></div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
     <section id="colecoes">
       <div class="container">
         <h2>Coleções</h2>
-        <div id="colecoes-grid" class="estado-vazio"><p>Carregando coleções…</p></div>
+        <div id="colecoes-grid">
+          <div class="grid-colecoes" aria-hidden="true">
+            <div class="skeleton-bloco skeleton-colecao"></div>
+            <div class="skeleton-bloco skeleton-colecao"></div>
+            <div class="skeleton-bloco skeleton-colecao"></div>
+            <div class="skeleton-bloco skeleton-colecao"></div>
+          </div>
+        </div>
       </div>
     </section>
 
