@@ -7,18 +7,33 @@ import {
   remover,
   definirQtd,
   total,
+  formatarPreco,
+  formatarSubtotal,
+  formatarTotal,
   mensagemPedido,
 } from '../js/carrinho.js';
 
 const catalogoPath = fileURLToPath(new URL('../data/catalogo.json', import.meta.url));
 const catalogo = JSON.parse(readFileSync(catalogoPath, 'utf8')).discos;
 
-// Dois discos reais do catálogo, ambos sem preço (data/catalogo.json).
+// Três discos reais do catálogo (data/catalogo.json), todos sem preço lá.
 const JORGE_BEN_ID = 726944;
 const ARTHUR_VEROCAI_ID = 2968639;
+const MADVILLAINY_ID = 242785;
 
 function disco(id) {
   return catalogo.find((d) => d.id === id);
+}
+
+// Clone do catálogo de teste do contrato: 726944 com preco=220, 2968639 sem
+// preço, 242785 com preco=180. Os preços são injetados só no teste, nunca em
+// data/catalogo.json.
+function catalogoComPrecosDoContrato() {
+  return catalogo.map((d) => {
+    if (d.id === JORGE_BEN_ID) return { ...d, preco: 220 };
+    if (d.id === MADVILLAINY_ID) return { ...d, preco: 180 };
+    return d;
+  });
 }
 
 describe('adicionar', () => {
@@ -75,17 +90,43 @@ describe('definirQtd', () => {
   });
 });
 
+describe('formatarPreco', () => {
+  test('sem separador de milhar', () => {
+    assert.equal(formatarPreco(220), 'R$ 220');
+  });
+
+  test('com separador de milhar', () => {
+    assert.equal(formatarPreco(1250), 'R$ 1.250');
+  });
+});
+
+describe('formatarSubtotal (página do carrinho)', () => {
+  test('com preço, qtd 1: só o preço', () => {
+    assert.equal(formatarSubtotal(220, 1), 'R$ 220');
+  });
+
+  test('com preço, qtd > 1: qtd × preço = subtotal', () => {
+    assert.equal(formatarSubtotal(220, 2), '2 × R$ 220 = R$ 440');
+  });
+
+  test('sem preço: Sob consulta, com qualquer qtd', () => {
+    assert.equal(formatarSubtotal(null, 1), 'Sob consulta');
+    assert.equal(formatarSubtotal(null, 3), 'Sob consulta');
+  });
+});
+
 describe('total', () => {
-  test('sem preço: valor 0 e temSemPreco conta os itens', () => {
+  test('sem preço: valor 0 e itensSemPreco conta os itens', () => {
     let estado = { itens: [], obs: '' };
     estado = adicionar(estado, JORGE_BEN_ID);
     estado = adicionar(estado, ARTHUR_VEROCAI_ID);
     const resultado = total(estado, catalogo);
     assert.equal(resultado.valor, 0);
-    assert.equal(resultado.temSemPreco, 2);
+    assert.equal(resultado.itensComPreco, 0);
+    assert.equal(resultado.itensSemPreco, 2);
   });
 
-  test('com preço: soma preco * qtd, temSemPreco 0', () => {
+  test('com preço: soma preco * qtd, itensSemPreco 0', () => {
     const catalogoComPreco = catalogo.map((d) =>
       d.id === JORGE_BEN_ID ? { ...d, preco: 220 } : d
     );
@@ -93,19 +134,102 @@ describe('total', () => {
     estado = adicionar(estado, JORGE_BEN_ID); // qtd 2
     const resultado = total(estado, catalogoComPreco);
     assert.equal(resultado.valor, 440);
-    assert.equal(resultado.temSemPreco, 0);
+    assert.equal(resultado.itensComPreco, 1);
+    assert.equal(resultado.itensSemPreco, 0);
+  });
+
+  test('misto: soma só os com preço, conta os dois grupos', () => {
+    const catalogoTeste = catalogoComPrecosDoContrato();
+    let estado = { itens: [], obs: '' };
+    estado = adicionar(estado, JORGE_BEN_ID);
+    estado = adicionar(estado, JORGE_BEN_ID); // qtd 2, preco 220
+    estado = adicionar(estado, ARTHUR_VEROCAI_ID); // qtd 1, sem preço
+    estado = adicionar(estado, MADVILLAINY_ID); // qtd 1, preco 180
+    const resultado = total(estado, catalogoTeste);
+    assert.equal(resultado.valor, 620);
+    assert.equal(resultado.itensComPreco, 2);
+    assert.equal(resultado.itensSemPreco, 1);
   });
 
   test('item de id inexistente no catálogo é ignorado', () => {
     const estado = adicionar({ itens: [], obs: '' }, 999999);
     const resultado = total(estado, catalogo);
     assert.equal(resultado.valor, 0);
-    assert.equal(resultado.temSemPreco, 0);
+    assert.equal(resultado.itensComPreco, 0);
+    assert.equal(resultado.itensSemPreco, 0);
+  });
+});
+
+describe('formatarTotal — as três formas', () => {
+  test('todos com preço: "Total: R$ 660"', () => {
+    assert.equal(
+      formatarTotal({ valor: 660, itensComPreco: 3, itensSemPreco: 0 }),
+      'Total: R$ 660'
+    );
+  });
+
+  test('misto: "Total: R$ 620 + 1 item sob consulta" (singular e plural)', () => {
+    assert.equal(
+      formatarTotal({ valor: 620, itensComPreco: 2, itensSemPreco: 1 }),
+      'Total: R$ 620 + 1 item sob consulta'
+    );
+    assert.equal(
+      formatarTotal({ valor: 620, itensComPreco: 2, itensSemPreco: 2 }),
+      'Total: R$ 620 + 2 itens sob consulta'
+    );
+  });
+
+  test('nenhum com preço: "Total: sob consulta (N itens sem preço)" (como hoje)', () => {
+    assert.equal(
+      formatarTotal({ valor: 0, itensComPreco: 0, itensSemPreco: 2 }),
+      'Total: sob consulta (2 itens sem preço)'
+    );
+    assert.equal(
+      formatarTotal({ valor: 0, itensComPreco: 0, itensSemPreco: 1 }),
+      'Total: sob consulta (1 item sem preço)'
+    );
+  });
+});
+
+describe('finais de linha do item na mensagem — os quatro casos', () => {
+  const discoTeste = {
+    id: 1,
+    artista: 'Artista Teste',
+    titulo: 'Título Teste',
+    ano: null,
+    formatoLabel: 'Vinil LP',
+    selo: 'Selo',
+    catno: 'CAT-001',
+    discogsUrl: 'https://example.com/1',
+  };
+
+  function linhaItem(preco, qtd) {
+    const catalogoTeste = [{ ...discoTeste, preco }];
+    let estado = adicionar({ itens: [], obs: '' }, 1);
+    estado = definirQtd(estado, 1, qtd);
+    const msg = mensagemPedido(estado, catalogoTeste, 'Loja');
+    return msg.split('\n')[2];
+  }
+
+  test('com preço, qtd 1 → "· R$ 220"', () => {
+    assert.ok(linhaItem(220, 1).endsWith('· R$ 220'));
+  });
+
+  test('com preço, qtd > 1 → "· 2 un. × R$ 220 = R$ 440"', () => {
+    assert.ok(linhaItem(220, 2).endsWith('· 2 un. × R$ 220 = R$ 440'));
+  });
+
+  test('sem preço, qtd 1 → "· Sob consulta"', () => {
+    assert.ok(linhaItem(null, 1).endsWith('· Sob consulta'));
+  });
+
+  test('sem preço, qtd > 1 → "· 2 un. · Sob consulta"', () => {
+    assert.ok(linhaItem(null, 2).endsWith('· 2 un. · Sob consulta'));
   });
 });
 
 describe('mensagemPedido', () => {
-  test('bate literalmente com o modelo do contrato: 2 discos reais sem preço', () => {
+  test('sem preço (como antes do v3): item vira "Sob consulta", total "sob consulta"', () => {
     let estado = { itens: [], obs: '' };
     estado = adicionar(estado, JORGE_BEN_ID); // qtd 1
     estado = adicionar(estado, JORGE_BEN_ID); // qtd 2
@@ -117,11 +241,42 @@ describe('mensagemPedido', () => {
     assert.equal(linhas[0], 'Olá! Quero fazer um pedido na Originária Discos:');
     assert.equal(
       linhas[2],
-      '1. Jorge Ben – África Brasil (1976) · Vinil LP · Philips 6349 187 · 2 un.'
+      '1. Jorge Ben – África Brasil (1976) · Vinil LP · Philips 6349 187 · 2 un. · Sob consulta'
     );
     assert.equal(linhas[3], '   discogs.com/release/726944');
     assert.ok(msg.includes('Total: sob consulta (2 itens sem preço)'));
     assert.equal(linhas[linhas.length - 1], 'Pode me passar disponibilidade, prazo e valor?');
+  });
+
+  test('bate literalmente com o modelo v3 do contrato: 3 discos reais, preços injetados no teste', () => {
+    const catalogoTeste = catalogoComPrecosDoContrato();
+    const estado = {
+      itens: [
+        { id: JORGE_BEN_ID, qtd: 2 },
+        { id: ARTHUR_VEROCAI_ID, qtd: 1 },
+        { id: MADVILLAINY_ID, qtd: 1 },
+      ],
+      obs: '',
+    };
+
+    const msg = mensagemPedido(estado, catalogoTeste, 'Originária Discos');
+
+    const esperado = [
+      'Olá! Quero fazer um pedido na Originária Discos:',
+      '',
+      '1. Jorge Ben – África Brasil (1976) · Vinil LP · Philips 6349 187 · 2 un. × R$ 220 = R$ 440',
+      '   discogs.com/release/726944',
+      '2. Arthur Verocai – Arthur Verocai (1972) · Vinil LP · Continental SLP-10.079 · Sob consulta',
+      '   discogs.com/release/2968639',
+      '3. MF DOOM & Madlib & Madvillain – Madvillainy (2004) · Vinil 2LP · Stones Throw Records STH2065 · R$ 180',
+      '   discogs.com/release/242785',
+      '',
+      'Total: R$ 620 + 1 item sob consulta',
+      '',
+      'Pode me passar disponibilidade, prazo e valor?',
+    ].join('\n');
+
+    assert.equal(msg, esperado);
   });
 
   test('item de id inexistente no catálogo é ignorado, não quebra a mensagem', () => {
@@ -147,5 +302,6 @@ describe('mensagemPedido', () => {
   test('sanidade dos discos usados na fixture (mesmos dados de data/catalogo.json)', () => {
     assert.equal(disco(JORGE_BEN_ID).preco, null);
     assert.equal(disco(ARTHUR_VEROCAI_ID).preco, null);
+    assert.equal(disco(MADVILLAINY_ID).preco, null);
   });
 });
