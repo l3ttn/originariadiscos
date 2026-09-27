@@ -532,6 +532,13 @@ section > .container > h2 {
   font-variant-numeric: tabular-nums;
 }
 
+.carrinho-item__subtotal {
+  grid-column: 2;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--cor-acento);
+}
+
 .carrinho-item__remover {
   grid-column: 2;
   justify-self: start;
