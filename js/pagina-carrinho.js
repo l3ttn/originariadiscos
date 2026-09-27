@@ -9,6 +9,8 @@ import {
   remover,
   definirQtd,
   total,
+  formatarPreco,
+  formatarSubtotal,
   formatarTotal,
   atualizarContadorHeader,
 } from './carrinho.js';
@@ -76,7 +78,7 @@ function renderItem(item, disco, { onQtd, onRemover }) {
   info.appendChild(el('p', 'carrinho-item__titulo', `${disco.titulo} – ${disco.formatoLabel}`));
   const selo = `${disco.selo || ''}${disco.catno ? ` ${disco.catno}` : ''}`.trim();
   if (selo) info.appendChild(el('p', 'carrinho-item__meta', selo));
-  info.appendChild(el('p', 'carrinho-item__preco', disco.preco != null ? `R$ ${disco.preco}` : 'Sob consulta'));
+  info.appendChild(el('p', 'carrinho-item__preco', disco.preco != null ? formatarPreco(disco.preco) : 'Sob consulta'));
   row.appendChild(info);
 
   const qtdWrap = el('div', 'carrinho-item__qtd');
@@ -88,6 +90,8 @@ function renderItem(item, disco, { onQtd, onRemover }) {
   qtdWrap.appendChild(spanQtd);
   qtdWrap.appendChild(btnMais);
   row.appendChild(qtdWrap);
+
+  row.appendChild(el('p', 'carrinho-item__subtotal', formatarSubtotal(disco.preco, item.qtd)));
 
   const btnRemover = criarBotao('btn btn--ghost carrinho-item__remover', 'Remover', onRemover);
   row.appendChild(btnRemover);
