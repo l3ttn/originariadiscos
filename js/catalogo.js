@@ -15,6 +15,13 @@ function carregar() {
   return _promessa;
 }
 
+// Resolve (nunca rejeita) quando o catálogo terminou de carregar ou falhou —
+// consumida por js/intro.js para não prender a abertura além do necessário.
+export const catalogoPronto = carregar().then(
+  () => undefined,
+  () => undefined
+);
+
 /** Todos os discos do catálogo. */
 export async function todos() {
   return carregar();

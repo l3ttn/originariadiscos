@@ -3,10 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
   <title>Disco | Originária Discos</title>
   <meta name="description" content="Ficha do disco: faixas, formato, prensagem e atendimento direto pelo WhatsApp.">
   <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap">
   <link rel="stylesheet" href="css/estilo.css">
+  <script type="module" src="js/intro.js"></script>
 </head>
 <body>
   <header class="header">
@@ -29,7 +34,16 @@
     <section>
       <div class="container">
         <div id="disco-root">
-          <div class="estado-vazio"><p>Carregando disco…</p></div>
+          <div class="ficha" aria-hidden="true">
+            <div class="skeleton-bloco" style="aspect-ratio: 1 / 1; border-radius: var(--raio);"></div>
+            <div>
+              <div class="skeleton-bloco skeleton-linha-larga" style="width: 40%; margin-bottom: 0.85rem;"></div>
+              <div class="skeleton-bloco skeleton-linha-larga" style="margin-bottom: 0.6rem;"></div>
+              <div class="skeleton-bloco skeleton-linha-larga" style="width: 70%; margin-bottom: 1.5rem;"></div>
+              <div class="skeleton-bloco" style="height: 2.6rem; border-radius: var(--raio); margin-bottom: 0.6rem;"></div>
+              <div class="skeleton-bloco" style="height: 2.6rem; border-radius: var(--raio);"></div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
