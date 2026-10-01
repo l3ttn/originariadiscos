@@ -1,6 +1,6 @@
 // Monta links wa.me. O número nunca é hardcoded aqui — vem de js/config.js.
 import { WHATSAPP, NOME_LOJA } from './config.js';
-import { mensagemPedido } from './carrinho.js';
+import { mensagemPedido, trechoEdicao, discogsUrlLinha } from './carrinho.js';
 
 /** Link wa.me com a mensagem já codificada. */
 export function montarLink(msg) {
@@ -9,7 +9,7 @@ export function montarLink(msg) {
 
 function linhaFormato(disco) {
   const cor = disco.cor ? ` · ${disco.cor}` : '';
-  return `${disco.formatoLabel}${cor} · ${disco.selo} ${disco.catno}`;
+  return `${disco.formatoLabel}${cor} · ${trechoEdicao(disco)}`;
 }
 
 function linhaAnoTitulo(disco) {
@@ -25,7 +25,7 @@ export function linkSolicitar(disco) {
       : 'Olá! Vi que este disco está esgotado no site e quero solicitar o meu:';
   const msg =
     `${linha1}\n\n` +
-    `${linhaAnoTitulo(disco)}\n${linhaFormato(disco)}\nDiscogs: ${disco.discogsUrl}\n\n` +
+    `${linhaAnoTitulo(disco)}\n${linhaFormato(disco)}\nDiscogs: ${discogsUrlLinha(disco)}\n\n` +
     `Pode me passar disponibilidade, prazo e valor?`;
   return montarLink(msg);
 }

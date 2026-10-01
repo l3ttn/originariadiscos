@@ -214,8 +214,12 @@ section > .container > h2 {
 /* Footer ----------------------------------------------------------------- */
 
 .footer {
-  background: var(--cor-texto);
-  color: var(--cor-fundo);
+  /* Fundo fixo, igual nos dois esquemas (como .colecao): var(--cor-texto)
+     inverte no escuro (vira quase branco) e deixava a faixa clara destoando
+     do fundo preto. */
+  background: #111111;
+  color: #ededed;
+  border-top: 1px solid #333333;
   margin-top: 3rem;
 }
 
@@ -249,7 +253,9 @@ section > .container > h2 {
 }
 
 .footer__atribuicao {
-  color: var(--cor-texto-suave);
+  /* Cinza claro fixo (não var(--cor-texto-suave)): no modo claro ela é
+     #666666, que contra o fundo #111111 fixo do rodapé cai pra ~3.3:1. */
+  color: #a1a1a1;
   font-size: 0.85rem;
   margin: 0;
 }
@@ -901,6 +907,11 @@ section > .container > h2 {
   color: var(--cor-texto-suave);
   font-size: 0.95rem;
   margin-bottom: 0.25rem;
+}
+
+/* Lançamento original: secundário à edição à venda, por isso menor. */
+.ficha__meta--original {
+  font-size: 0.85rem;
 }
 
 .ficha__tags {
