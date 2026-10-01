@@ -29,6 +29,31 @@ npm run lint       # checa a sintaxe dos .js/.mjs
 o limite de taxa do Discogs). Rode `npm run catalogo -- --force` para ignorar o cache de
 releases em `data/cache/` e buscar tudo de novo.
 
+## Como precificar (3 passos)
+
+1. Rode `npm run precos` (usa `data/catalogo.json`, então rode `npm run catalogo` antes se ele
+   estiver desatualizado). O script consulta o Discogs Marketplace disco a disco — sem
+   `DISCOGS_TOKEN` já traz o menor anúncio à venda em BRL; com um token em
+   `Settings → Developers` no discogs.com (`export DISCOGS_TOKEN=...` antes de rodar), também
+   traz a sugestão de preço por condição (Mint, Near Mint) na moeda da sua conta.
+2. Leia `data/precos-relatorio.md`: uma linha por disco com à venda, menor anúncio, sugestão,
+   preços observados manualmente (`data/precos-observados.csv`) e a referência (mediana das
+   fontes disponíveis) ao lado do preço atual em `discos.txt`.
+3. Rode `npm run precos -- --propor` (aceita `--margem=1.10` etc., padrão `1.00`) para gerar
+   `discos.propostos.txt` — cópia de `discos.txt` com `preco=` preenchido (referência × margem,
+   arredondado para múltiplo de 5) só nas linhas que ainda não tinham preço. Copie pra
+   `discos.txt` as linhas que você aprovar; `discos.propostos.txt` nunca é commitado nem lido
+   pelo site.
+
+Preços observados manualmente (grupos de WhatsApp, lojas) entram em
+`data/precos-observados.csv` (`id,preco,fonte,data,link`, `id` = release id do Discogs).
+
+Como a loja vende novo/lacrado, a referência **não** usa o preço da prensagem original de
+colecionador — ela busca a reedição em vinil oficial mais recente de cada disco (a mais nova do
+Brasil e a mais nova no geral) e usa o menor anúncio dela; a prensagem original só entra na
+conta se nenhuma reedição tiver exemplar à venda. O relatório mostra as duas colunas lado a
+lado (`original` e `reedição`) para o dono comparar.
+
 ## Trocar WhatsApp / logo / Instagram
 
 - **WhatsApp, Instagram, nome da loja e URL do site**: `js/config.js`.
