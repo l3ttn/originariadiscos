@@ -14,6 +14,10 @@ import {
   listaFormato,
   pontuarCandidato,
   escolherMelhorCandidato,
+  derivarEdicaoVendaAutomatica,
+  derivarEdicaoVendaFixada,
+  resolverIdEdicaoFixada,
+  descricoesVinilString,
 } from '../scripts/build-catalogo.mjs';
 
 // --- parseLinha -------------------------------------------------------
@@ -261,4 +265,81 @@ test('filtrarCandidatosQueCasam: devolve todos os que casam, não só o primeiro
   const candidatos = filtrarCandidatosQueCasam(resultados, normalizarTexto('Alice Coltrane'), normalizarTexto('Journey In Satchidananda'));
   assert.equal(candidatos.length, 2);
   assert.deepEqual(candidatos.map((c) => c.id), [1, 2]);
+});
+
+// --- edicaoVenda (v5) — CONTRATO.md "Edição à venda (v5)" -------------------
+
+test('parseLinha: campo edicao= fica em opts.edicao (URL ou id de release)', () => {
+  const r1 = parseLinha('Jorge Ben – África Brasil | edicao=https://www.discogs.com/release/15793439', 'Brasil');
+  assert.equal(r1.ok, true);
+  assert.equal(r1.opts.edicao, 'https://www.discogs.com/release/15793439');
+  const r2 = parseLinha('Jorge Ben – África Brasil', 'Brasil');
+  assert.equal(r2.opts.edicao, null);
+});
+
+test('resolverIdEdicaoFixada: aceita URL de release ou id numérico; outra coisa → null', () => {
+  assert.equal(resolverIdEdicaoFixada('https://www.discogs.com/release/15793439-Jorge-Ben-Africa-Brasil'), 15793439);
+  assert.equal(resolverIdEdicaoFixada('15793439'), 15793439);
+  assert.equal(resolverIdEdicaoFixada('abc'), null);
+  assert.equal(resolverIdEdicaoFixada(null), null);
+});
+
+test('derivarEdicaoVendaAutomatica: a partir de um versions[] de fixture com bootleg — exclui o bootleg e escolhe a reedição Brasil mais recente (caso real: master 112296, África Brasil)', () => {
+  const versoesBrutas = [
+    { id: 31257475, released: '2024', country: 'Europe', label: 'Future Shock (4)', catno: 'FS4485', format: 'LP, Album, Reissue, Unofficial Release' }, // bootleg — tem de ser excluído
+    { id: 15793439, released: '2020', country: 'Brazil', label: 'Polysom', catno: '33057-1', format: 'LP, Album, Limited Edition, Reissue, Repress' },
+    { id: 18574192, released: '2019', country: 'US', label: 'Universal Music Special Markets (2)', catno: 'B0028558-01', format: 'LP, Album, Reissue, Stereo' },
+  ];
+  const edicaoVenda = derivarEdicaoVendaAutomatica(versoesBrutas);
+  assert.deepEqual(edicaoVenda, {
+    id: 15793439,
+    ano: 2020,
+    pais: 'Brazil',
+    selo: 'Polysom',
+    catno: '33057-1',
+    formato: 'LP, Album, Limited Edition, Reissue, Repress',
+    discogsUrl: 'https://www.discogs.com/release/15793439',
+    fixadaPeloDono: false,
+  });
+});
+
+test('derivarEdicaoVendaAutomatica: só o bootleg (sem versão oficial) → null', () => {
+  const versoesBrutas = [
+    { id: 31257475, released: '2024', country: 'Europe', label: 'Future Shock', catno: 'FS4485', format: 'LP, Album, Reissue, Unofficial Release' },
+  ];
+  assert.equal(derivarEdicaoVendaAutomatica(versoesBrutas), null);
+});
+
+test('derivarEdicaoVendaAutomatica: sem versões (master sem reedição) → null', () => {
+  assert.equal(derivarEdicaoVendaAutomatica([]), null);
+});
+
+test('derivarEdicaoVendaFixada: a partir de um release de fixture (edicao= fixado pelo dono)', () => {
+  const releaseFixture = {
+    id: 999,
+    year: 2018,
+    country: 'Germany',
+    labels: [{ name: 'Music On Vinyl (2)', catno: 'MOVLP123' }],
+    formats: [{ name: 'Vinyl', qty: '1', descriptions: ['LP', 'Album', 'Reissue', '180g'] }],
+    uri: 'https://www.discogs.com/release/999-Fixture',
+  };
+  assert.deepEqual(derivarEdicaoVendaFixada(releaseFixture), {
+    id: 999,
+    ano: 2018,
+    pais: 'Germany',
+    selo: 'Music On Vinyl', // sufixo " (2)" removido
+    catno: 'MOVLP123',
+    formato: 'LP, Album, Reissue, 180g',
+    discogsUrl: 'https://www.discogs.com/release/999-Fixture',
+    fixadaPeloDono: true,
+  });
+});
+
+test('derivarEdicaoVendaFixada: sem release (falha ao buscar) → null', () => {
+  assert.equal(derivarEdicaoVendaFixada(null), null);
+});
+
+test('descricoesVinilString: descrições do 1º formato Vinyl unidas por ", "; sem Vinyl → null', () => {
+  assert.equal(descricoesVinilString([{ name: 'Vinyl', descriptions: ['LP', 'Album', 'Reissue'] }]), 'LP, Album, Reissue');
+  assert.equal(descricoesVinilString([{ name: 'CD' }]), null);
 });

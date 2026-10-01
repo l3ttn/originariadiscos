@@ -1,9 +1,12 @@
-// Preços de referência (v4 / v4.1). Lê data/catalogo.json, consulta o Discogs Marketplace
-// (sem token: stats/lowest_price; com token: sugestão por condição), a reedição em vinil
-// mais recente e oficial de cada master (a loja vende novo/lacrado, não a prensagem de
-// colecionador), e cruza com data/precos-observados.csv (preços vistos manualmente pelo dono).
+// Preços de referência (v4 / v4.1 / v5). Lê data/catalogo.json, consulta o Discogs
+// Marketplace (sem token: stats/lowest_price; com token: sugestão por condição), a reedição
+// em vinil mais recente e oficial de cada master (a loja vende novo/lacrado, não a prensagem
+// de colecionador — escolha compartilhada com build-catalogo.mjs via discogs-versoes.mjs),
+// e cruza com data/precos-observados.csv (preços vistos manualmente pelo dono) e, se existir,
+// data/precos-varejo.json (lojas brasileiras, gerado por scripts/varejo-br.mjs).
 // Escreve data/precos.json e data/precos-relatorio.md.
-// Ver CONTRATO.md — seções "Preços de referência (v4)" e "Preços (v4.1)".
+// Ver CONTRATO.md — seções "Preços de referência (v4)", "Preços (v4.1)", "Edição à venda
+// (v5)" e "Varejo brasileiro (v5)".
 //
 // Uso: node scripts/precos.mjs [--propor [--margem=1.00]]
 
@@ -11,21 +14,21 @@ import { promises as fs } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
-import { chamarDiscogs, escreverJsonAtomic, lerJsonSeExistir, parseLinha, listaFormato } from './build-catalogo.mjs';
+import { chamarDiscogs, escreverJsonAtomic, lerJsonSeExistir, parseLinha, obterContadorChamadas } from './build-catalogo.mjs';
+import { filtrarVersoesOficiais, escolherCandidatasReedicao, obterVersoesReedicao } from './discogs-versoes.mjs';
 
 const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
 const ROOT_DIR = path.join(SCRIPT_DIR, '..');
 const DATA_DIR = path.join(ROOT_DIR, 'data');
-const CACHE_DIR = path.join(DATA_DIR, 'cache');
 const DISCOS_TXT = path.join(ROOT_DIR, 'discos.txt');
 const DISCOS_PROPOSTOS_TXT = path.join(ROOT_DIR, 'discos.propostos.txt');
 const CATALOGO_JSON = path.join(DATA_DIR, 'catalogo.json');
 const PRECOS_OBSERVADOS_CSV = path.join(DATA_DIR, 'precos-observados.csv');
+const PRECOS_VAREJO_JSON = path.join(DATA_DIR, 'precos-varejo.json');
 const PRECOS_JSON = path.join(DATA_DIR, 'precos.json');
 const PRECOS_RELATORIO_MD = path.join(DATA_DIR, 'precos-relatorio.md');
 
 const CACHE_FRESCURA_MS = 6 * 60 * 60 * 1000; // 6h — mesmo teto do cache de release do pipeline
-const FORMATOS_REEDICAO_EXCLUIDOS = new Set(['unofficial release', 'test pressing', 'promo']);
 
 // ---------------------------------------------------------------------------
 // Funções puras (exportadas para teste — não fazem I/O nem rede)
@@ -143,34 +146,23 @@ export function valorSugestaoSeBRL(sugestaoMint, moeda) {
   return typeof sugestaoMint.value === 'number' ? sugestaoMint.value : null;
 }
 
-/** Uma versão (item de /masters/{id}/versions) é oficial se `format` não contém bootleg/promo/teste. */
-export function versaoEhOficial(versao) {
-  const formatos = listaFormato(versao?.format).map((f) => f.toLowerCase());
-  return !formatos.some((f) => FORMATOS_REEDICAO_EXCLUIDOS.has(f));
-}
-
-/** Filtra fora Unofficial Release / Test Pressing / Promo (ex.: bootleg de 2024, id 31257475). */
-export function filtrarVersoesOficiais(versoes) {
-  return (Array.isArray(versoes) ? versoes : []).filter(versaoEhOficial);
-}
-
 /**
- * Candidatas de reedição a partir de versões já oficiais e ordenadas por `released` desc (a
- * API garante essa ordem via sort=released&sort_order=desc — a função não reordena, só
- * escolhe): a mais recente com country === "Brazil" e a mais recente no geral, sem repetir
- * id (no máximo 2). Lista vazia → [] (nenhuma reedição; usa só a original).
+ * Garante que a versão de `disco.edicaoVenda` entra primeiro nas candidatas de reedição
+ * (dedup por id) — CONTRATO.md "Edição à venda (v5)": "esse id entra primeiro na lista de
+ * candidatas de reedição". Sem edicaoVenda, devolve as candidatas automáticas sem alteração.
  */
-export function escolherCandidatasReedicao(versoesOficiaisOrdenadas) {
-  const lista = Array.isArray(versoesOficiaisOrdenadas) ? versoesOficiaisOrdenadas : [];
-  if (lista.length === 0) return [];
-  const maisRecenteGeral = lista[0];
-  const maisRecenteBrasil = lista.find((v) => v?.country === 'Brazil') || null;
-  const candidatas = [];
-  if (maisRecenteBrasil) candidatas.push(maisRecenteBrasil);
-  if (maisRecenteGeral && (!maisRecenteBrasil || maisRecenteGeral.id !== maisRecenteBrasil.id)) {
-    candidatas.push(maisRecenteGeral);
-  }
-  return candidatas.slice(0, 2);
+export function priorizarEdicaoVenda(candidatas, edicaoVenda) {
+  const lista = Array.isArray(candidatas) ? candidatas : [];
+  if (!edicaoVenda?.id) return lista;
+  const resto = lista.filter((c) => c?.id !== edicaoVenda.id);
+  const pseudoCandidata = {
+    id: edicaoVenda.id,
+    released: edicaoVenda.ano != null ? String(edicaoVenda.ano) : '',
+    country: edicaoVenda.pais ?? null,
+    label: edicaoVenda.selo ?? null,
+    catno: edicaoVenda.catno ?? null,
+  };
+  return [pseudoCandidata, ...resto];
 }
 
 /** "2020", "2020-05-12" → 2020; sem 4 dígitos no início → null. */
@@ -179,11 +171,21 @@ export function anoDeReleased(released) {
   return m ? Number(m[1]) : null;
 }
 
-/** Menor menorAnuncioBRL entre as reedições com exemplares à venda; nenhuma → null. */
-export function calcularReedicaoBRL(reedicoes) {
-  const valores = (Array.isArray(reedicoes) ? reedicoes : [])
-    .map((r) => r?.menorAnuncioBRL)
-    .filter((v) => typeof v === 'number' && Number.isFinite(v));
+/**
+ * menorAnuncioBRL da reedição a usar como referência. Com `preferirId` (CONTRATO.md "Edição
+ * à venda (v5)": id de `edicaoVenda`) e essa reedição tendo exemplar à venda, usa o preço
+ * dela; senão (ou sem `preferirId`) cai no menor menorAnuncioBRL entre as com exemplar à
+ * venda. Nenhuma com anúncio → null.
+ */
+export function calcularReedicaoBRL(reedicoes, preferirId) {
+  const lista = Array.isArray(reedicoes) ? reedicoes : [];
+  if (preferirId != null) {
+    const preferida = lista.find((r) => r?.id === preferirId);
+    if (preferida && typeof preferida.menorAnuncioBRL === 'number' && Number.isFinite(preferida.menorAnuncioBRL)) {
+      return preferida.menorAnuncioBRL;
+    }
+  }
+  const valores = lista.map((r) => r?.menorAnuncioBRL).filter((v) => typeof v === 'number' && Number.isFinite(v));
   return valores.length > 0 ? Math.min(...valores) : null;
 }
 
@@ -195,11 +197,19 @@ export function reedicaoPrincipal(reedicoes) {
 }
 
 /**
- * referenciaBRL = mediana(sugestaoMintBRL?, reedicaoBRL ?? menorAnuncioOriginalBRL?, observados...),
- * arredondada para inteiro; base = lista das fontes que entraram. A original só entra se NÃO
- * houver reedição com anúncio (reedicaoBRL null). Nenhuma fonte → { null, [] }.
+ * referenciaBRL = mediana(sugestaoMintBRL?, reedicaoBRL ?? menorAnuncioOriginalBRL?,
+ * observados..., varejo...), arredondada para inteiro; base = lista das fontes que entraram.
+ * A original só entra se NÃO houver reedição com anúncio (reedicaoBRL null). `varejoPrecos`
+ * (CONTRATO.md "Varejo brasileiro (v5)": ofertas `disponivel: true` de data/precos-varejo.json)
+ * entra com base `"varejo-br"`. Nenhuma fonte → { null, [] }.
  */
-export function calcularReferenciaBRL({ sugestaoMintBRL, reedicaoBRL, menorAnuncioOriginalBRL, observadosPrecos }) {
+export function calcularReferenciaBRL({
+  sugestaoMintBRL,
+  reedicaoBRL,
+  menorAnuncioOriginalBRL,
+  observadosPrecos,
+  varejoPrecos,
+}) {
   const valores = [];
   const base = [];
   if (typeof sugestaoMintBRL === 'number' && Number.isFinite(sugestaoMintBRL)) {
@@ -220,8 +230,30 @@ export function calcularReferenciaBRL({ sugestaoMintBRL, reedicaoBRL, menorAnunc
     valores.push(...observados);
     base.push('observado');
   }
+  const varejo = (Array.isArray(varejoPrecos) ? varejoPrecos : []).filter(
+    (v) => typeof v === 'number' && Number.isFinite(v),
+  );
+  if (varejo.length > 0) {
+    valores.push(...varejo);
+    base.push('varejo-br');
+  }
   if (valores.length === 0) return { referenciaBRL: null, base: [] };
   return { referenciaBRL: Math.round(mediana(valores)), base };
+}
+
+/** Ofertas de varejo brasileiro (data/precos-varejo.json) com `disponivel === true` e `preco` numérico. */
+export function ofertasVarejoDisponiveis(ofertas) {
+  return (Array.isArray(ofertas) ? ofertas : []).filter(
+    (o) => o?.disponivel === true && typeof o?.preco === 'number' && Number.isFinite(o.preco),
+  );
+}
+
+/** Coluna "varejo BR (n · menor–maior)" do relatório; sem oferta disponível → "—". */
+export function formatarColunaVarejo(ofertasDisponiveis) {
+  const lista = Array.isArray(ofertasDisponiveis) ? ofertasDisponiveis : [];
+  if (lista.length === 0) return '—';
+  const precos = lista.map((o) => o.preco);
+  return `${lista.length} · ${formatarReais(Math.min(...precos))}–${formatarReais(Math.max(...precos))}`;
 }
 
 /**
@@ -237,11 +269,13 @@ export function recalcularComObservados(registro, observadosDoDisco) {
     data,
   }));
   const sugestaoMintBRL = valorSugestaoSeBRL(registro.sugestaoMint, registro.moeda);
+  const varejoPrecos = ofertasVarejoDisponiveis(registro.varejoOfertas).map((o) => o.preco);
   const { referenciaBRL, base } = calcularReferenciaBRL({
     sugestaoMintBRL,
     reedicaoBRL: registro.reedicaoBRL,
     menorAnuncioOriginalBRL: registro.menorAnuncioBRL,
     observadosPrecos: observados.map((o) => o.preco),
+    varejoPrecos,
   });
   return { ...registro, observados, referenciaBRL, base };
 }
@@ -281,16 +315,17 @@ export function linhaRelatorio(disco, info) {
     Array.isArray(registro.observados) && registro.observados.length > 0
       ? registro.observados.map((o) => formatarReais(o.preco)).join(', ')
       : '—';
+  const varejoTxt = formatarColunaVarejo(registro.varejoOfertas);
   const referencia = registro.referenciaBRL != null ? formatarReais(registro.referenciaBRL) : '—';
   const atual = disco.preco != null ? formatarReais(disco.preco) : 'Sob consulta';
-  return `| ${disco.ordem} | ${nome} | ${aVenda} | ${original} | ${reedicaoTxt} | ${reedicaoAnuncio} | ${sugestaoM} | ${observados} | ${referencia} | ${atual} |`;
+  return `| ${disco.ordem} | ${nome} | ${aVenda} | ${original} | ${reedicaoTxt} | ${reedicaoAnuncio} | ${sugestaoM} | ${observados} | ${varejoTxt} | ${referencia} | ${atual} |`;
 }
 
 /** Monta o markdown completo do relatório a partir do catálogo (ordenado por `ordem`) e dos registros. */
 export function gerarRelatorioMd(discosCatalogo, discosPorId, geradoEm) {
   const linhas = [
-    '| ordem | artista – título | à venda | original (BRL) | reedição (ano · selo · país) | menor anúncio reedição (BRL) | sugestão M | observados | referência | preço atual |',
-    '| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |',
+    '| ordem | artista – título | à venda | original (BRL) | reedição (ano · selo · país) | menor anúncio reedição (BRL) | sugestão M | observados | varejo BR (n · menor–maior) | referência | preço atual |',
+    '| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |',
   ];
   const ordenados = [...discosCatalogo].sort((a, b) => a.ordem - b.ordem);
   let comReferencia = 0;
@@ -311,15 +346,12 @@ export function gerarRelatorioMd(discosCatalogo, discosPorId, geradoEm) {
 // I/O e rede
 // ---------------------------------------------------------------------------
 
-let chamadasContador = 0;
-
-async function chamarComContagem(url, contexto) {
-  chamadasContador += 1;
-  return chamarDiscogs(url, contexto);
-}
+// Contador de chamadas: `obterContadorChamadas()` (build-catalogo.mjs) é o único — incrementa
+// dentro de `chamarDiscogs`, então já conta as chamadas feitas por aqui e por
+// discogs-versoes.mjs (obterVersoesReedicao), sem precisar de um contador local duplicado.
 
 async function obterEstatisticasMercado(id) {
-  const dados = await chamarComContagem(
+  const dados = await chamarDiscogs(
     `https://api.discogs.com/marketplace/stats/${id}?curr_abbr=BRL`,
     `marketplace/stats/${id}`,
   );
@@ -327,35 +359,19 @@ async function obterEstatisticasMercado(id) {
 }
 
 async function obterSugestoes(id) {
-  const dados = await chamarComContagem(
+  const dados = await chamarDiscogs(
     `https://api.discogs.com/marketplace/price_suggestions/${id}`,
     `price_suggestions/${id}`,
   );
   return extrairSugestoes(dados);
 }
 
-/** Versões (Vinyl) do master, com cache de 6h em data/cache/versoes-{masterId}.json. */
-async function obterVersoesReedicao(masterId) {
-  const caminho = path.join(CACHE_DIR, `versoes-${masterId}.json`);
-  const cache = await lerJsonSeExistir(caminho);
-  if (cache && cache._fetchedAt) {
-    const idade = Date.now() - new Date(cache._fetchedAt).getTime();
-    if (Number.isFinite(idade) && idade < CACHE_FRESCURA_MS) {
-      return Array.isArray(cache.versions) ? cache.versions : [];
-    }
-  }
-  const dados = await chamarComContagem(
-    `https://api.discogs.com/masters/${masterId}/versions?format=Vinyl&sort=released&sort_order=desc&per_page=10`,
-    `masters/${masterId}/versions(reedicao)`,
-  );
-  const versions = Array.isArray(dados.versions) ? dados.versions : [];
-  await fs.mkdir(CACHE_DIR, { recursive: true });
-  await escreverJsonAtomic(caminho, { _fetchedAt: new Date().toISOString(), versions });
-  return versions;
-}
-
-/** reedicoes[] de um disco (id, ano, país, selo, catno, à venda, menor anúncio) via candidatas. */
-async function obterReedicoes(masterId) {
+/**
+ * reedicoes[] de um disco (id, ano, país, selo, catno, à venda, menor anúncio) via candidatas
+ * (`escolherCandidatasReedicao`/`filtrarVersoesOficiais`, de discogs-versoes.mjs). Com
+ * `edicaoVenda`, o id dela entra primeiro (CONTRATO.md "Edição à venda (v5)").
+ */
+async function obterReedicoes(masterId, edicaoVenda) {
   if (!masterId) return [];
   let versoesBrutas;
   try {
@@ -364,7 +380,7 @@ async function obterReedicoes(masterId) {
     console.error(`aviso: falha em masters/${masterId}/versions: ${err.message}`);
     return [];
   }
-  const candidatas = escolherCandidatasReedicao(filtrarVersoesOficiais(versoesBrutas));
+  const candidatas = priorizarEdicaoVenda(escolherCandidatasReedicao(filtrarVersoesOficiais(versoesBrutas)), edicaoVenda);
   const reedicoes = [];
   for (const candidata of candidatas) {
     let stats = { menorAnuncioBRL: null, aVenda: null };
@@ -399,7 +415,7 @@ function precosEstaoFrescos(consultadoEm) {
   return Number.isFinite(t) && Date.now() - t < CACHE_FRESCURA_MS;
 }
 
-async function processarDisco(disco, observadosPorId, temToken) {
+async function processarDisco(disco, observadosPorId, temToken, varejoOfertasPorId) {
   let menorAnuncioBRL = null;
   let aVenda = null;
   try {
@@ -420,8 +436,8 @@ async function processarDisco(disco, observadosPorId, temToken) {
     }
   }
 
-  const reedicoes = await obterReedicoes(disco.masterId);
-  const reedicaoBRL = calcularReedicaoBRL(reedicoes);
+  const reedicoes = await obterReedicoes(disco.masterId, disco.edicaoVenda);
+  const reedicaoBRL = calcularReedicaoBRL(reedicoes, disco.edicaoVenda?.id ?? null);
 
   const observados = observadosParaId(observadosPorId, disco.id).map(({ preco, fonte, data }) => ({
     preco,
@@ -429,12 +445,15 @@ async function processarDisco(disco, observadosPorId, temToken) {
     data,
   }));
 
+  const varejoOfertas = ofertasVarejoDisponiveis(varejoOfertasPorId?.[String(disco.id)]);
+
   const sugestaoMintBRL = valorSugestaoSeBRL(sugestaoMint, moeda);
   const { referenciaBRL, base } = calcularReferenciaBRL({
     sugestaoMintBRL,
     reedicaoBRL,
     menorAnuncioOriginalBRL: menorAnuncioBRL,
     observadosPrecos: observados.map((o) => o.preco),
+    varejoPrecos: varejoOfertas.map((o) => o.preco),
   });
 
   return {
@@ -447,9 +466,16 @@ async function processarDisco(disco, observadosPorId, temToken) {
     reedicoes,
     reedicaoBRL,
     observados,
+    varejoOfertas,
     referenciaBRL,
     base,
   };
+}
+
+/** `data/precos-varejo.json` (gerado por scripts/varejo-br.mjs), se existir; senão `{}`. */
+async function lerVarejoSeExistir() {
+  const dados = await lerJsonSeExistir(PRECOS_VAREJO_JSON);
+  return dados && typeof dados.discos === 'object' && dados.discos !== null ? dados.discos : {};
 }
 
 async function gerarPrecos(catalogo) {
@@ -457,10 +483,12 @@ async function gerarPrecos(catalogo) {
   const { porId: observadosPorId, avisos } = parseCsvObservados(csvConteudo);
   for (const aviso of avisos) console.error(`aviso csv precos-observados: ${aviso}`);
 
+  const varejoOfertasPorId = await lerVarejoSeExistir();
+
   const temToken = Boolean(process.env.DISCOGS_TOKEN);
   const discosPorId = {};
   for (const disco of catalogo.discos) {
-    discosPorId[String(disco.id)] = await processarDisco(disco, observadosPorId, temToken);
+    discosPorId[String(disco.id)] = await processarDisco(disco, observadosPorId, temToken, varejoOfertasPorId);
   }
 
   const consultadoEm = new Date().toISOString();
@@ -589,7 +617,7 @@ async function main() {
   const n = catalogo.discos.length;
   const comReferencia = Object.values(dadosPrecos.discos).filter((d) => d.referenciaBRL != null).length;
   const tempo = formatarTempo(Date.now() - inicio);
-  console.log(`OK ${n} discos · com referência ${comReferencia} · chamadas ${chamadasContador} · ${tempo}`);
+  console.log(`OK ${n} discos · com referência ${comReferencia} · chamadas ${obterContadorChamadas()} · ${tempo}`);
 }
 
 const ehModuloPrincipal = process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href;

@@ -8,19 +8,20 @@ import {
   extrairSugestoes,
   extrairEstatisticasMercado,
   valorSugestaoSeBRL,
-  versaoEhOficial,
-  filtrarVersoesOficiais,
-  escolherCandidatasReedicao,
+  priorizarEdicaoVenda,
   anoDeReleased,
   calcularReedicaoBRL,
   reedicaoPrincipal,
   calcularReferenciaBRL,
+  ofertasVarejoDisponiveis,
+  formatarColunaVarejo,
   recalcularComObservados,
   arredondarMultiplo5,
   precoProposto,
   linhaRelatorio,
   gerarRelatorioMd,
 } from '../scripts/precos.mjs';
+import { versaoEhOficial, filtrarVersoesOficiais, escolherCandidatasReedicao } from '../scripts/discogs-versoes.mjs';
 
 // --- parseCsvObservados ----------------------------------------------------
 
@@ -165,6 +166,45 @@ test('calcularReferenciaBRL: com reedição, prefere reedicaoBRL e IGNORA o orig
   assert.deepEqual(r.base, ['discogs-reedicao']);
 });
 
+// --- varejo brasileiro (v5): entra na mediana e na coluna do relatório ------
+
+test('calcularReferenciaBRL: ofertas de varejo BR entram na mediana e a base ganha "varejo-br"', () => {
+  const r = calcularReferenciaBRL({
+    sugestaoMintBRL: null,
+    reedicaoBRL: 230,
+    menorAnuncioOriginalBRL: null,
+    observadosPrecos: [],
+    varejoPrecos: [200, 220],
+  });
+  assert.equal(r.referenciaBRL, 220); // mediana([200, 220, 230]) = 220
+  assert.deepEqual(r.base, ['discogs-reedicao', 'varejo-br']);
+});
+
+test('calcularReferenciaBRL: sem data/precos-varejo.json (varejoPrecos ausente), nada muda', () => {
+  const r = calcularReferenciaBRL({ sugestaoMintBRL: null, reedicaoBRL: 230, menorAnuncioOriginalBRL: null, observadosPrecos: [] });
+  assert.equal(r.referenciaBRL, 230);
+  assert.deepEqual(r.base, ['discogs-reedicao']);
+});
+
+test('ofertasVarejoDisponiveis: filtra só disponivel === true com preco numérico', () => {
+  const ofertas = [
+    { loja: 'HipMusic', preco: 220, disponivel: true },
+    { loja: 'Rua6', preco: 999, disponivel: false },
+    { loja: 'Buzina', preco: null, disponivel: true },
+  ];
+  assert.deepEqual(
+    ofertasVarejoDisponiveis(ofertas).map((o) => o.loja),
+    ['HipMusic'],
+  );
+  assert.deepEqual(ofertasVarejoDisponiveis(undefined), []);
+});
+
+test('formatarColunaVarejo: "<n> · <menor>–<maior>"; sem oferta → "—"', () => {
+  assert.equal(formatarColunaVarejo([{ preco: 220 }, { preco: 199 }, { preco: 240 }]), '3 · R$ 199–R$ 240');
+  assert.equal(formatarColunaVarejo([]), '—');
+  assert.equal(formatarColunaVarejo(undefined), '—');
+});
+
 // --- versaoEhOficial / filtrarVersoesOficiais --------------------------------
 
 test('versaoEhOficial: exclui Unofficial Release, Test Pressing e Promo', () => {
@@ -214,6 +254,30 @@ test('escolherCandidatasReedicao: sem nenhuma versão do Brasil → só a mais r
   assert.deepEqual(escolherCandidatasReedicao(oficiais).map((c) => c.id), [1]);
 });
 
+// --- priorizarEdicaoVenda (v5): edicaoVenda entra primeiro nas candidatas ----
+
+test('priorizarEdicaoVenda: edicaoVenda que já estava nas candidatas vai para o primeiro lugar (dedup)', () => {
+  const candidatas = [
+    { id: 111, released: '2020', country: 'Brazil' },
+    { id: 999, released: '2024', country: 'Germany' },
+  ];
+  const edicaoVenda = { id: 999, ano: 2024, pais: 'Germany', selo: 'Music On Vinyl', catno: 'MOVLP1' };
+  const resultado = priorizarEdicaoVenda(candidatas, edicaoVenda);
+  assert.deepEqual(resultado.map((c) => c.id), [999, 111]); // 999 vai pro primeiro, sem duplicar
+});
+
+test('priorizarEdicaoVenda: edicaoVenda fixada pelo dono, ausente das candidatas automáticas, entra como 1ª', () => {
+  const candidatas = [{ id: 111, released: '2020', country: 'Brazil' }];
+  const edicaoVenda = { id: 777, ano: 2018, pais: 'US', selo: 'Universal', catno: 'UNI-1' };
+  const resultado = priorizarEdicaoVenda(candidatas, edicaoVenda);
+  assert.deepEqual(resultado.map((c) => c.id), [777, 111]);
+});
+
+test('priorizarEdicaoVenda: sem edicaoVenda devolve as candidatas automáticas sem alteração', () => {
+  const candidatas = [{ id: 111, released: '2020', country: 'Brazil' }];
+  assert.deepEqual(priorizarEdicaoVenda(candidatas, null), candidatas);
+});
+
 // --- anoDeReleased / calcularReedicaoBRL / reedicaoPrincipal ------------------
 
 test('anoDeReleased: extrai o ano de "2020" ou "2020-05-12"; sem 4 dígitos → null', () => {
@@ -235,6 +299,29 @@ test('calcularReedicaoBRL: menor valor entre as reedições com exemplares à ve
 test('calcularReedicaoBRL: nenhuma reedição com anúncio → null', () => {
   assert.equal(calcularReedicaoBRL([{ id: 1, menorAnuncioBRL: null }]), null);
   assert.equal(calcularReedicaoBRL([]), null);
+});
+
+// --- calcularReedicaoBRL com preferirId (v5: edicaoVenda.id) -----------------
+
+test('calcularReedicaoBRL: com preferirId e a edicaoVenda tendo anúncio, usa o preço dela (não o menor geral)', () => {
+  const reedicoes = [
+    { id: 15793439, menorAnuncioBRL: 300 }, // edicaoVenda — mais cara, mas é a que a loja vende
+    { id: 999, menorAnuncioBRL: 150 }, // mais barata, mas não é a edicaoVenda
+  ];
+  assert.equal(calcularReedicaoBRL(reedicoes, 15793439), 300);
+});
+
+test('calcularReedicaoBRL: com preferirId mas a edicaoVenda sem anúncio, cai no menor entre as demais', () => {
+  const reedicoes = [
+    { id: 15793439, menorAnuncioBRL: null }, // edicaoVenda sem exemplar à venda
+    { id: 999, menorAnuncioBRL: 150 },
+  ];
+  assert.equal(calcularReedicaoBRL(reedicoes, 15793439), 150);
+});
+
+test('calcularReedicaoBRL: sem preferirId continua igual (menor geral)', () => {
+  const reedicoes = [{ id: 1, menorAnuncioBRL: 230 }, { id: 2, menorAnuncioBRL: 180 }];
+  assert.equal(calcularReedicaoBRL(reedicoes), 180);
 });
 
 test('reedicaoPrincipal: prefere a que tem anúncio; sem nenhuma com anúncio, usa a mais recente (primeira)', () => {
@@ -317,14 +404,33 @@ test('linhaRelatorio: disco com reedição (caso real: Jorge Ben, master 112296)
   const linha = linhaRelatorio(disco, info);
   assert.equal(
     linha,
-    '| 1 | Jorge Ben – África Brasil | 36 | R$ 150 | 2020 · Polysom · Brazil | R$ 230 | — | — | R$ 230 | Sob consulta |',
+    '| 1 | Jorge Ben – África Brasil | 36 | R$ 150 | 2020 · Polysom · Brazil | R$ 230 | — | — | — | R$ 230 | Sob consulta |',
   );
 });
 
 test('linhaRelatorio: disco sem nenhuma fonte (sem reedição também) usa "—" e "Sob consulta"', () => {
   const disco = { ordem: 2, artista: 'X', titulo: 'Y', preco: null };
   const linha = linhaRelatorio(disco, null);
-  assert.equal(linha, '| 2 | X – Y | — | — | — | — | — | — | — | Sob consulta |');
+  assert.equal(linha, '| 2 | X – Y | — | — | — | — | — | — | — | — | Sob consulta |');
+});
+
+test('linhaRelatorio: coluna varejo BR mostra n e faixa de preço quando há ofertas disponíveis', () => {
+  const disco = { ordem: 3, artista: 'Jorge Ben', titulo: 'África Brasil', preco: null };
+  const info = {
+    aVenda: 36,
+    menorAnuncioBRL: 150,
+    reedicoes: [],
+    reedicaoBRL: null,
+    sugestaoMint: null,
+    observados: [],
+    varejoOfertas: [
+      { loja: 'HipMusic', preco: 220, disponivel: true },
+      { loja: 'Vinil Discos', preco: 199, disponivel: true },
+    ],
+    referenciaBRL: 210,
+  };
+  const linha = linhaRelatorio(disco, info);
+  assert.match(linha, /\| 2 · R\$ 199–R\$ 220 \|/);
 });
 
 test('gerarRelatorioMd: conta discos com e sem referência no rodapé e traz as colunas novas', () => {
@@ -340,6 +446,7 @@ test('gerarRelatorioMd: conta discos com e sem referência no rodapé e traz as 
   assert.match(md, /reedição \(ano · selo · país\)/);
   assert.match(md, /menor anúncio reedição \(BRL\)/);
   assert.match(md, /original \(BRL\)/);
+  assert.match(md, /varejo BR \(n · menor–maior\)/);
   const linhasTabela = md.split('\n').filter((l) => l.startsWith('| ') && !l.startsWith('| ordem') && !l.startsWith('| ---'));
   assert.equal(linhasTabela.length, 2);
   assert.match(md, /1 disco\(s\) com referência de preço · 1 sem referência/);

@@ -1,6 +1,9 @@
 # Originária Discos — lista de discos do site.
 # Uma linha por disco: "Artista – Título" ou link do Discogs. Campos opcionais depois de "|":
 #   status=esgotado|disponivel|encomenda   preco=220   nota=comentário curto   destaque   novo
+#   edicao=<URL ou id de release do Discogs>  — fixa a "edição à venda" (o que a loja de fato
+#     vende/envia). Sem esse campo, a escolha é automática: a reedição em vinil oficial mais
+#     recente do master, preferindo a do Brasil (CONTRATO.md "Edição à venda").
 # "## Nome" abre uma seção (Brasil, Jazz...) que vale para as linhas abaixo dela.
 
 ## Brasil
