@@ -1,0 +1,179 @@
+{
+  "consultadoEm": "2026-10-01T20:14:00.242Z",
+  "lojas": [
+    {
+      "nome": "HipMusic",
+      "base": "https://www.hipmusic.com.br",
+      "produtosNoSitemap": 8442,
+      "requisicoes": 13,
+      "bloqueadasPorRobots": 0
+    },
+    {
+      "nome": "Vinil Discos",
+      "base": "https://www.vinildiscos.com.br",
+      "produtosNoSitemap": 487,
+      "requisicoes": 11,
+      "bloqueadasPorRobots": 0
+    },
+    {
+      "nome": "Rua6 Underground",
+      "base": "https://www.rua6underground.com.br",
+      "produtosNoSitemap": 50,
+      "requisicoes": 4,
+      "bloqueadasPorRobots": 0
+    },
+    {
+      "nome": "Buzina Discos",
+      "base": "https://www.buzinadiscos.com.br",
+      "produtosNoSitemap": 50,
+      "requisicoes": 4,
+      "bloqueadasPorRobots": 0
+    }
+  ],
+  "discos": {
+    "1025": [],
+    "2879": [],
+    "6530": [],
+    "11778": [],
+    "31381": [],
+    "94800": [],
+    "135352": [],
+    "170032": [],
+    "202658": [],
+    "216166": [],
+    "242785": [],
+    "268430": [],
+    "356592": [],
+    "392604": [],
+    "526351": [
+      {
+        "loja": "Vinil Discos",
+        "nome": "Lp Vinil Fleetwood Mac  Rumours - Importado Lacrado",
+        "preco": 388.93,
+        "url": "https://www.vinildiscos.com.br/lp-vinil-fleetwood-mac-rumours-importado-lacrado",
+        "disponivel": true
+      }
+    ],
+    "549847": [],
+    "649184": [
+      {
+        "loja": "Vinil Discos",
+        "nome": "Lp Vinil Novos Baianos Acabou Chorare 180g Novo",
+        "preco": 389.9,
+        "url": "https://www.vinildiscos.com.br/lp-vinil-novos-baianos-acabou-chorare-180g-novo",
+        "disponivel": false
+      },
+      {
+        "loja": "Buzina Discos",
+        "nome": "Disco de Vinil Novo - Novos Baianos - Acabou Chorare - LP Preto 180g",
+        "preco": 199.9,
+        "url": "https://www.buzinadiscos.com.br/disco-de-vinil-novo-novos-baianos-acabou-chorare-lp-preto-180g",
+        "disponivel": false
+      }
+    ],
+    "726944": [
+      {
+        "loja": "HipMusic",
+        "nome": "LP Jorge Ben - África Brasil - Vinil Polysom - Lacrado - Hm",
+        "preco": 220,
+        "url": "https://www.hipmusic.com.br/lp-jorge-ben-africa-brasil-vinil-polysom-lacrado-hm-2025-12-10-15-10-29",
+        "disponivel": true
+      },
+      {
+        "loja": "Vinil Discos",
+        "nome": "Disco de Vinil Lp Jorge Ben África Brasil 180g Polysom Novo Lacrado",
+        "preco": 206.82,
+        "url": "https://www.vinildiscos.com.br/lp-jorge-ben-africa-brasil-180g-polysom-novo-lacrado",
+        "disponivel": true
+      }
+    ],
+    "873261": [],
+    "1078894": [],
+    "1125096": [],
+    "1205173": [
+      {
+        "loja": "Vinil Discos",
+        "nome": "Disco de Vinil Lp Previsão Do Tempo Marcos Valle 180g Lacrado",
+        "preco": 256.45,
+        "url": "https://www.vinildiscos.com.br/lp-vinil-previsao-do-tempo-marcos-valle-180g-lacrado",
+        "disponivel": true
+      },
+      {
+        "loja": "Rua6 Underground",
+        "nome": "Vinil LP Marcos Valle - Previsão do Tempo - Reedição Polysom",
+        "preco": 213.39,
+        "url": "https://www.rua6underground.com.br/vinil-lp-marcos-valle-previsao-do-tempo-reedicao-polysom",
+        "disponivel": true
+      }
+    ],
+    "1222672": [],
+    "1365302": [
+      {
+        "loja": "Vinil Discos",
+        "nome": "Lp Mutantes Ao Vivo 180g Lacrado Polysom",
+        "preco": 99.9,
+        "url": "https://www.vinildiscos.com.br/lp-mutantes-ao-vivo-180g-lacrado-polysom",
+        "disponivel": false
+      }
+    ],
+    "1873013": [
+      {
+        "loja": "HipMusic",
+        "nome": "LP Pink Floyd - The Dark Side Of The Moon - Disco Vinil - Hm",
+        "preco": 342,
+        "url": "https://www.hipmusic.com.br/lp-pink-floyd-dark-side-of-the-moon-vinil-quadrafonico-hm",
+        "disponivel": true
+      }
+    ],
+    "2028398": [],
+    "2422289": [
+      {
+        "loja": "Vinil Discos",
+        "nome": "Lp Vinil Milton Nascimento Clube Da Esquina 2 180g Duplo",
+        "preco": 370.12,
+        "url": "https://www.vinildiscos.com.br/lp-vinil-milton-nascimento-clube-da-esquina-2-180g-duplo",
+        "disponivel": true
+      }
+    ],
+    "2968639": [
+      {
+        "loja": "Vinil Discos",
+        "nome": "Disco de Vinil Lp Arthur Verocai - Novo Lacrado",
+        "preco": 269.9,
+        "url": "https://www.vinildiscos.com.br/disco-de-vinil-lp-arthur-verocai-novo-lacrado",
+        "disponivel": false
+      }
+    ],
+    "3942811": [],
+    "4202979": [],
+    "4950798": [],
+    "5034045": [
+      {
+        "loja": "Vinil Discos",
+        "nome": "Lp Vinil The Velvet Underground &amp; Nico Importado Lacrado",
+        "preco": 370.12,
+        "url": "https://www.vinildiscos.com.br/lp-vinil-the-velvet-underground-nico-importado-lacrado",
+        "disponivel": true
+      }
+    ],
+    "5431106": [],
+    "5604009": [],
+    "5750709": [],
+    "6276183": [],
+    "6401859": [],
+    "6890747": [],
+    "7252111": [],
+    "7383499": [],
+    "8938725": [],
+    "9500449": [],
+    "11416588": [],
+    "12766539": [],
+    "13286331": [],
+    "13314830": [],
+    "13374934": [],
+    "14478692": [],
+    "15714043": [],
+    "23757107": [],
+    "26197826": []
+  }
+}

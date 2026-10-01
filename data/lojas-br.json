@@ -1,0 +1,6 @@
+[
+  { "nome": "HipMusic", "base": "https://www.hipmusic.com.br", "plataforma": "lojaintegrada" },
+  { "nome": "Vinil Discos", "base": "https://www.vinildiscos.com.br", "plataforma": "lojaintegrada" },
+  { "nome": "Rua6 Underground", "base": "https://www.rua6underground.com.br", "plataforma": "lojaintegrada" },
+  { "nome": "Buzina Discos", "base": "https://www.buzinadiscos.com.br", "plataforma": "lojaintegrada" }
+]
