@@ -1,8 +1,8 @@
 {
-  "consultadoEm": "2026-09-27T20:59:18.451Z",
+  "consultadoEm": "2026-10-01T21:04:57.705Z",
   "discos": {
     "1025": {
-      "menorAnuncioBRL": 778.5,
+      "menorAnuncioBRL": 777,
       "aVenda": 16,
       "sugestaoMint": null,
       "sugestaoNM": null,
@@ -16,19 +16,20 @@
           "selo": "Planet E",
           "catno": "pe65234",
           "aVenda": 16,
-          "menorAnuncioBRL": 778.5
+          "menorAnuncioBRL": 777
         }
       ],
-      "reedicaoBRL": 778.5,
+      "reedicaoBRL": 777,
       "observados": [],
-      "referenciaBRL": 779,
+      "varejoOfertas": [],
+      "referenciaBRL": 777,
       "base": [
         "discogs-reedicao"
       ]
     },
     "2879": {
-      "menorAnuncioBRL": 235.91,
-      "aVenda": 121,
+      "menorAnuncioBRL": 235.45,
+      "aVenda": 122,
       "sugestaoMint": null,
       "sugestaoNM": null,
       "moeda": null,
@@ -41,19 +42,20 @@
           "selo": "Daft Life",
           "catno": "0085365227255",
           "aVenda": 41,
-          "menorAnuncioBRL": 830.4
+          "menorAnuncioBRL": 777
         }
       ],
-      "reedicaoBRL": 830.4,
+      "reedicaoBRL": 777,
       "observados": [],
-      "referenciaBRL": 830,
+      "varejoOfertas": [],
+      "referenciaBRL": 777,
       "base": [
         "discogs-reedicao"
       ]
     },
     "6530": {
-      "menorAnuncioBRL": 654.65,
-      "aVenda": 38,
+      "menorAnuncioBRL": 653.39,
+      "aVenda": 34,
       "sugestaoMint": null,
       "sugestaoNM": null,
       "moeda": null,
@@ -66,18 +68,19 @@
           "selo": "Virgin",
           "catno": "375-4043, 0602537540433",
           "aVenda": 7,
-          "menorAnuncioBRL": 288.74
+          "menorAnuncioBRL": 286.17
         }
       ],
-      "reedicaoBRL": 288.74,
+      "reedicaoBRL": 286.17,
       "observados": [],
-      "referenciaBRL": 289,
+      "varejoOfertas": [],
+      "referenciaBRL": 286,
       "base": [
         "discogs-reedicao"
       ]
     },
     "11778": {
-      "menorAnuncioBRL": 850.34,
+      "menorAnuncioBRL": 848.7,
       "aVenda": 10,
       "sugestaoMint": null,
       "sugestaoNM": null,
@@ -90,20 +93,21 @@
           "pais": "Europe",
           "selo": "Warp Records",
           "catno": "warplp55r, skalp1",
-          "aVenda": 89,
-          "menorAnuncioBRL": 165.6
+          "aVenda": 90,
+          "menorAnuncioBRL": 164.12
         }
       ],
-      "reedicaoBRL": 165.6,
+      "reedicaoBRL": 164.12,
       "observados": [],
-      "referenciaBRL": 166,
+      "varejoOfertas": [],
+      "referenciaBRL": 164,
       "base": [
         "discogs-reedicao"
       ]
     },
     "31381": {
-      "menorAnuncioBRL": 31.04,
-      "aVenda": 46,
+      "menorAnuncioBRL": 30.98,
+      "aVenda": 44,
       "sugestaoMint": null,
       "sugestaoNM": null,
       "moeda": null,
@@ -115,20 +119,21 @@
           "pais": "US",
           "selo": "Analogue Productions",
           "catno": "APJ 084, AAPJ 084, KC 32731, AL 32731, 88875078021",
-          "aVenda": 6,
-          "menorAnuncioBRL": 337.09
+          "aVenda": 5,
+          "menorAnuncioBRL": 336.44
         }
       ],
-      "reedicaoBRL": 337.09,
+      "reedicaoBRL": 336.44,
       "observados": [],
-      "referenciaBRL": 337,
+      "varejoOfertas": [],
+      "referenciaBRL": 336,
       "base": [
         "discogs-reedicao"
       ]
     },
     "94800": {
-      "menorAnuncioBRL": 465.92,
-      "aVenda": 7,
+      "menorAnuncioBRL": 406.16,
+      "aVenda": 8,
       "sugestaoMint": null,
       "sugestaoNM": null,
       "moeda": null,
@@ -140,20 +145,21 @@
           "pais": "Worldwide",
           "selo": "RCA",
           "catno": "19802901231",
-          "aVenda": 29,
-          "menorAnuncioBRL": 217.63
+          "aVenda": 28,
+          "menorAnuncioBRL": 217.21
         }
       ],
-      "reedicaoBRL": 217.63,
+      "reedicaoBRL": 217.21,
       "observados": [],
-      "referenciaBRL": 218,
+      "varejoOfertas": [],
+      "referenciaBRL": 217,
       "base": [
         "discogs-reedicao"
       ]
     },
     "135352": {
-      "menorAnuncioBRL": 73.56,
-      "aVenda": 17,
+      "menorAnuncioBRL": 73.42,
+      "aVenda": 15,
       "sugestaoMint": null,
       "sugestaoNM": null,
       "moeda": null,
@@ -165,20 +171,21 @@
           "pais": "Europe",
           "selo": "Island Records",
           "catno": "535 147-3",
-          "aVenda": 8,
-          "menorAnuncioBRL": 176.93
+          "aVenda": 9,
+          "menorAnuncioBRL": 176.59
         }
       ],
-      "reedicaoBRL": 176.93,
+      "reedicaoBRL": 176.59,
       "observados": [],
+      "varejoOfertas": [],
       "referenciaBRL": 177,
       "base": [
         "discogs-reedicao"
       ]
     },
     "170032": {
-      "menorAnuncioBRL": 589.77,
-      "aVenda": 20,
+      "menorAnuncioBRL": 588.64,
+      "aVenda": 19,
       "sugestaoMint": null,
       "sugestaoNM": null,
       "moeda": null,
@@ -191,19 +198,20 @@
           "selo": "Seroma",
           "catno": "TSR-087",
           "aVenda": 7,
-          "menorAnuncioBRL": 642.85
+          "menorAnuncioBRL": 641.61
         }
       ],
-      "reedicaoBRL": 642.85,
+      "reedicaoBRL": 641.61,
       "observados": [],
-      "referenciaBRL": 643,
+      "varejoOfertas": [],
+      "referenciaBRL": 642,
       "base": [
         "discogs-reedicao"
       ]
     },
     "202658": {
-      "menorAnuncioBRL": 207.6,
-      "aVenda": 71,
+      "menorAnuncioBRL": 196.84,
+      "aVenda": 73,
       "sugestaoMint": null,
       "sugestaoNM": null,
       "moeda": null,
@@ -215,20 +223,21 @@
           "pais": "US",
           "selo": "Motown",
           "catno": "B0034240-01",
-          "aVenda": 20,
-          "menorAnuncioBRL": 129.7
+          "aVenda": 22,
+          "menorAnuncioBRL": 129.45
         }
       ],
-      "reedicaoBRL": 129.7,
+      "reedicaoBRL": 129.45,
       "observados": [],
-      "referenciaBRL": 130,
+      "varejoOfertas": [],
+      "referenciaBRL": 129,
       "base": [
         "discogs-reedicao"
       ]
     },
     "216166": {
-      "menorAnuncioBRL": 68.85,
-      "aVenda": 169,
+      "menorAnuncioBRL": 68.72,
+      "aVenda": 167,
       "sugestaoMint": null,
       "sugestaoNM": null,
       "moeda": null,
@@ -241,19 +250,20 @@
           "selo": "Parlophone",
           "catno": "DB 77821, 9029-58429-1",
           "aVenda": 6,
-          "menorAnuncioBRL": 207.6
+          "menorAnuncioBRL": 207.2
         }
       ],
-      "reedicaoBRL": 207.6,
+      "reedicaoBRL": 207.2,
       "observados": [],
-      "referenciaBRL": 208,
+      "varejoOfertas": [],
+      "referenciaBRL": 207,
       "base": [
         "discogs-reedicao"
       ]
     },
     "242785": {
-      "menorAnuncioBRL": 451.53,
-      "aVenda": 12,
+      "menorAnuncioBRL": 429.94,
+      "aVenda": 10,
       "sugestaoMint": null,
       "sugestaoNM": null,
       "moeda": null,
@@ -265,19 +275,20 @@
           "pais": "Worldwide",
           "selo": "Stones Throw Records",
           "catno": "STH2065-8",
-          "aVenda": 54,
-          "menorAnuncioBRL": 184.04
+          "aVenda": 52,
+          "menorAnuncioBRL": 182.39
         }
       ],
-      "reedicaoBRL": 184.04,
+      "reedicaoBRL": 182.39,
       "observados": [],
-      "referenciaBRL": 184,
+      "varejoOfertas": [],
+      "referenciaBRL": 182,
       "base": [
         "discogs-reedicao"
       ]
     },
     "268430": {
-      "menorAnuncioBRL": 989.89,
+      "menorAnuncioBRL": 990.76,
       "aVenda": 43,
       "sugestaoMint": null,
       "sugestaoNM": null,
@@ -290,19 +301,20 @@
           "pais": "Europe",
           "selo": "Virgin",
           "catno": "00602488290043, B0022335-01",
-          "aVenda": 26,
-          "menorAnuncioBRL": 176.93
+          "aVenda": 25,
+          "menorAnuncioBRL": 176.59
         }
       ],
-      "reedicaoBRL": 176.93,
+      "reedicaoBRL": 176.59,
       "observados": [],
+      "varejoOfertas": [],
       "referenciaBRL": 177,
       "base": [
         "discogs-reedicao"
       ]
     },
     "356592": {
-      "menorAnuncioBRL": 1297.5,
+      "menorAnuncioBRL": 1295,
       "aVenda": 25,
       "sugestaoMint": null,
       "sugestaoNM": null,
@@ -315,19 +327,20 @@
           "pais": null,
           "selo": "Rhymesayers Entertainment",
           "catno": "RSE0493-1",
-          "aVenda": 94,
-          "menorAnuncioBRL": 145.06
+          "aVenda": 111,
+          "menorAnuncioBRL": 144.78
         }
       ],
-      "reedicaoBRL": 145.06,
+      "reedicaoBRL": 144.78,
       "observados": [],
+      "varejoOfertas": [],
       "referenciaBRL": 145,
       "base": [
         "discogs-reedicao"
       ]
     },
     "392604": {
-      "menorAnuncioBRL": 657.85,
+      "menorAnuncioBRL": 651.99,
       "aVenda": 11,
       "sugestaoMint": null,
       "sugestaoNM": null,
@@ -340,20 +353,21 @@
           "pais": "US",
           "selo": "Get On Down",
           "catno": "GET 56055-7, 19658821957",
-          "aVenda": 22,
-          "menorAnuncioBRL": 519
+          "aVenda": 21,
+          "menorAnuncioBRL": 623.9
         }
       ],
-      "reedicaoBRL": 519,
+      "reedicaoBRL": 623.9,
       "observados": [],
-      "referenciaBRL": 519,
+      "varejoOfertas": [],
+      "referenciaBRL": 624,
       "base": [
         "discogs-reedicao"
       ]
     },
     "526351": {
-      "menorAnuncioBRL": 77.85,
-      "aVenda": 96,
+      "menorAnuncioBRL": 77.7,
+      "aVenda": 94,
       "sugestaoMint": null,
       "sugestaoNM": null,
       "moeda": null,
@@ -366,18 +380,28 @@
           "selo": "Warner Records",
           "catno": "RCV1 726431",
           "aVenda": 2,
-          "menorAnuncioBRL": 160.78
+          "menorAnuncioBRL": 159.34
         }
       ],
-      "reedicaoBRL": 160.78,
+      "reedicaoBRL": 159.34,
       "observados": [],
-      "referenciaBRL": 161,
+      "varejoOfertas": [
+        {
+          "loja": "Vinil Discos",
+          "nome": "Lp Vinil Fleetwood Mac  Rumours - Importado Lacrado",
+          "preco": 388.93,
+          "url": "https://www.vinildiscos.com.br/lp-vinil-fleetwood-mac-rumours-importado-lacrado",
+          "disponivel": true
+        }
+      ],
+      "referenciaBRL": 274,
       "base": [
-        "discogs-reedicao"
+        "discogs-reedicao",
+        "varejo-br"
       ]
     },
     "549847": {
-      "menorAnuncioBRL": 259.5,
+      "menorAnuncioBRL": 259,
       "aVenda": 27,
       "sugestaoMint": null,
       "sugestaoNM": null,
@@ -390,20 +414,21 @@
           "pais": "US",
           "selo": "Impulse!",
           "catno": "IMP-228",
-          "aVenda": 23,
-          "menorAnuncioBRL": 155.65
+          "aVenda": 17,
+          "menorAnuncioBRL": 155.35
         }
       ],
-      "reedicaoBRL": 155.65,
+      "reedicaoBRL": 155.35,
       "observados": [],
-      "referenciaBRL": 156,
+      "varejoOfertas": [],
+      "referenciaBRL": 155,
       "base": [
         "discogs-reedicao"
       ]
     },
     "649184": {
-      "menorAnuncioBRL": 206.42,
-      "aVenda": 30,
+      "menorAnuncioBRL": 206.02,
+      "aVenda": 31,
       "sugestaoMint": null,
       "sugestaoNM": null,
       "moeda": null,
@@ -421,6 +446,7 @@
       ],
       "reedicaoBRL": 299,
       "observados": [],
+      "varejoOfertas": [],
       "referenciaBRL": 299,
       "base": [
         "discogs-reedicao"
@@ -441,19 +467,36 @@
           "selo": "Polysom",
           "catno": "33057-1",
           "aVenda": 30,
-          "menorAnuncioBRL": 230.01
+          "menorAnuncioBRL": 229.57
         }
       ],
-      "reedicaoBRL": 230.01,
+      "reedicaoBRL": 229.57,
       "observados": [],
-      "referenciaBRL": 230,
+      "varejoOfertas": [
+        {
+          "loja": "HipMusic",
+          "nome": "LP Jorge Ben - África Brasil - Vinil Polysom - Lacrado - Hm",
+          "preco": 220,
+          "url": "https://www.hipmusic.com.br/lp-jorge-ben-africa-brasil-vinil-polysom-lacrado-hm-2025-12-10-15-10-29",
+          "disponivel": true
+        },
+        {
+          "loja": "Vinil Discos",
+          "nome": "Disco de Vinil Lp Jorge Ben África Brasil 180g Polysom Novo Lacrado",
+          "preco": 206.82,
+          "url": "https://www.vinildiscos.com.br/lp-jorge-ben-africa-brasil-180g-polysom-novo-lacrado",
+          "disponivel": true
+        }
+      ],
+      "referenciaBRL": 220,
       "base": [
-        "discogs-reedicao"
+        "discogs-reedicao",
+        "varejo-br"
       ]
     },
     "873261": {
-      "menorAnuncioBRL": 233.55,
-      "aVenda": 47,
+      "menorAnuncioBRL": 233.1,
+      "aVenda": 51,
       "sugestaoMint": null,
       "sugestaoNM": null,
       "moeda": null,
@@ -465,20 +508,21 @@
           "pais": "Worldwide",
           "selo": "Impulse!",
           "catno": "B0035572-01, A-9181, AS-9181",
-          "aVenda": 91,
-          "menorAnuncioBRL": 155.7
+          "aVenda": 87,
+          "menorAnuncioBRL": 155.4
         }
       ],
-      "reedicaoBRL": 155.7,
+      "reedicaoBRL": 155.4,
       "observados": [],
-      "referenciaBRL": 156,
+      "varejoOfertas": [],
+      "referenciaBRL": 155,
       "base": [
         "discogs-reedicao"
       ]
     },
     "1078894": {
-      "menorAnuncioBRL": 207.6,
-      "aVenda": 15,
+      "menorAnuncioBRL": 207.2,
+      "aVenda": 16,
       "sugestaoMint": null,
       "sugestaoNM": null,
       "moeda": null,
@@ -488,22 +532,23 @@
           "id": 34930796,
           "ano": 2025,
           "pais": null,
-          "selo": "Dragon (2)",
+          "selo": "Dragon",
           "catno": "DRLS-5002",
           "aVenda": 2,
-          "menorAnuncioBRL": 145.06
+          "menorAnuncioBRL": 144.78
         }
       ],
-      "reedicaoBRL": 145.06,
+      "reedicaoBRL": 144.78,
       "observados": [],
+      "varejoOfertas": [],
       "referenciaBRL": 145,
       "base": [
         "discogs-reedicao"
       ]
     },
     "1125096": {
-      "menorAnuncioBRL": 235.32,
-      "aVenda": 26,
+      "menorAnuncioBRL": 234.87,
+      "aVenda": 27,
       "sugestaoMint": null,
       "sugestaoNM": null,
       "moeda": null,
@@ -516,12 +561,13 @@
           "selo": "Hyperdub",
           "catno": "HDBLP002",
           "aVenda": 9,
-          "menorAnuncioBRL": 345.93
+          "menorAnuncioBRL": 345.26
         }
       ],
-      "reedicaoBRL": 345.93,
+      "reedicaoBRL": 345.26,
       "observados": [],
-      "referenciaBRL": 346,
+      "varejoOfertas": [],
+      "referenciaBRL": 345,
       "base": [
         "discogs-reedicao"
       ]
@@ -541,19 +587,36 @@
           "selo": "Universal Music",
           "catno": "33379-1",
           "aVenda": 23,
-          "menorAnuncioBRL": 259.5
+          "menorAnuncioBRL": 259
         }
       ],
-      "reedicaoBRL": 259.5,
+      "reedicaoBRL": 259,
       "observados": [],
-      "referenciaBRL": 260,
+      "varejoOfertas": [
+        {
+          "loja": "Vinil Discos",
+          "nome": "Disco de Vinil Lp Previsão Do Tempo Marcos Valle 180g Lacrado",
+          "preco": 256.45,
+          "url": "https://www.vinildiscos.com.br/lp-vinil-previsao-do-tempo-marcos-valle-180g-lacrado",
+          "disponivel": true
+        },
+        {
+          "loja": "Rua6 Underground",
+          "nome": "Vinil LP Marcos Valle - Previsão do Tempo - Reedição Polysom",
+          "preco": 213.39,
+          "url": "https://www.rua6underground.com.br/vinil-lp-marcos-valle-previsao-do-tempo-reedicao-polysom",
+          "disponivel": true
+        }
+      ],
+      "referenciaBRL": 256,
       "base": [
-        "discogs-reedicao"
+        "discogs-reedicao",
+        "varejo-br"
       ]
     },
     "1222672": {
       "menorAnuncioBRL": 180,
-      "aVenda": 35,
+      "aVenda": 34,
       "sugestaoMint": null,
       "sugestaoNM": null,
       "moeda": null,
@@ -566,7 +629,7 @@
           "selo": "Universal Music",
           "catno": "060243598603",
           "aVenda": 1,
-          "menorAnuncioBRL": 570.9
+          "menorAnuncioBRL": 569.8
         },
         {
           "id": 35146936,
@@ -574,13 +637,14 @@
           "pais": "UK",
           "selo": "Mr Bongo",
           "catno": "MRBLP149, 6349077, 6349.077",
-          "aVenda": 53,
-          "menorAnuncioBRL": 133.75
+          "aVenda": 57,
+          "menorAnuncioBRL": 133.49
         }
       ],
-      "reedicaoBRL": 133.75,
+      "reedicaoBRL": 569.8,
       "observados": [],
-      "referenciaBRL": 134,
+      "varejoOfertas": [],
+      "referenciaBRL": 570,
       "base": [
         "discogs-reedicao"
       ]
@@ -600,7 +664,7 @@
           "selo": "Polysom",
           "catno": "33234-1",
           "aVenda": 4,
-          "menorAnuncioBRL": 454.07
+          "menorAnuncioBRL": 453.19
         },
         {
           "id": 12455484,
@@ -609,19 +673,20 @@
           "selo": "Polydor",
           "catno": "B0013169-01, LPNG 44.018, LPNG-44-018",
           "aVenda": 1,
-          "menorAnuncioBRL": 648.75
+          "menorAnuncioBRL": 647.5
         }
       ],
-      "reedicaoBRL": 454.07,
+      "reedicaoBRL": 453.19,
       "observados": [],
-      "referenciaBRL": 454,
+      "varejoOfertas": [],
+      "referenciaBRL": 453,
       "base": [
         "discogs-reedicao"
       ]
     },
     "1873013": {
-      "menorAnuncioBRL": 648.75,
-      "aVenda": 113,
+      "menorAnuncioBRL": 647.5,
+      "aVenda": 115,
       "sugestaoMint": null,
       "sugestaoNM": null,
       "moeda": null,
@@ -633,20 +698,30 @@
           "pais": "Worldwide",
           "selo": "Legacy",
           "catno": "196587 20271",
-          "aVenda": 129,
-          "menorAnuncioBRL": 150.46
+          "aVenda": 135,
+          "menorAnuncioBRL": 150.17
         }
       ],
-      "reedicaoBRL": 150.46,
+      "reedicaoBRL": 150.17,
       "observados": [],
-      "referenciaBRL": 150,
+      "varejoOfertas": [
+        {
+          "loja": "HipMusic",
+          "nome": "LP Pink Floyd - The Dark Side Of The Moon - Disco Vinil - Hm",
+          "preco": 342,
+          "url": "https://www.hipmusic.com.br/lp-pink-floyd-dark-side-of-the-moon-vinil-quadrafonico-hm",
+          "disponivel": true
+        }
+      ],
+      "referenciaBRL": 246,
       "base": [
-        "discogs-reedicao"
+        "discogs-reedicao",
+        "varejo-br"
       ]
     },
     "2028398": {
-      "menorAnuncioBRL": 36.33,
-      "aVenda": 25,
+      "menorAnuncioBRL": 36.26,
+      "aVenda": 24,
       "sugestaoMint": null,
       "sugestaoNM": null,
       "moeda": null,
@@ -668,11 +743,12 @@
           "selo": "Vampi Soul",
           "catno": "VAMPI 320",
           "aVenda": 38,
-          "menorAnuncioBRL": 181.18
+          "menorAnuncioBRL": 180.83
         }
       ],
-      "reedicaoBRL": 181.18,
+      "reedicaoBRL": 180.83,
       "observados": [],
+      "varejoOfertas": [],
       "referenciaBRL": 181,
       "base": [
         "discogs-reedicao"
@@ -693,14 +769,24 @@
           "selo": "Polysom",
           "catno": "33293-1",
           "aVenda": 10,
-          "menorAnuncioBRL": 1038
+          "menorAnuncioBRL": 1036
         }
       ],
-      "reedicaoBRL": 1038,
+      "reedicaoBRL": 1036,
       "observados": [],
-      "referenciaBRL": 1038,
+      "varejoOfertas": [
+        {
+          "loja": "Vinil Discos",
+          "nome": "Lp Vinil Milton Nascimento Clube Da Esquina 2 180g Duplo",
+          "preco": 370.12,
+          "url": "https://www.vinildiscos.com.br/lp-vinil-milton-nascimento-clube-da-esquina-2-180g-duplo",
+          "disponivel": true
+        }
+      ],
+      "referenciaBRL": 703,
       "base": [
-        "discogs-reedicao"
+        "discogs-reedicao",
+        "varejo-br"
       ]
     },
     "2968639": {
@@ -718,18 +804,19 @@
           "selo": "Três Selos",
           "catno": "R3-074/2",
           "aVenda": 4,
-          "menorAnuncioBRL": 449.8
+          "menorAnuncioBRL": 448.93
         }
       ],
-      "reedicaoBRL": 449.8,
+      "reedicaoBRL": 448.93,
       "observados": [],
-      "referenciaBRL": 450,
+      "varejoOfertas": [],
+      "referenciaBRL": 449,
       "base": [
         "discogs-reedicao"
       ]
     },
     "3942811": {
-      "menorAnuncioBRL": 129.75,
+      "menorAnuncioBRL": 129.5,
       "aVenda": 2,
       "sugestaoMint": null,
       "sugestaoNM": null,
@@ -748,6 +835,7 @@
       ],
       "reedicaoBRL": null,
       "observados": [],
+      "varejoOfertas": [],
       "referenciaBRL": 130,
       "base": [
         "discogs-original"
@@ -768,19 +856,20 @@
           "selo": "Greensleeves Records",
           "catno": "GREL 2031",
           "aVenda": 49,
-          "menorAnuncioBRL": 117.95
+          "menorAnuncioBRL": 117.73
         }
       ],
-      "reedicaoBRL": 117.95,
+      "reedicaoBRL": 117.73,
       "observados": [],
+      "varejoOfertas": [],
       "referenciaBRL": 118,
       "base": [
         "discogs-reedicao"
       ]
     },
     "4950798": {
-      "menorAnuncioBRL": 1038,
-      "aVenda": 31,
+      "menorAnuncioBRL": 1559.89,
+      "aVenda": 30,
       "sugestaoMint": null,
       "sugestaoNM": null,
       "moeda": null,
@@ -792,19 +881,20 @@
           "pais": "Australia",
           "selo": "XL Recordings",
           "catno": "XLLP781",
-          "aVenda": 2,
-          "menorAnuncioBRL": 199.28
+          "aVenda": 3,
+          "menorAnuncioBRL": 198.9
         }
       ],
-      "reedicaoBRL": 199.28,
+      "reedicaoBRL": 198.9,
       "observados": [],
+      "varejoOfertas": [],
       "referenciaBRL": 199,
       "base": [
         "discogs-reedicao"
       ]
     },
     "5034045": {
-      "menorAnuncioBRL": 2491.2,
+      "menorAnuncioBRL": 2486.4,
       "aVenda": 8,
       "sugestaoMint": null,
       "sugestaoNM": null,
@@ -817,19 +907,29 @@
           "pais": "Japan",
           "selo": "Verve Records",
           "catno": "UIJY-75397",
-          "aVenda": 13,
-          "menorAnuncioBRL": 233.92
+          "aVenda": 12,
+          "menorAnuncioBRL": 231.83
         }
       ],
-      "reedicaoBRL": 233.92,
+      "reedicaoBRL": 231.83,
       "observados": [],
-      "referenciaBRL": 234,
+      "varejoOfertas": [
+        {
+          "loja": "Vinil Discos",
+          "nome": "Lp Vinil The Velvet Underground &amp; Nico Importado Lacrado",
+          "preco": 370.12,
+          "url": "https://www.vinildiscos.com.br/lp-vinil-the-velvet-underground-nico-importado-lacrado",
+          "disponivel": true
+        }
+      ],
+      "referenciaBRL": 301,
       "base": [
-        "discogs-reedicao"
+        "discogs-reedicao",
+        "varejo-br"
       ]
     },
     "5431106": {
-      "menorAnuncioBRL": 10.38,
+      "menorAnuncioBRL": 10.36,
       "aVenda": 30,
       "sugestaoMint": null,
       "sugestaoNM": null,
@@ -843,18 +943,19 @@
           "selo": "Epic",
           "catno": "19658763921, KE 30986",
           "aVenda": 46,
-          "menorAnuncioBRL": 142.47
+          "menorAnuncioBRL": 145.04
         }
       ],
-      "reedicaoBRL": 142.47,
+      "reedicaoBRL": 145.04,
       "observados": [],
-      "referenciaBRL": 142,
+      "varejoOfertas": [],
+      "referenciaBRL": 145,
       "base": [
         "discogs-reedicao"
       ]
     },
     "5604009": {
-      "menorAnuncioBRL": 2422,
+      "menorAnuncioBRL": 2417.33,
       "aVenda": 2,
       "sugestaoMint": null,
       "sugestaoNM": null,
@@ -868,19 +969,20 @@
           "selo": "Três Selos Paralelo",
           "catno": "TSPL-019 , FD-014, FD014",
           "aVenda": 6,
-          "menorAnuncioBRL": 850
+          "menorAnuncioBRL": 1000
         }
       ],
-      "reedicaoBRL": 850,
+      "reedicaoBRL": 1000,
       "observados": [],
-      "referenciaBRL": 850,
+      "varejoOfertas": [],
+      "referenciaBRL": 1000,
       "base": [
         "discogs-reedicao"
       ]
     },
     "5750709": {
-      "menorAnuncioBRL": 129.75,
-      "aVenda": 21,
+      "menorAnuncioBRL": 129.5,
+      "aVenda": 20,
       "sugestaoMint": null,
       "sugestaoNM": null,
       "moeda": null,
@@ -893,18 +995,19 @@
           "selo": "Kling Klang",
           "catno": "50999 9 66020 1 0, 5099996602010, 9999-66020-1",
           "aVenda": 9,
-          "menorAnuncioBRL": 176.93
+          "menorAnuncioBRL": 176.59
         }
       ],
-      "reedicaoBRL": 176.93,
+      "reedicaoBRL": 176.59,
       "observados": [],
+      "varejoOfertas": [],
       "referenciaBRL": 177,
       "base": [
         "discogs-reedicao"
       ]
     },
     "6276183": {
-      "menorAnuncioBRL": 253.69,
+      "menorAnuncioBRL": 253.2,
       "aVenda": 12,
       "sugestaoMint": null,
       "sugestaoNM": null,
@@ -912,24 +1015,25 @@
       "moedaDiferente": false,
       "reedicoes": [
         {
-          "id": 37478574,
+          "id": 37584492,
           "ano": 2026,
           "pais": "Europe",
-          "selo": "DOL",
-          "catno": "DOL725HZ",
-          "aVenda": 1,
-          "menorAnuncioBRL": 208.71
+          "selo": "Second Records",
+          "catno": "SRPD0019",
+          "aVenda": 5,
+          "menorAnuncioBRL": 111.78
         }
       ],
-      "reedicaoBRL": 208.71,
+      "reedicaoBRL": 111.78,
       "observados": [],
-      "referenciaBRL": 209,
+      "varejoOfertas": [],
+      "referenciaBRL": 112,
       "base": [
         "discogs-reedicao"
       ]
     },
     "6401859": {
-      "menorAnuncioBRL": 524.9,
+      "menorAnuncioBRL": 523.89,
       "aVenda": 4,
       "sugestaoMint": null,
       "sugestaoNM": null,
@@ -943,19 +1047,20 @@
           "selo": "Music On Vinyl",
           "catno": "MOVLP2526, MVLP2526",
           "aVenda": 5,
-          "menorAnuncioBRL": 146.85
+          "menorAnuncioBRL": 146.57
         }
       ],
-      "reedicaoBRL": 146.85,
+      "reedicaoBRL": 146.57,
       "observados": [],
+      "varejoOfertas": [],
       "referenciaBRL": 147,
       "base": [
         "discogs-reedicao"
       ]
     },
     "6890747": {
-      "menorAnuncioBRL": 778.5,
-      "aVenda": 4,
+      "menorAnuncioBRL": 777,
+      "aVenda": 3,
       "sugestaoMint": null,
       "sugestaoNM": null,
       "moeda": null,
@@ -967,20 +1072,21 @@
           "pais": "US",
           "selo": "Impulse!",
           "catno": "A-77, 602478371004",
-          "aVenda": 60,
-          "menorAnuncioBRL": 151.93
+          "aVenda": 57,
+          "menorAnuncioBRL": 151.63
         }
       ],
-      "reedicaoBRL": 151.93,
+      "reedicaoBRL": 151.63,
       "observados": [],
+      "varejoOfertas": [],
       "referenciaBRL": 152,
       "base": [
         "discogs-reedicao"
       ]
     },
     "7252111": {
-      "menorAnuncioBRL": 144.14,
-      "aVenda": 78,
+      "menorAnuncioBRL": 143.86,
+      "aVenda": 77,
       "sugestaoMint": null,
       "sugestaoNM": null,
       "moeda": null,
@@ -992,20 +1098,21 @@
           "pais": "US",
           "selo": "Interscope Records",
           "catno": "602488527392",
-          "aVenda": 11,
-          "menorAnuncioBRL": 171.22
+          "aVenda": 8,
+          "menorAnuncioBRL": 175.86
         }
       ],
-      "reedicaoBRL": 171.22,
+      "reedicaoBRL": 175.86,
       "observados": [],
-      "referenciaBRL": 171,
+      "varejoOfertas": [],
+      "referenciaBRL": 176,
       "base": [
         "discogs-reedicao"
       ]
     },
     "7383499": {
-      "menorAnuncioBRL": 103.8,
-      "aVenda": 108,
+      "menorAnuncioBRL": 129.5,
+      "aVenda": 110,
       "sugestaoMint": null,
       "sugestaoNM": null,
       "moeda": null,
@@ -1018,18 +1125,19 @@
           "selo": "Brainfeeder",
           "catno": "BF050",
           "aVenda": 50,
-          "menorAnuncioBRL": 204.69
+          "menorAnuncioBRL": 204.3
         }
       ],
-      "reedicaoBRL": 204.69,
+      "reedicaoBRL": 204.3,
       "observados": [],
-      "referenciaBRL": 205,
+      "varejoOfertas": [],
+      "referenciaBRL": 204,
       "base": [
         "discogs-reedicao"
       ]
     },
     "8938725": {
-      "menorAnuncioBRL": 353.86,
+      "menorAnuncioBRL": 353.18,
       "aVenda": 2,
       "sugestaoMint": null,
       "sugestaoNM": null,
@@ -1042,19 +1150,20 @@
           "pais": "US",
           "selo": "Stones Throw Records",
           "catno": "STH2126-10",
-          "aVenda": 87,
-          "menorAnuncioBRL": 197.17
+          "aVenda": 91,
+          "menorAnuncioBRL": 196.79
         }
       ],
-      "reedicaoBRL": 197.17,
+      "reedicaoBRL": 196.79,
       "observados": [],
+      "varejoOfertas": [],
       "referenciaBRL": 197,
       "base": [
         "discogs-reedicao"
       ]
     },
     "9500449": {
-      "menorAnuncioBRL": 69.2,
+      "menorAnuncioBRL": 69.07,
       "aVenda": 5,
       "sugestaoMint": null,
       "sugestaoNM": null,
@@ -1067,20 +1176,21 @@
           "pais": "US",
           "selo": "Analogue Productions",
           "catno": "UHQR 0016-45",
-          "aVenda": 23,
-          "menorAnuncioBRL": 830.14
+          "aVenda": 21,
+          "menorAnuncioBRL": 828.54
         }
       ],
-      "reedicaoBRL": 830.14,
+      "reedicaoBRL": 828.54,
       "observados": [],
-      "referenciaBRL": 830,
+      "varejoOfertas": [],
+      "referenciaBRL": 829,
       "base": [
         "discogs-reedicao"
       ]
     },
     "11416588": {
-      "menorAnuncioBRL": 176.34,
-      "aVenda": 10,
+      "menorAnuncioBRL": 176,
+      "aVenda": 12,
       "sugestaoMint": null,
       "sugestaoNM": null,
       "moeda": null,
@@ -1093,18 +1203,19 @@
           "selo": "Night Time Stories",
           "catno": "ALNLP050RBR",
           "aVenda": 14,
-          "menorAnuncioBRL": 233.19
+          "menorAnuncioBRL": 232.74
         }
       ],
-      "reedicaoBRL": 233.19,
+      "reedicaoBRL": 232.74,
       "observados": [],
+      "varejoOfertas": [],
       "referenciaBRL": 233,
       "base": [
         "discogs-reedicao"
       ]
     },
     "12766539": {
-      "menorAnuncioBRL": 2984.25,
+      "menorAnuncioBRL": 2978.5,
       "aVenda": 4,
       "sugestaoMint": null,
       "sugestaoNM": null,
@@ -1118,18 +1229,19 @@
           "selo": "Craft Recordings",
           "catno": "CR10094, RLP 9376, OJC-140",
           "aVenda": 2,
-          "menorAnuncioBRL": 217.98
+          "menorAnuncioBRL": 217.56
         }
       ],
-      "reedicaoBRL": 217.98,
+      "reedicaoBRL": 217.56,
       "observados": [],
+      "varejoOfertas": [],
       "referenciaBRL": 218,
       "base": [
         "discogs-reedicao"
       ]
     },
     "13286331": {
-      "menorAnuncioBRL": 31.09,
+      "menorAnuncioBRL": 31.03,
       "aVenda": 18,
       "sugestaoMint": null,
       "sugestaoNM": null,
@@ -1143,19 +1255,20 @@
           "selo": "Tamla Motown",
           "catno": "0050109032617",
           "aVenda": 24,
-          "menorAnuncioBRL": 141.49
+          "menorAnuncioBRL": 141.21
         }
       ],
-      "reedicaoBRL": 141.49,
+      "reedicaoBRL": 141.21,
       "observados": [],
+      "varejoOfertas": [],
       "referenciaBRL": 141,
       "base": [
         "discogs-reedicao"
       ]
     },
     "13314830": {
-      "menorAnuncioBRL": 1297.5,
-      "aVenda": 1,
+      "menorAnuncioBRL": null,
+      "aVenda": 0,
       "sugestaoMint": null,
       "sugestaoNM": null,
       "moeda": null,
@@ -1167,13 +1280,14 @@
           "pais": "USA & Europe",
           "selo": "Apollo",
           "catno": "AMB3922LPRT",
-          "aVenda": 36,
-          "menorAnuncioBRL": 493.05
+          "aVenda": 35,
+          "menorAnuncioBRL": 466.2
         }
       ],
-      "reedicaoBRL": 493.05,
+      "reedicaoBRL": 466.2,
       "observados": [],
-      "referenciaBRL": 493,
+      "varejoOfertas": [],
+      "referenciaBRL": 466,
       "base": [
         "discogs-reedicao"
       ]
@@ -1190,7 +1304,7 @@
           "id": 5280303,
           "ano": 1983,
           "pais": "Brazil",
-          "selo": "Milestone (4)",
+          "selo": "Milestone",
           "catno": "5047090, 504.7090",
           "aVenda": 2,
           "menorAnuncioBRL": 300
@@ -1202,19 +1316,20 @@
           "selo": "Far Out Recordings",
           "catno": "FARO170LP",
           "aVenda": 2,
-          "menorAnuncioBRL": 147.44
+          "menorAnuncioBRL": 147.16
         }
       ],
-      "reedicaoBRL": 147.44,
+      "reedicaoBRL": 300,
       "observados": [],
-      "referenciaBRL": 147,
+      "varejoOfertas": [],
+      "referenciaBRL": 300,
       "base": [
         "discogs-reedicao"
       ]
     },
     "14478692": {
       "menorAnuncioBRL": 430,
-      "aVenda": 12,
+      "aVenda": 11,
       "sugestaoMint": null,
       "sugestaoNM": null,
       "moeda": null,
@@ -1226,7 +1341,7 @@
           "pais": "Brazil",
           "selo": "Philips",
           "catno": "060257715322",
-          "aVenda": 12,
+          "aVenda": 13,
           "menorAnuncioBRL": 380
         },
         {
@@ -1235,13 +1350,14 @@
           "pais": "USA & Europe",
           "selo": "Transoceânica",
           "catno": "86602",
-          "aVenda": 4,
-          "menorAnuncioBRL": 153.28
+          "aVenda": 5,
+          "menorAnuncioBRL": 152.99
         }
       ],
-      "reedicaoBRL": 153.28,
+      "reedicaoBRL": 380,
       "observados": [],
-      "referenciaBRL": 153,
+      "varejoOfertas": [],
+      "referenciaBRL": 380,
       "base": [
         "discogs-reedicao"
       ]
@@ -1260,20 +1376,21 @@
           "pais": "Europe",
           "selo": "Top Dawg Entertainment",
           "catno": "00602478100871",
-          "aVenda": 35,
-          "menorAnuncioBRL": 173
+          "aVenda": 36,
+          "menorAnuncioBRL": 138.13
         }
       ],
-      "reedicaoBRL": 173,
+      "reedicaoBRL": 138.13,
       "observados": [],
-      "referenciaBRL": 173,
+      "varejoOfertas": [],
+      "referenciaBRL": 138,
       "base": [
         "discogs-reedicao"
       ]
     },
     "23757107": {
-      "menorAnuncioBRL": 155.7,
-      "aVenda": 6,
+      "menorAnuncioBRL": 155.4,
+      "aVenda": 7,
       "sugestaoMint": null,
       "sugestaoNM": null,
       "moeda": null,
@@ -1283,21 +1400,22 @@
           "id": 37636218,
           "ano": 2026,
           "pais": "Worldwide",
-          "selo": "Rhino Records (2)",
+          "selo": "Rhino Records",
           "catno": "RHF1 728259, 081227808792",
-          "aVenda": 22,
-          "menorAnuncioBRL": 214.92
+          "aVenda": 26,
+          "menorAnuncioBRL": 214.5
         }
       ],
-      "reedicaoBRL": 214.92,
+      "reedicaoBRL": 214.5,
       "observados": [],
+      "varejoOfertas": [],
       "referenciaBRL": 215,
       "base": [
         "discogs-reedicao"
       ]
     },
     "26197826": {
-      "menorAnuncioBRL": 137,
+      "menorAnuncioBRL": 136.74,
       "aVenda": 13,
       "sugestaoMint": null,
       "sugestaoNM": null,
@@ -1310,13 +1428,14 @@
           "pais": "US",
           "selo": "Tamla",
           "catno": "B0033100-01, Tamla 2025",
-          "aVenda": 1,
-          "menorAnuncioBRL": 225.96
+          "aVenda": 2,
+          "menorAnuncioBRL": 194.15
         }
       ],
-      "reedicaoBRL": 225.96,
+      "reedicaoBRL": 194.15,
       "observados": [],
-      "referenciaBRL": 226,
+      "varejoOfertas": [],
+      "referenciaBRL": 194,
       "base": [
         "discogs-reedicao"
       ]
