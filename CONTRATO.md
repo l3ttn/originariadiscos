@@ -160,3 +160,38 @@ Pode me passar disponibilidade, prazo e valor?
 
 - `total(estado, catalogo)` passa a devolver `{ valor, itensComPreco, itensSemPreco }`; `formatarTotal` gera a linha nas três formas. Card e ficha continuam mostrando `R$ 220` / `Sob consulta`.
 - Testes em `tests/carrinho.test.mjs`: os quatro finais de linha, as três formas de total, `formatarPreco(1250) === 'R$ 1.250'`, e a mensagem literal acima (catálogo de teste = os 3 discos reais com os preços injetados no teste, não no `data/catalogo.json`).
+
+## Design v4 — visual atual (referência Vercel) e abertura com vinil
+
+Objetivo: o site parecer um produto atual e leve, no padrão dos sites que a Vercel publica (vercel.com, seus templates de e-commerce): fundo quase branco (`#fafafa`) com texto quase preto (`#111`), bordas finas `#eaeaea`, cantos 12 px, sombras discretas, tipografia geométrica de alto contraste (`Inter`/`Geist` via Google Fonts como melhoria progressiva, fallback `system-ui`), muito respiro, header fixo com vidro (`backdrop-filter: blur(12px)` + fundo translúcido), hover que eleva o card 2 px e escurece a borda, transições de 150–200 ms, **modo escuro** automático por `prefers-color-scheme` com tokens invertidos (`#000`/`#ededed`/`#333`). Capa continua sendo a estrela: proporção 1:1, `object-fit: cover`, `loading="lazy"`, `decoding="async"`. Skeleton (blocos cinza pulsando) enquanto `data/catalogo.json` não chegou, em vez de "Carregando...". Botões: primário preto sólido (branco no escuro), secundário com borda; o botão WhatsApp mantém o verde `#25D366` como único acento colorido além do laranja da marca (`--cor-acento`, que fica só em badges e preço). Tudo em tokens no `:root` de `css/estilo.css`, com o bloco `@media (prefers-color-scheme: dark)` redefinindo.
+
+**Abertura (intro)** em todas as páginas, arquivo `js/intro.js` + markup `<div class="intro" aria-hidden="true">` no início do `<body>`:
+- Um disco de vinil grande (min(70vw, 420px)) desenhado em CSS/SVG inline: disco preto com ranhuras (gradiente radial repetido), selo central laranja com o texto "Originária Discos", furo central; braço do toca-discos (linha + cabeçote) que desce sobre o disco nos primeiros 500 ms; o disco gira (`rotate` 33 rpm ≈ 1,8 s por volta, `animation-timing-function: linear`).
+- Duração: some com fade de 300 ms quando **as duas** condições valerem: passaram 1 400 ms **e** o catálogo carregou (`catalogo.js` expõe uma Promise `catalogoPronto`); teto absoluto de 2 500 ms mesmo sem catálogo (falha de rede não pode prender a tela). `body` recebe `intro-ativa` durante a intro (`overflow: hidden`) e a classe sai junto com o overlay; o overlay é **removido do DOM** ao final.
+- Só uma vez por sessão: `sessionStorage['originaria.intro'] = '1'` (try/catch); na segunda página da mesma aba, sem intro. Com `prefers-reduced-motion: reduce`, sem intro nenhuma. Com JS desligado, o overlay não existe (é o JS que o cria, não o HTML).
+- Som: navegador bloqueia áudio sem gesto do usuário, então **não** há som automático. Fica um botão discreto no overlay, "tocar agulha", que só quando clicado toca um "clique de agulha + chiado" curto sintetizado com Web Audio (ruído filtrado, 400 ms), sem arquivo de áudio.
+- Acessibilidade: overlay `aria-hidden`, botão com `aria-label`, foco não fica preso.
+
+**Não muda**: estrutura das páginas, ids/classes usados pelos módulos (`.card`, `button.card__add`, `[data-contador]`, `#btn-pedir`, `.cta-solicitar`, `[data-id]`), textos, mensagens do WhatsApp, `js/config.js`, testes existentes continuam verdes (ajustar só se o markup do card mudar de forma equivalente).
+
+Medição observável: em 360 px sem scroll horizontal; zero erro de console; `header` com `backdrop-filter`; overlay `.intro` existe logo após o load e **não existe** 3 s depois; `sessionStorage['originaria.intro'] === '1'` após a intro; com `prefers-reduced-motion: reduce` emulado, `.intro` nunca é criado; com `prefers-color-scheme: dark` emulado, `getComputedStyle(body).backgroundColor` é escuro (`rgb(0, 0, 0)`); todas as contagens anteriores (15 cards no index, 30 no catálogo, 4 links WhatsApp na ficha) iguais.
+
+## Preços de referência (v4) — `scripts/precos.mjs`
+
+Objetivo: o dono precificar com base no mercado real, disco a disco, sem inventar. Fontes, em ordem de confiança:
+
+1. **Discogs Marketplace, sem token** — `GET https://api.discogs.com/marketplace/stats/{id}?curr_abbr=BRL` (medido em 2026-09-27: responde `num_for_sale` e `lowest_price.value` em BRL para a prensagem exata; ex. 726944 → 36 à venda, menor R$ 150,00). Mesmo pacing (2,6 s), User-Agent, timeout e retry do `build-catalogo.mjs` (reaproveite as funções; se estiverem presas ao `main()`, exporte).
+2. **Discogs sugestão por condição, com token** — `GET /marketplace/price_suggestions/{id}` com `Authorization: Discogs token=…` (só se `DISCOGS_TOKEN` existir; sem token, pula em silêncio e registra `sugestao: null`). Devolve `{ "Mint (M)": {currency, value}, "Near Mint (NM or M-)": {...}, ... }` na moeda da conta do dono. Guardar `moeda` e os valores de `Mint (M)` e `Near Mint (NM or M-)`; se a moeda não for `BRL`, guardar mesmo assim e marcar `moedaDiferente: true` (não converter).
+3. **Preços observados manualmente** — `data/precos-observados.csv` (o dono preenche com o que vê em grupos de WhatsApp e lojas brasileiras), cabeçalho `id,preco,fonte,data,link` (`id` = release id do Discogs, `preco` inteiro em reais, `fonte` texto livre, `data` AAAA-MM-DD, `link` opcional). Linha inválida → ignorada com aviso.
+
+Saída `data/precos.json`: `{ consultadoEm, discos: { "<id>": { menorAnuncioBRL, aVenda, sugestaoMint, sugestaoNM, moeda, moedaDiferente, observados: [{preco, fonte, data}], referenciaBRL, base } } }`. `referenciaBRL` = mediana dos valores em BRL disponíveis entre `sugestaoMint` (se BRL), `menorAnuncioBRL` e os `observados`; `base` = lista das fontes que entraram (ex. `["discogs-menor", "observado"]`); nenhuma fonte → `referenciaBRL: null`. Arredondar a referência para inteiro.
+
+Relatório `data/precos-relatorio.md` (gerado): tabela `ordem | artista – título | à venda | menor anúncio (BRL) | sugestão M | observados | referência | preço atual em discos.txt`, ordenada por `ordem`, mais um rodapé com data, quantos discos têm referência e quantos não têm. É esse arquivo que o dono lê para decidir.
+
+Flag `--propor [--margem=1.00]`: escreve `discos.propostos.txt` = cópia de `discos.txt` em que cada linha **sem** `preco=` e **com** referência ganha `| preco=<referência × margem, arredondado para múltiplo de 5>`. Nunca sobrescreve `discos.txt`. Linhas que já têm `preco=` não mudam.
+
+`package.json`: `"precos": "node scripts/precos.mjs"`. README: seção "Como precificar" em 3 passos (rodar, ler o relatório, copiar as linhas do `discos.propostos.txt` que aprovar — ou criar o token do Discogs em Settings → Developers para ter a sugestão por condição). Workflow do Actions **não** muda nesta rodada (o dono roda local quando for precificar).
+
+Testes `tests/precos.test.mjs` (funções puras exportadas, sem rede): parse do CSV (linha válida, inválida, id inexistente), mediana com 1/2/3 fontes, `referenciaBRL` null sem fontes, `moedaDiferente` exclui a sugestão da mediana, arredondamento para múltiplo de 5 com margem, e a linha do relatório para um disco de exemplo.
+
+Medição observável: `node scripts/precos.mjs` termina com `OK <n> discos · com referência <r> · chamadas <c> · <tempo>`; `data/precos.json` válido com uma chave por disco do catálogo; para 4 ids fixos (726944, 242785, 6401859, 6276183) `menorAnuncioBRL` bate com um `curl` independente feito no mesmo momento (tolerância: igual) e `aVenda` bate ±2; `--propor` gera `discos.propostos.txt` com o mesmo número de linhas de `discos.txt` e `preco=` só nas linhas que não tinham.
