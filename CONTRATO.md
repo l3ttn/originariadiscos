@@ -205,3 +205,43 @@ A loja vende **novo/lacrado**; a prensagem original (release principal do master
 - `referenciaBRL` passa a ser: mediana de {`reedicaoBRL`, `sugestaoMint` (se BRL), `observados`} — a **original entra só se não houver reedição com anúncio** (`base` registra `"discogs-reedicao"` ou `"discogs-original"`). O relatório ganha as colunas `reedição (ano · selo · país)` e `menor anúncio reedição (BRL)`, e a coluna antiga vira `original (BRL)`.
 - Orçamento: 1 chamada de versões + até 2 de stats por disco, além da original → ≈ 200 chamadas ≈ 9 min sem token (com `DISCOGS_TOKEN`, 60/min). Cache das versões em `data/cache/versoes-{masterId}.json` (6 h) para não repetir.
 - Testes: filtro de oficiais (exclui `Unofficial Release`/`Test Pressing`/`Promo`), escolha das candidatas (Brasil mais recente + geral mais recente, dedup), `reedicaoBRL` = menor entre as com anúncio, `referenciaBRL` preferindo reedição, e a linha do relatório com as colunas novas.
+
+## Edição à venda (v5) — a ficha e a mensagem citam a reedição que a loja vende
+
+A loja vende **novo/lacrado**, mas a ficha mostra a prensagem original (ex. Philips 1976) enquanto o preço de referência vem da reedição (Polysom 2020). O cliente tem de ver a edição que vai receber; a original vira informação secundária.
+
+**Pipeline (`scripts/build-catalogo.mjs`)** — novo campo por disco:
+
+```
+edicaoVenda: { id, ano, pais, selo, catno, formato, discogsUrl, fixadaPeloDono } | null
+```
+
+- Escolha automática = **a mesma regra** de `precos.mjs` (v4.1): `GET /masters/{masterId}/versions?format=Vinyl&sort=released&sort_order=desc&per_page=10`, excluir `Unofficial Release`/`Test Pressing`/`Promo`; preferir a mais recente com `country === "Brazil"`, senão a mais recente oficial. As funções de escolha saem de `precos.mjs` para um módulo compartilhado `scripts/discogs-versoes.mjs`, importado pelos dois (sem duplicar), e o cache `data/cache/versoes-{masterId}.json` é o mesmo.
+- Campos vêm do item de `versions[]`: `id`, `ano = Number(released.slice(0,4)) || null`, `pais = country`, `selo = label` (sem sufixo ` (n)`), `catno`, `formato = format` (string), `discogsUrl = "https://www.discogs.com/release/" + id`, `fixadaPeloDono = false`. Sem `masterId` ou sem versão oficial → `null`.
+- **Fixar pelo dono:** em `discos.txt`, `| edicao=<URL ou id de release do Discogs>` → `GET /releases/{id}` e os campos vêm de lá (`ano = year`, `pais = country`, `selo`/`catno` = `labels[0]`, `formato` = descrições do 1º formato Vinyl unidas por ", "), `fixadaPeloDono = true`. Documentar a opção no cabeçalho de comentários de `discos.txt`.
+- Os demais campos do disco (capa, faixas, vídeos, gêneros, `id`) **não mudam**: continuam da prensagem resolvida hoje. O `id` do disco é estável (carrinho e preços dependem dele).
+
+**Preços (`scripts/precos.mjs`)**: se o disco tiver `edicaoVenda`, esse id entra **primeiro** na lista de candidatas de reedição (dedup); `reedicaoBRL` usa a `edicaoVenda` quando ela tiver exemplar à venda, senão o menor entre as demais candidatas com anúncio.
+
+**Site (`js/`)**:
+- Ficha (`disco.html`): abaixo do título, linha **"Edição à venda: {selo} · {país} · {ano} · {catno}"** e, quando `edicaoVenda.id !== id`, linha secundária menor **"Lançamento original: {selo original} · {país original} · {ano original}"**. Sem `edicaoVenda`: exatamente como hoje. "Ver no Discogs" aponta para `edicaoVenda.discogsUrl` quando existir.
+- Mensagens do WhatsApp (`linkSolicitar` e `mensagemPedido`): no trecho de selo, com `edicaoVenda` → `· {selo} {ano} · {catno}` e o link do Discogs da linha vira `discogs.com/release/{edicaoVenda.id}`; sem `edicaoVenda` → igual a hoje (`· {selo} {catno}`, link da prensagem). O `(ano)` depois do título continua sendo o ano original. Exemplo literal, item do pedido para 726944 com `edicaoVenda = {id: 15793439, ano: 2020, pais: "Brazil", selo: "Polysom", catno: "33057-1"}`, `preco 220`, `qtd 2`:
+
+```
+1. Jorge Ben – África Brasil (1976) · Vinil LP · Polysom 2020 · 33057-1 · 2 un. × R$ 220 = R$ 440
+   discogs.com/release/15793439
+```
+
+- **Rodapé no modo escuro**: hoje fica cinza-claro (faixa clara destoando do fundo preto). O rodapé tem fundo escuro nos dois esquemas (como `.colecao`), com borda superior fina e texto claro; contraste do texto ≥ 4.5:1.
+
+## Varejo brasileiro (v5) — `scripts/varejo-br.mjs`
+
+Preços de lojas brasileiras de vinil, para entrar na referência junto com o Discogs. **Medido em 2026-10-01**: 4 lojas de vinil novo rodam na plataforma Loja Integrada (HipMusic, Vinil Discos, Rua6 Underground, Buzina Discos); o `robots.txt` delas permite `/` e o sitemap, **proíbe `/buscar` e `/api/*`** e pede `Crawl-delay: 10`; `fetch` do Node com User-Agent honesto recebe 200 no sitemap e na página do produto; a página do produto traz `itemprop="price" content="220.00"` e `schema.org/InStock` (ex. HipMusic, África Brasil Polysom lacrado, R$ 220). Mercado Livre (página montada por JS), Amazon (503), Magalu (403) e Americanas (API de busca não devolve vinil) ficam de fora.
+
+- **Lojas** em `data/lojas-br.json`: `[{ "nome": "HipMusic", "base": "https://www.hipmusic.com.br", "plataforma": "lojaintegrada" }, … Vinil Discos (https://www.vinildiscos.com.br), Rua6 Underground (https://www.rua6underground.com.br), Buzina Discos (https://www.buzinadiscos.com.br)]`. Adicionar loja = uma linha.
+- **Regras de educação, não negociáveis:** User-Agent `OriginariaDiscos-precos/1.0 (+https://l3ttn.github.io/originariadiscos/)` (sem imitar navegador); ler e obedecer `robots.txt` de cada host (grupo `*`, `Allow`/`Disallow` com `*` e `$`, a regra mais longa vence, `Crawl-delay`); **nunca** requisitar caminho proibido; intervalo por host = `max(Crawl-delay, 3 s)`; hosts diferentes podem andar em paralelo, mesmo host em série; timeout 20 s; 429/503 → espera 60 s, 2 tentativas, depois desiste daquela URL.
+- **Fluxo Loja Integrada:** `sitemap.xml` (índice) → sub-sitemaps de produto → lista de URLs (cache 24 h em `data/cache/sitemap-{host}.json`). Para cada disco do catálogo, casar pelo **slug** da URL: todos os tokens do título com ≥ 3 letras (normalizados sem acento, minúsculos, fora `de, do, da, dos, das, the, and, vol, e`) presentes no slug, ≥ 1 token do artista com ≥ 3 letras presente, e `lp` ou `vinil` no slug; **excluir** slugs com `cd, box, kit, usado, seminovo, semi, k7, fita, dvd, cassete, compacto, bluray`. No máximo 3 URLs por loja por disco (as de menos tokens extras). Página do produto (cache 6 h em `data/cache/produto-{hash}.json`): preço de `itemprop="price"` ou `product:price:amount`, disponibilidade `schema.org/InStock`, nome de `og:title` ou `<h1>`; o nome tem de passar no mesmo casamento.
+- **Saída** `data/precos-varejo.json`: `{ consultadoEm, lojas: [{ nome, base, produtosNoSitemap, requisicoes, bloqueadasPorRobots }], discos: { "<id>": [{ loja, nome, preco, url, disponivel }] } }` com uma chave por disco do catálogo (`[]` quando nada). Última linha do stdout: `OK <n> discos · com oferta BR <k> · ofertas <o> · requisições <r> · <tempo>`.
+- **Na referência (`precos.mjs`)**: se `data/precos-varejo.json` existir, cada oferta `disponivel: true` do disco entra na mediana; `base` ganha `"varejo-br"`; relatório ganha a coluna `varejo BR (n · menor–maior)`. Sem o arquivo, nada muda.
+- `package.json`: `"varejo": "node scripts/varejo-br.mjs"`. README, seção "Como precificar": rodar `npm run varejo` antes de `npm run precos` (≈ 10–20 min, por causa do intervalo de 10 s que as lojas pedem) e a frase "Para fixar a edição que você vende, acrescente `| edicao=<link do release no Discogs>` na linha do disco."
+- Testes `tests/varejo-br.test.mjs` (sem rede): parser de robots (`/buscar?q=x` proibido, página de produto permitida, `/*fq=*` proibido, `Crawl-delay` lido), casamento de slug (aceita `lp-jorge-ben-africa-brasil-vinil-polysom-lacrado-hm-2025-12-10-15-10-29`; rejeita `box-5-cds-jorge-ben-jor-alo-alo-novo-lacrado-hm` e `kit-disco-de-vinil-lp-jorge-ben-a-tabua-da-esmeralda-africa-brasil`), extração de preço/disponibilidade de um trecho de HTML de fixture, agendador que **nunca** chama o `fetch` injetado para URL proibida e respeita o intervalo com relógio injetado.

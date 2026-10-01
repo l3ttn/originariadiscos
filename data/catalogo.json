@@ -1,5 +1,5 @@
 {
-  "geradoEm": "2026-09-24T15:19:15.756Z",
+  "geradoEm": "2026-10-01T20:52:28.068Z",
   "fonte": "Discogs",
   "discos": [
     {
@@ -183,7 +183,17 @@
       "novo": false,
       "comentario": "O disco que define o samba-funk. Prensagem original de 1976 é lendária.",
       "adicionadoEm": "2026-09-24T15:12:16.106Z",
-      "ordem": 1
+      "ordem": 1,
+      "edicaoVenda": {
+        "id": 15793439,
+        "ano": 2020,
+        "pais": "Brazil",
+        "selo": "Polysom",
+        "catno": "33057-1",
+        "formato": "LP, Album, Limited Edition, Reissue, Repress",
+        "discogsUrl": "https://www.discogs.com/release/15793439",
+        "fixadaPeloDono": false
+      }
     },
     {
       "id": 170032,
@@ -300,7 +310,17 @@
       "novo": false,
       "comentario": null,
       "adicionadoEm": "2026-09-24T15:12:21.324Z",
-      "ordem": 2
+      "ordem": 2,
+      "edicaoVenda": {
+        "id": 36683854,
+        "ano": 2026,
+        "pais": "Brazil",
+        "selo": "Seroma",
+        "catno": "TSR-087",
+        "formato": "LP, Album, Club Edition, Limited Edition, Reissue, Remastered",
+        "discogsUrl": "https://www.discogs.com/release/36683854",
+        "fixadaPeloDono": false
+      }
     },
     {
       "id": 1205173,
@@ -492,7 +512,17 @@
       "novo": true,
       "comentario": null,
       "adicionadoEm": "2026-09-24T15:12:26.543Z",
-      "ordem": 3
+      "ordem": 3,
+      "edicaoVenda": {
+        "id": 37141890,
+        "ano": 2026,
+        "pais": "Brazil",
+        "selo": "Universal Music",
+        "catno": "33379-1",
+        "formato": "LP, Album, Limited Edition, Reissue, Remastered",
+        "discogsUrl": "https://www.discogs.com/release/37141890",
+        "fixadaPeloDono": false
+      }
     },
     {
       "id": 2968639,
@@ -628,7 +658,17 @@
       "novo": false,
       "comentario": null,
       "adicionadoEm": "2026-09-24T15:12:31.790Z",
-      "ordem": 4
+      "ordem": 4,
+      "edicaoVenda": {
+        "id": 36838822,
+        "ano": 2026,
+        "pais": "Brazil",
+        "selo": "Três Selos",
+        "catno": "R3-074/2",
+        "formato": "LP, Album, Reissue, Repress",
+        "discogsUrl": "https://www.discogs.com/release/36838822",
+        "fixadaPeloDono": false
+      }
     },
     {
       "id": 2422289,
@@ -775,7 +815,17 @@
       "novo": false,
       "comentario": null,
       "adicionadoEm": "2026-09-24T15:12:36.973Z",
-      "ordem": 5
+      "ordem": 5,
+      "edicaoVenda": {
+        "id": 9804534,
+        "ano": 2017,
+        "pais": "Brazil",
+        "selo": "Polysom",
+        "catno": "33293-1",
+        "formato": "LP, Album, Reissue, Remastered",
+        "discogsUrl": "https://www.discogs.com/release/9804534",
+        "fixadaPeloDono": false
+      }
     },
     {
       "id": 1222672,
@@ -927,7 +977,17 @@
       "novo": false,
       "comentario": null,
       "adicionadoEm": "2026-09-24T15:12:42.153Z",
-      "ordem": 6
+      "ordem": 6,
+      "edicaoVenda": {
+        "id": 35136590,
+        "ano": 2025,
+        "pais": "Brazil",
+        "selo": "Universal Music",
+        "catno": "060243598603",
+        "formato": "LP, Album, Reissue, Remastered, Repress, Stereo",
+        "discogsUrl": "https://www.discogs.com/release/35136590",
+        "fixadaPeloDono": false
+      }
     },
     {
       "id": 1365302,
@@ -1107,7 +1167,17 @@
       "novo": false,
       "comentario": null,
       "adicionadoEm": "2026-09-24T15:12:47.345Z",
-      "ordem": 7
+      "ordem": 7,
+      "edicaoVenda": {
+        "id": 8173813,
+        "ano": 2015,
+        "pais": "Brazil",
+        "selo": "Polysom",
+        "catno": "33234-1",
+        "formato": "LP, Album, Reissue, Mono",
+        "discogsUrl": "https://www.discogs.com/release/8173813",
+        "fixadaPeloDono": false
+      }
     },
     {
       "id": 14478692,
@@ -1338,7 +1408,17 @@
       "novo": true,
       "comentario": "Elis & Tom (1974). No Discogs o artista é \"Elis* & Tom*\", por isso a linha usa o link direto.",
       "adicionadoEm": "2026-09-24T15:19:10.689Z",
-      "ordem": 8
+      "ordem": 8,
+      "edicaoVenda": {
+        "id": 13980452,
+        "ano": 2019,
+        "pais": "Brazil",
+        "selo": "Philips",
+        "catno": "060257715322",
+        "formato": "LP, Album, Reissue",
+        "discogsUrl": "https://www.discogs.com/release/13980452",
+        "fixadaPeloDono": false
+      }
     },
     {
       "id": 13374934,
@@ -1500,7 +1580,17 @@
       "novo": false,
       "comentario": null,
       "adicionadoEm": "2026-09-24T15:13:02.999Z",
-      "ordem": 9
+      "ordem": 9,
+      "edicaoVenda": {
+        "id": 5280303,
+        "ano": 1983,
+        "pais": "Brazil",
+        "selo": "Milestone",
+        "catno": "5047090, 504.7090",
+        "formato": "LP, Album",
+        "discogsUrl": "https://www.discogs.com/release/5280303",
+        "fixadaPeloDono": false
+      }
     },
     {
       "id": 649184,
@@ -1601,7 +1691,17 @@
       "novo": false,
       "comentario": null,
       "adicionadoEm": "2026-09-24T15:13:08.119Z",
-      "ordem": 10
+      "ordem": 10,
+      "edicaoVenda": {
+        "id": 35731924,
+        "ano": 2025,
+        "pais": "Brazil",
+        "selo": "Três Selos",
+        "catno": "TSR-083",
+        "formato": "LP, Album, Club Edition, Limited Edition, Reissue",
+        "discogsUrl": "https://www.discogs.com/release/35731924",
+        "fixadaPeloDono": false
+      }
     },
     {
       "id": 6276183,
@@ -1701,7 +1801,17 @@
       "novo": false,
       "comentario": null,
       "adicionadoEm": "2026-09-24T15:13:13.584Z",
-      "ordem": 11
+      "ordem": 11,
+      "edicaoVenda": {
+        "id": 37584492,
+        "ano": 2026,
+        "pais": "Europe",
+        "selo": "Second Records",
+        "catno": "SRPD0019",
+        "formato": "LP, Album, Reissue, Stereo",
+        "discogsUrl": "https://www.discogs.com/release/37584492",
+        "fixadaPeloDono": false
+      }
     },
     {
       "id": 6890747,
@@ -1793,7 +1903,17 @@
       "novo": false,
       "comentario": null,
       "adicionadoEm": "2026-09-24T15:13:18.629Z",
-      "ordem": 12
+      "ordem": 12,
+      "edicaoVenda": {
+        "id": 35229295,
+        "ano": 2025,
+        "pais": "US",
+        "selo": "Impulse!",
+        "catno": "A-77, 602478371004",
+        "formato": "LP, Album, Reissue, Mono",
+        "discogsUrl": "https://www.discogs.com/release/35229295",
+        "fixadaPeloDono": false
+      }
     },
     {
       "id": 549847,
@@ -1884,7 +2004,17 @@
       "novo": true,
       "comentario": null,
       "adicionadoEm": "2026-09-24T15:13:23.722Z",
-      "ordem": 13
+      "ordem": 13,
+      "edicaoVenda": {
+        "id": 35411572,
+        "ano": 2023,
+        "pais": "US",
+        "selo": "Impulse!",
+        "catno": "IMP-228",
+        "formato": "LP, Album, Limited Edition, Reissue",
+        "discogsUrl": "https://www.discogs.com/release/35411572",
+        "fixadaPeloDono": false
+      }
     },
     {
       "id": 873261,
@@ -1941,7 +2071,17 @@
       "novo": false,
       "comentario": null,
       "adicionadoEm": "2026-09-24T15:13:28.918Z",
-      "ordem": 14
+      "ordem": 14,
+      "edicaoVenda": {
+        "id": 25484281,
+        "ano": 2022,
+        "pais": "Worldwide",
+        "selo": "Impulse!",
+        "catno": "B0035572-01, A-9181, AS-9181",
+        "formato": "LP, Album, Reissue, Remastered, Stereo",
+        "discogsUrl": "https://www.discogs.com/release/25484281",
+        "fixadaPeloDono": false
+      }
     },
     {
       "id": 31381,
@@ -2064,7 +2204,17 @@
       "novo": false,
       "comentario": null,
       "adicionadoEm": "2026-09-24T15:13:34.142Z",
-      "ordem": 15
+      "ordem": 15,
+      "edicaoVenda": {
+        "id": 18271585,
+        "ano": 2021,
+        "pais": "US",
+        "selo": "Analogue Productions",
+        "catno": "APJ 084, AAPJ 084, KC 32731, AL 32731, 88875078021",
+        "formato": "LP, Album, Limited Edition, Reissue, Repress, Stereo",
+        "discogsUrl": "https://www.discogs.com/release/18271585",
+        "fixadaPeloDono": false
+      }
     },
     {
       "id": 7383499,
@@ -2257,7 +2407,17 @@
       "novo": false,
       "comentario": null,
       "adicionadoEm": "2026-09-24T15:13:39.364Z",
-      "ordem": 16
+      "ordem": 16,
+      "edicaoVenda": {
+        "id": 19092715,
+        "ano": 2021,
+        "pais": "Europe",
+        "selo": "Brainfeeder",
+        "catno": "BF050",
+        "formato": "Album",
+        "discogsUrl": "https://www.discogs.com/release/19092715",
+        "fixadaPeloDono": false
+      }
     },
     {
       "id": 12766539,
@@ -2319,7 +2479,17 @@
       "novo": false,
       "comentario": null,
       "adicionadoEm": "2026-09-24T15:13:44.593Z",
-      "ordem": 17
+      "ordem": 17,
+      "edicaoVenda": {
+        "id": 36391366,
+        "ano": 2026,
+        "pais": "US",
+        "selo": "Craft Recordings",
+        "catno": "CR10094, RLP 9376, OJC-140",
+        "formato": "LP, Album, Limited Edition, Reissue, Stereo",
+        "discogsUrl": "https://www.discogs.com/release/36391366",
+        "fixadaPeloDono": false
+      }
     },
     {
       "id": 26197826,
@@ -2398,7 +2568,17 @@
       "novo": false,
       "comentario": null,
       "adicionadoEm": "2026-09-24T15:13:49.778Z",
-      "ordem": 18
+      "ordem": 18,
+      "edicaoVenda": {
+        "id": 38205186,
+        "ano": 2026,
+        "pais": "US",
+        "selo": "Tamla",
+        "catno": "B0033100-01, Tamla 2025",
+        "formato": "LP, Album, Limited Edition, Reissue",
+        "discogsUrl": "https://www.discogs.com/release/38205186",
+        "fixadaPeloDono": false
+      }
     },
     {
       "id": 13286331,
@@ -2559,7 +2739,17 @@
       "novo": false,
       "comentario": null,
       "adicionadoEm": "2026-09-24T15:13:55.003Z",
-      "ordem": 19
+      "ordem": 19,
+      "edicaoVenda": {
+        "id": 25276999,
+        "ano": 2022,
+        "pais": "Europe",
+        "selo": "Tamla Motown",
+        "catno": "0050109032617",
+        "formato": "LP, Album, Reissue, Remastered, Stereo",
+        "discogsUrl": "https://www.discogs.com/release/25276999",
+        "fixadaPeloDono": false
+      }
     },
     {
       "id": 23757107,
@@ -2641,7 +2831,17 @@
       "novo": false,
       "comentario": null,
       "adicionadoEm": "2026-09-24T15:14:02.768Z",
-      "ordem": 20
+      "ordem": 20,
+      "edicaoVenda": {
+        "id": 37636218,
+        "ano": 2026,
+        "pais": "Worldwide",
+        "selo": "Rhino Records",
+        "catno": "RHF1 728259, 081227808792",
+        "formato": "LP, Album, Limited Edition, Numbered, Reissue, Stereo",
+        "discogsUrl": "https://www.discogs.com/release/37636218",
+        "fixadaPeloDono": false
+      }
     },
     {
       "id": 268430,
@@ -2848,7 +3048,17 @@
       "novo": true,
       "comentario": null,
       "adicionadoEm": "2026-09-24T15:14:07.947Z",
-      "ordem": 21
+      "ordem": 21,
+      "edicaoVenda": {
+        "id": 36474214,
+        "ano": 2026,
+        "pais": "Europe",
+        "selo": "Virgin",
+        "catno": "00602488290043, B0022335-01",
+        "formato": "LP, Album, Limited Edition, Reissue, Stereo",
+        "discogsUrl": "https://www.discogs.com/release/36474214",
+        "fixadaPeloDono": false
+      }
     },
     {
       "id": 202658,
@@ -2969,7 +3179,17 @@
       "novo": false,
       "comentario": null,
       "adicionadoEm": "2026-09-24T15:14:15.773Z",
-      "ordem": 22
+      "ordem": 22,
+      "edicaoVenda": {
+        "id": 25628452,
+        "ano": 2023,
+        "pais": "US",
+        "selo": "Motown",
+        "catno": "B0034240-01",
+        "formato": "LP, Album, Limited Edition, Reissue",
+        "discogsUrl": "https://www.discogs.com/release/25628452",
+        "fixadaPeloDono": false
+      }
     },
     {
       "id": 5431106,
@@ -3162,7 +3382,17 @@
       "novo": false,
       "comentario": null,
       "adicionadoEm": "2026-09-24T15:14:20.947Z",
-      "ordem": 23
+      "ordem": 23,
+      "edicaoVenda": {
+        "id": 27647037,
+        "ano": 2023,
+        "pais": "US",
+        "selo": "Epic",
+        "catno": "19658763921, KE 30986",
+        "formato": "LP, Album, Club Edition, Reissue, Remastered, Stereo",
+        "discogsUrl": "https://www.discogs.com/release/27647037",
+        "fixadaPeloDono": false
+      }
     },
     {
       "id": 2028398,
@@ -3329,7 +3559,17 @@
       "novo": false,
       "comentario": null,
       "adicionadoEm": "2026-09-24T15:14:26.128Z",
-      "ordem": 24
+      "ordem": 24,
+      "edicaoVenda": {
+        "id": 11741258,
+        "ano": 1977,
+        "pais": "Brazil",
+        "selo": "Polydor",
+        "catno": "2391 227",
+        "formato": "LP, Album, Stereo",
+        "discogsUrl": "https://www.discogs.com/release/11741258",
+        "fixadaPeloDono": false
+      }
     },
     {
       "id": 94800,
@@ -3481,7 +3721,17 @@
       "novo": false,
       "comentario": null,
       "adicionadoEm": "2026-09-24T15:14:31.346Z",
-      "ordem": 25
+      "ordem": 25,
+      "edicaoVenda": {
+        "id": 33671583,
+        "ano": 2025,
+        "pais": "Worldwide",
+        "selo": "RCA",
+        "catno": "19802901231",
+        "formato": "LP, Album, Record Store Day, Limited Edition, Reissue",
+        "discogsUrl": "https://www.discogs.com/release/33671583",
+        "fixadaPeloDono": false
+      }
     },
     {
       "id": 392604,
@@ -3669,7 +3919,17 @@
       "novo": false,
       "comentario": null,
       "adicionadoEm": "2026-09-24T15:14:36.663Z",
-      "ordem": 26
+      "ordem": 26,
+      "edicaoVenda": {
+        "id": 30343493,
+        "ano": 2024,
+        "pais": "US",
+        "selo": "Get On Down",
+        "catno": "GET 56055-7, 19658821957",
+        "formato": "7\", 45 RPM, Album, Stereo",
+        "discogsUrl": "https://www.discogs.com/release/30343493",
+        "fixadaPeloDono": false
+      }
     },
     {
       "id": 242785,
@@ -3851,7 +4111,17 @@
       "novo": false,
       "comentario": null,
       "adicionadoEm": "2026-09-24T15:14:41.772Z",
-      "ordem": 27
+      "ordem": 27,
+      "edicaoVenda": {
+        "id": 32459088,
+        "ano": 2024,
+        "pais": "Worldwide",
+        "selo": "Stones Throw Records",
+        "catno": "STH2065-8",
+        "formato": "LP, 45 RPM, Album, Reissue, Remastered",
+        "discogsUrl": "https://www.discogs.com/release/32459088",
+        "fixadaPeloDono": false
+      }
     },
     {
       "id": 356592,
@@ -3962,7 +4232,17 @@
       "novo": false,
       "comentario": null,
       "adicionadoEm": "2026-09-24T15:14:46.911Z",
-      "ordem": 28
+      "ordem": 28,
+      "edicaoVenda": {
+        "id": 37515507,
+        "ano": 2026,
+        "pais": null,
+        "selo": "Rhymesayers Entertainment",
+        "catno": "RSE0493-1",
+        "formato": "LP, Album, Reissue, Stereo",
+        "discogsUrl": "https://www.discogs.com/release/37515507",
+        "fixadaPeloDono": false
+      }
     },
     {
       "id": 8938725,
@@ -4258,7 +4538,17 @@
       "novo": true,
       "comentario": null,
       "adicionadoEm": "2026-09-24T15:14:52.157Z",
-      "ordem": 29
+      "ordem": 29,
+      "edicaoVenda": {
+        "id": 35572192,
+        "ano": 2025,
+        "pais": "US",
+        "selo": "Stones Throw Records",
+        "catno": "STH2126-10",
+        "formato": "LP, 45 RPM, Album, Reissue, Stereo",
+        "discogsUrl": "https://www.discogs.com/release/35572192",
+        "fixadaPeloDono": false
+      }
     },
     {
       "id": 15714043,
@@ -4405,7 +4695,17 @@
       "novo": false,
       "comentario": null,
       "adicionadoEm": "2026-09-24T15:14:57.373Z",
-      "ordem": 30
+      "ordem": 30,
+      "edicaoVenda": {
+        "id": 34138573,
+        "ano": 2025,
+        "pais": "Europe",
+        "selo": "Top Dawg Entertainment",
+        "catno": "00602478100871",
+        "formato": "LP, Limited Edition, Stereo",
+        "discogsUrl": "https://www.discogs.com/release/34138573",
+        "fixadaPeloDono": false
+      }
     },
     {
       "id": 5604009,
@@ -4567,7 +4867,17 @@
       "novo": false,
       "comentario": null,
       "adicionadoEm": "2026-09-24T15:15:02.543Z",
-      "ordem": 31
+      "ordem": 31,
+      "edicaoVenda": {
+        "id": 35873041,
+        "ano": 2025,
+        "pais": "Brazil",
+        "selo": "Três Selos Paralelo",
+        "catno": "TSPL-019 , FD-014, FD014",
+        "formato": "LP, Album, Limited Edition, Reissue",
+        "discogsUrl": "https://www.discogs.com/release/35873041",
+        "fixadaPeloDono": false
+      }
     },
     {
       "id": 9500449,
@@ -4733,7 +5043,17 @@
       "novo": false,
       "comentario": null,
       "adicionadoEm": "2026-09-24T15:15:07.779Z",
-      "ordem": 32
+      "ordem": 32,
+      "edicaoVenda": {
+        "id": 34074901,
+        "ano": 2025,
+        "pais": "US",
+        "selo": "Analogue Productions",
+        "catno": "UHQR 0016-45",
+        "formato": "12\", 45 RPM, Album, Numbered, Remastered, Stereo",
+        "discogsUrl": "https://www.discogs.com/release/34074901",
+        "fixadaPeloDono": false
+      }
     },
     {
       "id": 3942811,
@@ -4884,7 +5204,17 @@
       "novo": false,
       "comentario": null,
       "adicionadoEm": "2026-09-24T15:15:15.588Z",
-      "ordem": 33
+      "ordem": 33,
+      "edicaoVenda": {
+        "id": 34444447,
+        "ano": 2025,
+        "pais": "Europe",
+        "selo": "Onlyroots Records",
+        "catno": "ORLP18",
+        "formato": "LP, Album, Limited Edition, Reissue",
+        "discogsUrl": "https://www.discogs.com/release/34444447",
+        "fixadaPeloDono": false
+      }
     },
     {
       "id": 6401859,
@@ -5078,7 +5408,17 @@
       "novo": true,
       "comentario": "Super Ape (1976). No Discogs o crédito é \"The Upsetters\", por isso a linha usa o link direto.",
       "adicionadoEm": "2026-09-24T15:19:15.749Z",
-      "ordem": 34
+      "ordem": 34,
+      "edicaoVenda": {
+        "id": 25493965,
+        "ano": 2022,
+        "pais": "Europe",
+        "selo": "Music On Vinyl",
+        "catno": "MOVLP2526, MVLP2526",
+        "formato": "LP, Album, Limited Edition, Numbered, Reissue",
+        "discogsUrl": "https://www.discogs.com/release/25493965",
+        "fixadaPeloDono": false
+      }
     },
     {
       "id": 135352,
@@ -5215,7 +5555,17 @@
       "novo": false,
       "comentario": null,
       "adicionadoEm": "2026-09-24T15:15:28.570Z",
-      "ordem": 35
+      "ordem": 35,
+      "edicaoVenda": {
+        "id": 38138442,
+        "ano": 2026,
+        "pais": "Europe",
+        "selo": "Island Records",
+        "catno": "535 147-3",
+        "formato": "LP, Album",
+        "discogsUrl": "https://www.discogs.com/release/38138442",
+        "fixadaPeloDono": false
+      }
     },
     {
       "id": 4202979,
@@ -5368,7 +5718,17 @@
       "novo": false,
       "comentario": null,
       "adicionadoEm": "2026-09-24T15:15:33.761Z",
-      "ordem": 36
+      "ordem": 36,
+      "edicaoVenda": {
+        "id": 27035517,
+        "ano": 2023,
+        "pais": null,
+        "selo": "Greensleeves Records",
+        "catno": "GREL 2031",
+        "formato": "LP, Album, Reissue",
+        "discogsUrl": "https://www.discogs.com/release/27035517",
+        "fixadaPeloDono": false
+      }
     },
     {
       "id": 1078894,
@@ -5476,7 +5836,17 @@
       "novo": false,
       "comentario": null,
       "adicionadoEm": "2026-09-24T15:15:38.979Z",
-      "ordem": 37
+      "ordem": 37,
+      "edicaoVenda": {
+        "id": 34930796,
+        "ano": 2025,
+        "pais": null,
+        "selo": "Dragon",
+        "catno": "DRLS-5002",
+        "formato": "LP, Album, Reissue, Stereo",
+        "discogsUrl": "https://www.discogs.com/release/34930796",
+        "fixadaPeloDono": false
+      }
     },
     {
       "id": 2879,
@@ -5752,7 +6122,17 @@
       "novo": false,
       "comentario": null,
       "adicionadoEm": "2026-09-24T15:15:44.201Z",
-      "ordem": 38
+      "ordem": 38,
+      "edicaoVenda": {
+        "id": 32515302,
+        "ano": 2024,
+        "pais": "Worldwide",
+        "selo": "Daft Life",
+        "catno": "0085365227255",
+        "formato": "LP, Album, Limited Edition, Reissue",
+        "discogsUrl": "https://www.discogs.com/release/32515302",
+        "fixadaPeloDono": false
+      }
     },
     {
       "id": 11778,
@@ -6370,7 +6750,17 @@
       "novo": false,
       "comentario": null,
       "adicionadoEm": "2026-09-24T15:15:49.358Z",
-      "ordem": 39
+      "ordem": 39,
+      "edicaoVenda": {
+        "id": 34258777,
+        "ano": 2025,
+        "pais": "Europe",
+        "selo": "Warp Records",
+        "catno": "warplp55r, skalp1",
+        "formato": "LP, Album, Reissue",
+        "discogsUrl": "https://www.discogs.com/release/34258777",
+        "fixadaPeloDono": false
+      }
     },
     {
       "id": 13314830,
@@ -6486,7 +6876,17 @@
       "novo": false,
       "comentario": null,
       "adicionadoEm": "2026-09-24T15:15:54.550Z",
-      "ordem": 40
+      "ordem": 40,
+      "edicaoVenda": {
+        "id": 37004412,
+        "ano": 2026,
+        "pais": "USA & Europe",
+        "selo": "Apollo",
+        "catno": "AMB3922LPRT",
+        "formato": "LP, Album, Limited Edition, Picture Disc, Reissue, Stereo",
+        "discogsUrl": "https://www.discogs.com/release/37004412",
+        "fixadaPeloDono": false
+      }
     },
     {
       "id": 5750709,
@@ -6589,7 +6989,17 @@
       "novo": false,
       "comentario": null,
       "adicionadoEm": "2026-09-24T15:16:02.398Z",
-      "ordem": 41
+      "ordem": 41,
+      "edicaoVenda": {
+        "id": 30995770,
+        "ano": 2024,
+        "pais": "Argentina",
+        "selo": "Kling Klang",
+        "catno": "50999 9 66020 1 0, 5099996602010, 9999-66020-1",
+        "formato": "LP, Album, Reissue, Remastered, Repress",
+        "discogsUrl": "https://www.discogs.com/release/30995770",
+        "fixadaPeloDono": false
+      }
     },
     {
       "id": 6530,
@@ -6685,7 +7095,17 @@
       "novo": true,
       "comentario": null,
       "adicionadoEm": "2026-09-24T15:16:07.591Z",
-      "ordem": 42
+      "ordem": 42,
+      "edicaoVenda": {
+        "id": 37787442,
+        "ano": 2026,
+        "pais": "Japan",
+        "selo": "Virgin",
+        "catno": "375-4043, 0602537540433",
+        "formato": "LP, Album, Reissue, Stereo",
+        "discogsUrl": "https://www.discogs.com/release/37787442",
+        "fixadaPeloDono": false
+      }
     },
     {
       "id": 1125096,
@@ -6821,7 +7241,17 @@
       "novo": false,
       "comentario": null,
       "adicionadoEm": "2026-09-24T15:16:12.761Z",
-      "ordem": 43
+      "ordem": 43,
+      "edicaoVenda": {
+        "id": 31888372,
+        "ano": 2024,
+        "pais": "UK",
+        "selo": "Hyperdub",
+        "catno": "HDBLP002",
+        "formato": "12\", 33 ⅓ RPM, Album, Reissue, Repress, Special Edition",
+        "discogsUrl": "https://www.discogs.com/release/31888372",
+        "fixadaPeloDono": false
+      }
     },
     {
       "id": 1025,
@@ -6995,7 +7425,17 @@
       "novo": false,
       "comentario": null,
       "adicionadoEm": "2026-09-24T15:16:17.996Z",
-      "ordem": 44
+      "ordem": 44,
+      "edicaoVenda": {
+        "id": 1025,
+        "ano": 1997,
+        "pais": "US",
+        "selo": "Planet E",
+        "catno": "pe65234",
+        "formato": "12\", Album, 33 ⅓ RPM",
+        "discogsUrl": "https://www.discogs.com/release/1025",
+        "fixadaPeloDono": false
+      }
     },
     {
       "id": 1873013,
@@ -7089,7 +7529,17 @@
       "novo": false,
       "comentario": null,
       "adicionadoEm": "2026-09-24T15:16:23.320Z",
-      "ordem": 45
+      "ordem": 45,
+      "edicaoVenda": {
+        "id": 33535515,
+        "ano": 2025,
+        "pais": "Worldwide",
+        "selo": "Legacy",
+        "catno": "196587 20271",
+        "formato": "LP, Album, Reissue, Remastered, Stereo",
+        "discogsUrl": "https://www.discogs.com/release/33535515",
+        "fixadaPeloDono": false
+      }
     },
     {
       "id": 4950798,
@@ -7209,7 +7659,17 @@
       "novo": false,
       "comentario": null,
       "adicionadoEm": "2026-09-24T15:16:28.391Z",
-      "ordem": 46
+      "ordem": 46,
+      "edicaoVenda": {
+        "id": 38206593,
+        "ano": 2026,
+        "pais": "Australia",
+        "selo": "XL Recordings",
+        "catno": "XLLP781",
+        "formato": "LP, Album, Reissue",
+        "discogsUrl": "https://www.discogs.com/release/38206593",
+        "fixadaPeloDono": false
+      }
     },
     {
       "id": 5034045,
@@ -7390,7 +7850,17 @@
       "novo": false,
       "comentario": null,
       "adicionadoEm": "2026-09-24T15:16:33.611Z",
-      "ordem": 47
+      "ordem": 47,
+      "edicaoVenda": {
+        "id": 38237838,
+        "ano": 2026,
+        "pais": "Japan",
+        "selo": "Verve Records",
+        "catno": "UIJY-75397",
+        "formato": "LP, Album, Limited Edition, Reissue, Stereo",
+        "discogsUrl": "https://www.discogs.com/release/38237838",
+        "fixadaPeloDono": false
+      }
     },
     {
       "id": 7252111,
@@ -7612,7 +8082,17 @@
       "novo": true,
       "comentario": null,
       "adicionadoEm": "2026-09-24T15:16:38.895Z",
-      "ordem": 48
+      "ordem": 48,
+      "edicaoVenda": {
+        "id": 35422432,
+        "ano": 2025,
+        "pais": "US",
+        "selo": "Interscope Records",
+        "catno": "602488527392",
+        "formato": "LP, Album, Limited Edition, Reissue",
+        "discogsUrl": "https://www.discogs.com/release/35422432",
+        "fixadaPeloDono": false
+      }
     },
     {
       "id": 11416588,
@@ -7779,7 +8259,17 @@
       "novo": false,
       "comentario": null,
       "adicionadoEm": "2026-09-24T15:16:43.945Z",
-      "ordem": 49
+      "ordem": 49,
+      "edicaoVenda": {
+        "id": 35974129,
+        "ano": 2025,
+        "pais": "Japan",
+        "selo": "Night Time Stories",
+        "catno": "ALNLP050RBR",
+        "formato": "LP, Album, Limited Edition, Reissue",
+        "discogsUrl": "https://www.discogs.com/release/35974129",
+        "fixadaPeloDono": false
+      }
     },
     {
       "id": 216166,
@@ -7884,7 +8374,17 @@
       "novo": false,
       "comentario": null,
       "adicionadoEm": "2026-09-24T15:16:49.215Z",
-      "ordem": 50
+      "ordem": 50,
+      "edicaoVenda": {
+        "id": 36839548,
+        "ano": 2026,
+        "pais": "Argentina",
+        "selo": "Parlophone",
+        "catno": "DB 77821, 9029-58429-1",
+        "formato": "LP, Album, Reissue, Remastered, Stereo",
+        "discogsUrl": "https://www.discogs.com/release/36839548",
+        "fixadaPeloDono": false
+      }
     },
     {
       "id": 526351,
@@ -8000,7 +8500,17 @@
       "novo": false,
       "comentario": null,
       "adicionadoEm": "2026-09-24T15:16:54.677Z",
-      "ordem": 51
+      "ordem": 51,
+      "edicaoVenda": {
+        "id": 37222998,
+        "ano": 2026,
+        "pais": "Canada",
+        "selo": "Warner Records",
+        "catno": "RCV1 726431",
+        "formato": "LP, Album, Reissue, Stereo",
+        "discogsUrl": "https://www.discogs.com/release/37222998",
+        "fixadaPeloDono": false
+      }
     }
   ]
 }

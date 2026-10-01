@@ -27,13 +27,24 @@ function disco(id) {
 
 // Clone do catálogo de teste do contrato: 726944 com preco=220, 2968639 sem
 // preço, 242785 com preco=180. Os preços são injetados só no teste, nunca em
-// data/catalogo.json.
+// data/catalogo.json. edicaoVenda forçado a null em todos: este fixture cobre
+// o cenário "sem edição" (texto esperado usa selo/catno da prensagem), e não
+// pode depender de o catálogo real ainda não ter o campo — quando o pipeline
+// passar a gravar edicaoVenda nos discos reais, o teste continua cobrindo o
+// caso que ele diz cobrir.
 function catalogoComPrecosDoContrato() {
   return catalogo.map((d) => {
-    if (d.id === JORGE_BEN_ID) return { ...d, preco: 220 };
-    if (d.id === MADVILLAINY_ID) return { ...d, preco: 180 };
-    return d;
+    if (d.id === JORGE_BEN_ID) return { ...d, preco: 220, edicaoVenda: null };
+    if (d.id === MADVILLAINY_ID) return { ...d, preco: 180, edicaoVenda: null };
+    return { ...d, edicaoVenda: null };
   });
+}
+
+// Clone do catálogo real forçando edicaoVenda: null — usado pelos testes que
+// esperam o texto "sem edição" (selo/catno da prensagem) e não têm por que
+// depender de o catálogo real ter ou não o campo.
+function catalogoSemEdicao() {
+  return catalogo.map((d) => ({ ...d, edicaoVenda: null }));
 }
 
 describe('adicionar', () => {
@@ -235,7 +246,7 @@ describe('mensagemPedido', () => {
     estado = adicionar(estado, JORGE_BEN_ID); // qtd 2
     estado = adicionar(estado, ARTHUR_VEROCAI_ID); // qtd 1
 
-    const msg = mensagemPedido(estado, catalogo, 'Originária Discos');
+    const msg = mensagemPedido(estado, catalogoSemEdicao(), 'Originária Discos');
     const linhas = msg.split('\n');
 
     assert.equal(linhas[0], 'Olá! Quero fazer um pedido na Originária Discos:');
@@ -303,5 +314,28 @@ describe('mensagemPedido', () => {
     assert.equal(disco(JORGE_BEN_ID).preco, null);
     assert.equal(disco(ARTHUR_VEROCAI_ID).preco, null);
     assert.equal(disco(MADVILLAINY_ID).preco, null);
+  });
+
+  test('com edicaoVenda: trecho de selo/ano/catno da edição e link do release dela (v5)', () => {
+    const catalogoTeste = catalogo.map((d) =>
+      d.id === JORGE_BEN_ID
+        ? {
+            ...d,
+            preco: 220,
+            edicaoVenda: { id: 15793439, ano: 2020, pais: 'Brazil', selo: 'Polysom', catno: '33057-1' },
+          }
+        : d
+    );
+    const estado = adicionar({ itens: [], obs: '' }, JORGE_BEN_ID);
+    const comQtd2 = definirQtd(estado, JORGE_BEN_ID, 2);
+
+    const msg = mensagemPedido(comQtd2, catalogoTeste, 'Originária Discos');
+    const linhas = msg.split('\n');
+
+    assert.equal(
+      linhas[2],
+      '1. Jorge Ben – África Brasil (1976) · Vinil LP · Polysom 2020 · 33057-1 · 2 un. × R$ 220 = R$ 440'
+    );
+    assert.equal(linhas[3], '   discogs.com/release/15793439');
   });
 });
