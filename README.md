@@ -29,17 +29,21 @@ npm run lint       # checa a sintaxe dos .js/.mjs
 o limite de taxa do Discogs). Rode `npm run catalogo -- --force` para ignorar o cache de
 releases em `data/cache/` e buscar tudo de novo.
 
-## Como precificar (3 passos)
+## Como precificar (4 passos)
 
-1. Rode `npm run precos` (usa `data/catalogo.json`, então rode `npm run catalogo` antes se ele
+1. Rode `npm run varejo` antes de `npm run precos` (≈ 10–20 min, por causa do intervalo de
+   10 s que as lojas pedem) para gerar `data/precos-varejo.json` com ofertas de lojas
+   brasileiras de vinil novo. Sem esse arquivo, `npm run precos` roda igual, só sem a coluna
+   de varejo BR no relatório.
+2. Rode `npm run precos` (usa `data/catalogo.json`, então rode `npm run catalogo` antes se ele
    estiver desatualizado). O script consulta o Discogs Marketplace disco a disco — sem
    `DISCOGS_TOKEN` já traz o menor anúncio à venda em BRL; com um token em
    `Settings → Developers` no discogs.com (`export DISCOGS_TOKEN=...` antes de rodar), também
    traz a sugestão de preço por condição (Mint, Near Mint) na moeda da sua conta.
-2. Leia `data/precos-relatorio.md`: uma linha por disco com à venda, menor anúncio, sugestão,
+3. Leia `data/precos-relatorio.md`: uma linha por disco com à venda, menor anúncio, sugestão,
    preços observados manualmente (`data/precos-observados.csv`) e a referência (mediana das
    fontes disponíveis) ao lado do preço atual em `discos.txt`.
-3. Rode `npm run precos -- --propor` (aceita `--margem=1.10` etc., padrão `1.00`) para gerar
+4. Rode `npm run precos -- --propor` (aceita `--margem=1.10` etc., padrão `1.00`) para gerar
    `discos.propostos.txt` — cópia de `discos.txt` com `preco=` preenchido (referência × margem,
    arredondado para múltiplo de 5) só nas linhas que ainda não tinham preço. Copie pra
    `discos.txt` as linhas que você aprovar; `discos.propostos.txt` nunca é commitado nem lido
@@ -47,6 +51,9 @@ releases em `data/cache/` e buscar tudo de novo.
 
 Preços observados manualmente (grupos de WhatsApp, lojas) entram em
 `data/precos-observados.csv` (`id,preco,fonte,data,link`, `id` = release id do Discogs).
+
+Para fixar a edição que você vende, acrescente `| edicao=<link do release no Discogs>` na
+linha do disco.
 
 Como a loja vende novo/lacrado, a referência **não** usa o preço da prensagem original de
 colecionador — ela busca a reedição em vinil oficial mais recente de cada disco (a mais nova do
