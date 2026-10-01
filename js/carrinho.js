@@ -1,7 +1,9 @@
-// Carrinho (v2) — pedido com vários discos pelo WhatsApp, sem pagamento.
+// Carrinho (v3) — pedido com vários discos pelo WhatsApp, sem pagamento,
+// com preço unitário e subtotal por item.
 // Funções puras e testáveis (adicionar, remover, definirQtd, total,
-// mensagemPedido, quantidadeTotal, formatarTotal) + camada de I/O
-// (carregar, salvar, atualizarContadorHeader) que toca localStorage/DOM.
+// mensagemPedido, quantidadeTotal, formatarPreco, formatarSubtotal,
+// formatarTotal) + camada de I/O (carregar, salvar, atualizarContadorHeader)
+// que toca localStorage/DOM.
 
 const CHAVE = 'originaria.carrinho.v1';
 const QTD_MIN = 1;
@@ -36,24 +38,32 @@ export function definirQtd(estado, id, qtd) {
   };
 }
 
+/** `R$ 220`, `R$ 1.250` — pt-BR, sem centavos, com separador de milhar. */
+export function formatarPreco(preco) {
+  return `R$ ${preco.toLocaleString('pt-BR')}`;
+}
+
 /**
  * Soma o carrinho contra o catálogo: `valor` = total em reais dos itens com
- * preço conhecido; `temSemPreco` = quantos itens (linhas, não unidades) não
- * têm preço. Item cujo id não existe mais no catálogo é ignorado aqui.
+ * preço conhecido; `itensComPreco`/`itensSemPreco` = quantos itens (linhas,
+ * não unidades) têm ou não preço. Item cujo id não existe mais no catálogo
+ * é ignorado aqui.
  */
 export function total(estado, catalogo) {
   let valor = 0;
-  let temSemPreco = 0;
+  let itensComPreco = 0;
+  let itensSemPreco = 0;
   for (const item of estado.itens) {
     const disco = catalogo.find((d) => d.id === item.id);
     if (!disco) continue;
     if (disco.preco == null) {
-      temSemPreco += 1;
+      itensSemPreco += 1;
     } else {
+      itensComPreco += 1;
       valor += disco.preco * item.qtd;
     }
   }
-  return { valor, temSemPreco };
+  return { valor, itensComPreco, itensSemPreco };
 }
 
 /** Soma das quantidades de todos os itens — usada no contador do header. */
@@ -61,12 +71,49 @@ export function quantidadeTotal(estado) {
   return estado.itens.reduce((acc, it) => acc + it.qtd, 0);
 }
 
-/** A linha "Total: ..." — usada tanto na mensagem do WhatsApp quanto na página do carrinho. */
-export function formatarTotal({ valor, temSemPreco }) {
-  if (temSemPreco > 0) {
-    return `Total: sob consulta (${temSemPreco} ${temSemPreco === 1 ? 'item' : 'itens'} sem preço)`;
+/**
+ * `qtd × preço = resultado`, com sufixo opcional depois da quantidade
+ * (` un.` na mensagem do pedido; nada no subtotal da página do carrinho).
+ */
+function formatarMultiplicacao(preco, qtd, sufixoQtd = '') {
+  return `${qtd}${sufixoQtd} × ${formatarPreco(preco)} = ${formatarPreco(preco * qtd)}`;
+}
+
+/**
+ * Subtotal de uma linha (preço unitário × quantidade), usado na página do
+ * carrinho: `2 × R$ 220 = R$ 440` (qtd > 1), `R$ 220` (qtd 1), `Sob consulta`
+ * (sem preço).
+ */
+export function formatarSubtotal(preco, qtd) {
+  if (preco == null) return 'Sob consulta';
+  if (qtd > 1) return formatarMultiplicacao(preco, qtd);
+  return formatarPreco(preco);
+}
+
+/**
+ * Final de linha de um item na mensagem do pedido: `· R$ 220` (preço, qtd 1),
+ * `· 2 un. × R$ 220 = R$ 440` (preço, qtd > 1), `· Sob consulta` (sem preço,
+ * qtd 1), `· 2 un. · Sob consulta` (sem preço, qtd > 1) — o `·` é acrescentado
+ * por quem chama.
+ */
+function finalLinhaItem(preco, qtd) {
+  if (preco == null) {
+    return qtd > 1 ? `${qtd} un. · Sob consulta` : 'Sob consulta';
   }
-  return `Total: R$ ${valor}`;
+  if (qtd > 1) return formatarMultiplicacao(preco, qtd, ' un.');
+  return formatarPreco(preco);
+}
+
+/** A linha "Total: ..." — usada tanto na mensagem do WhatsApp quanto na página do carrinho. */
+export function formatarTotal({ valor, itensComPreco, itensSemPreco }) {
+  if (itensSemPreco === 0) {
+    return `Total: ${formatarPreco(valor)}`;
+  }
+  const rotuloItens = itensSemPreco === 1 ? 'item' : 'itens';
+  if (itensComPreco === 0) {
+    return `Total: sob consulta (${itensSemPreco} ${rotuloItens} sem preço)`;
+  }
+  return `Total: ${formatarPreco(valor)} + ${itensSemPreco} ${rotuloItens} sob consulta`;
 }
 
 /** Mensagem completa do pedido, pronta para `encodeURIComponent` (linkPedido, em whatsapp.js). */
@@ -79,9 +126,8 @@ export function mensagemPedido(estado, catalogo, nomeLoja) {
 
   itensValidos.forEach(({ item, disco }, i) => {
     const ano = disco.ano ? ` (${disco.ano})` : '';
-    const qtdSuffix = item.qtd > 1 ? ` · ${item.qtd} un.` : '';
     linhas.push(
-      `${i + 1}. ${disco.artista} – ${disco.titulo}${ano} · ${disco.formatoLabel} · ${disco.selo} ${disco.catno}${qtdSuffix}`
+      `${i + 1}. ${disco.artista} – ${disco.titulo}${ano} · ${disco.formatoLabel} · ${disco.selo} ${disco.catno} · ${finalLinhaItem(disco.preco, item.qtd)}`
     );
     linhas.push(`   discogs.com/release/${disco.id}`);
   });

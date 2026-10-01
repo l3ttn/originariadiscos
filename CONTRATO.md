@@ -135,3 +135,28 @@ Pode me passar disponibilidade, prazo e valor?
   `(ano)` só se houver; `· N un.` só se `qtd > 1`; a linha do Discogs é `discogs.com/release/{id}` (sem slug, mais curta no WhatsApp); preço formatado `R$ 220` sem centavos; itens na ordem em que foram adicionados.
 - **Regras**: zero deps, ES modules, `WHATSAPP` só de `js/config.js`; tudo relativo (subpath do Pages); textos pt-BR; mobile 360 px sem scroll horizontal; `carrinho.html` tem o mesmo header/footer estático dos outros (com "Data provided by Discogs").
 - **Testes** `tests/carrinho.test.mjs`: adicionar (novo → qtd 1; repetido → qtd 2), remover, definirQtd com limites 1–9, total com e sem preço, mensagem com 2 itens (bate com o modelo acima, literalmente), item de id inexistente ignorado.
+
+## Preço por item (v3)
+
+O cliente precisa ver exatamente o que está levando: preço unitário, quantidade e subtotal por disco, e o total depois. Preço vem de `preco=NNN` em `discos.txt` (inteiro em reais); sem preço → "Sob consulta". Formatação pt-BR sem centavos e com separador de milhar: `R$ 220`, `R$ 1.250` (`formatarPreco(n)` em `js/carrinho.js`, exportada).
+
+- **Página do carrinho**, por item: preço unitário (`R$ 220` ou `Sob consulta`), controle − / + e subtotal (`2 × R$ 220 = R$ 440`; com qtd 1 só `R$ 220`; sem preço `Sob consulta`). Linha de total abaixo da lista, nas três formas: todos com preço → `Total: R$ 660`; misto → `Total: R$ 620 + 1 item sob consulta` (`+ 2 itens sob consulta`); nenhum com preço → `Total: sob consulta (2 itens sem preço)` (como hoje).
+- **Mensagem do pedido** (`mensagemPedido`), fim da linha de cada item: com preço e qtd 1 → `· R$ 220`; com preço e qtd > 1 → `· 2 un. × R$ 220 = R$ 440`; sem preço e qtd 1 → `· Sob consulta`; sem preço e qtd > 1 → `· 2 un. · Sob consulta`. Linha `Total:` com as mesmas três formas da página. Exemplo literal (726944 com `preco=220` e qtd 2; 2968639 sem preço; 242785 com `preco=180`):
+
+```
+Olá! Quero fazer um pedido na Originária Discos:
+
+1. Jorge Ben – África Brasil (1976) · Vinil LP · Philips 6349 187 · 2 un. × R$ 220 = R$ 440
+   discogs.com/release/726944
+2. Arthur Verocai – Arthur Verocai (1972) · Vinil LP · Continental SLP-10.079 · Sob consulta
+   discogs.com/release/2968639
+3. MF DOOM & Madlib & Madvillain – Madvillainy (2004) · Vinil 2LP · Stones Throw Records STH2065 · R$ 180
+   discogs.com/release/242785
+
+Total: R$ 620 + 1 item sob consulta
+
+Pode me passar disponibilidade, prazo e valor?
+```
+
+- `total(estado, catalogo)` passa a devolver `{ valor, itensComPreco, itensSemPreco }`; `formatarTotal` gera a linha nas três formas. Card e ficha continuam mostrando `R$ 220` / `Sob consulta`.
+- Testes em `tests/carrinho.test.mjs`: os quatro finais de linha, as três formas de total, `formatarPreco(1250) === 'R$ 1.250'`, e a mensagem literal acima (catálogo de teste = os 3 discos reais com os preços injetados no teste, não no `data/catalogo.json`).
