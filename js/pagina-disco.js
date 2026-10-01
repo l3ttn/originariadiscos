@@ -148,14 +148,32 @@ function renderFicha(container, disco) {
   info.appendChild(el('p', 'ficha__artista', disco.artista));
   info.appendChild(el('h1', null, disco.titulo));
 
-  const selo = `${disco.selo || ''}${disco.catno ? ` ${disco.catno}` : ''}`.trim();
-  if (selo) info.appendChild(el('p', 'ficha__meta', selo));
+  const ev = disco.edicaoVenda;
+  if (ev) {
+    const linhaEdicao = [ev.selo, ev.pais, ev.ano != null ? String(ev.ano) : null, ev.catno]
+      .filter(Boolean)
+      .join(' · ');
+    info.appendChild(el('p', 'ficha__meta', `Edição à venda: ${linhaEdicao}`));
+    if (ev.id !== disco.id) {
+      const linhaOriginal = [disco.selo, disco.pais, disco.ano != null ? String(disco.ano) : null]
+        .filter(Boolean)
+        .join(' · ');
+      info.appendChild(
+        el('p', 'ficha__meta ficha__meta--original', `Lançamento original: ${linhaOriginal}`)
+      );
+    }
+  } else {
+    const selo = `${disco.selo || ''}${disco.catno ? ` ${disco.catno}` : ''}`.trim();
+    if (selo) info.appendChild(el('p', 'ficha__meta', selo));
+  }
 
   const detalhes = [disco.formatoLabel, disco.cor, disco.edicao].filter(Boolean).join(' · ');
   if (detalhes) info.appendChild(el('p', 'ficha__meta', detalhes));
 
-  const paisAno = [disco.pais, disco.ano].filter(Boolean).join(' · ');
-  if (paisAno) info.appendChild(el('p', 'ficha__meta', paisAno));
+  if (!ev) {
+    const paisAno = [disco.pais, disco.ano].filter(Boolean).join(' · ');
+    if (paisAno) info.appendChild(el('p', 'ficha__meta', paisAno));
+  }
 
   info.appendChild(renderTags(disco));
 
@@ -186,7 +204,7 @@ function renderFicha(container, disco) {
 
   const linkDiscogs = document.createElement('a');
   linkDiscogs.className = 'ficha__discogs';
-  linkDiscogs.href = disco.discogsUrl;
+  linkDiscogs.href = disco.edicaoVenda ? disco.edicaoVenda.discogsUrl : disco.discogsUrl;
   linkDiscogs.target = '_blank';
   linkDiscogs.rel = 'noopener';
   linkDiscogs.textContent = 'Ver no Discogs';

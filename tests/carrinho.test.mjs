@@ -304,4 +304,27 @@ describe('mensagemPedido', () => {
     assert.equal(disco(ARTHUR_VEROCAI_ID).preco, null);
     assert.equal(disco(MADVILLAINY_ID).preco, null);
   });
+
+  test('com edicaoVenda: trecho de selo/ano/catno da edição e link do release dela (v5)', () => {
+    const catalogoTeste = catalogo.map((d) =>
+      d.id === JORGE_BEN_ID
+        ? {
+            ...d,
+            preco: 220,
+            edicaoVenda: { id: 15793439, ano: 2020, pais: 'Brazil', selo: 'Polysom', catno: '33057-1' },
+          }
+        : d
+    );
+    const estado = adicionar({ itens: [], obs: '' }, JORGE_BEN_ID);
+    const comQtd2 = definirQtd(estado, JORGE_BEN_ID, 2);
+
+    const msg = mensagemPedido(comQtd2, catalogoTeste, 'Originária Discos');
+    const linhas = msg.split('\n');
+
+    assert.equal(
+      linhas[2],
+      '1. Jorge Ben – África Brasil (1976) · Vinil LP · Polysom 2020 · 33057-1 · 2 un. × R$ 220 = R$ 440'
+    );
+    assert.equal(linhas[3], '   discogs.com/release/15793439');
+  });
 });

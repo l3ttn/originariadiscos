@@ -26,6 +26,15 @@ const discoSemCorSemAno = {
   discogsUrl: 'https://www.discogs.com/release/2968639-Arthur-Verocai-Arthur-Verocai',
 };
 
+const edicaoVenda = {
+  id: 15793439,
+  ano: 2020,
+  pais: 'Brazil',
+  selo: 'Polysom',
+  catno: '33057-1',
+  discogsUrl: 'https://www.discogs.com/release/15793439',
+};
+
 function textoDoLink(href) {
   return decodeURIComponent(new URL(href).searchParams.get('text'));
 }
@@ -81,6 +90,23 @@ describe('linkSolicitar', () => {
     assert.ok(texto.includes('Vinil 2LP'));
     assert.ok(texto.includes('Continental'));
     assert.ok(texto.includes(discoSemCorSemAno.discogsUrl));
+  });
+
+  test('sem edicaoVenda: trecho de selo e link iguais a hoje (prensagem)', () => {
+    const href = linkSolicitar({ ...discoComCorEAno, status: 'disponivel' });
+    const texto = textoDoLink(href);
+    assert.ok(texto.includes('Philips 6349 187'));
+    assert.ok(texto.includes(`Discogs: ${discoComCorEAno.discogsUrl}`));
+  });
+
+  test('com edicaoVenda: trecho de selo "{selo} {ano} · {catno}" e link da edição', () => {
+    const href = linkSolicitar({ ...discoComCorEAno, status: 'disponivel', edicaoVenda });
+    const texto = textoDoLink(href);
+    assert.ok(texto.includes('Polysom 2020 · 33057-1'));
+    assert.ok(texto.includes(`Discogs: ${edicaoVenda.discogsUrl}`));
+    assert.ok(!texto.includes(discoComCorEAno.discogsUrl));
+    // ano no parêntese depois do título continua sendo o ano original.
+    assert.ok(texto.includes('(1976)'));
   });
 });
 

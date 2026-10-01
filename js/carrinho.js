@@ -72,6 +72,28 @@ export function quantidadeTotal(estado) {
 }
 
 /**
+ * Trecho "selo catno" da linha do item (mensagem do pedido e CTA do
+ * WhatsApp): sem `edicaoVenda`, selo e catno da prensagem, como hoje
+ * (`{selo} {catno}`); com `edicaoVenda`, selo/ano/catno da edição que a loja
+ * vende — o que o cliente vai receber (`{selo} {ano} · {catno}`).
+ */
+export function trechoEdicao(disco) {
+  const ev = disco.edicaoVenda;
+  if (!ev) return `${disco.selo} ${disco.catno}`;
+  return `${ev.selo} ${ev.ano} · ${ev.catno}`;
+}
+
+/** Id de release do Discogs da linha: da `edicaoVenda` quando houver, senão da prensagem. */
+export function releaseIdLinha(disco) {
+  return disco.edicaoVenda ? disco.edicaoVenda.id : disco.id;
+}
+
+/** URL completa do Discogs para o CTA: da `edicaoVenda` quando houver, senão da prensagem. */
+export function discogsUrlLinha(disco) {
+  return disco.edicaoVenda ? disco.edicaoVenda.discogsUrl : disco.discogsUrl;
+}
+
+/**
  * `qtd × preço = resultado`, com sufixo opcional depois da quantidade
  * (` un.` na mensagem do pedido; nada no subtotal da página do carrinho).
  */
@@ -127,9 +149,9 @@ export function mensagemPedido(estado, catalogo, nomeLoja) {
   itensValidos.forEach(({ item, disco }, i) => {
     const ano = disco.ano ? ` (${disco.ano})` : '';
     linhas.push(
-      `${i + 1}. ${disco.artista} – ${disco.titulo}${ano} · ${disco.formatoLabel} · ${disco.selo} ${disco.catno} · ${finalLinhaItem(disco.preco, item.qtd)}`
+      `${i + 1}. ${disco.artista} – ${disco.titulo}${ano} · ${disco.formatoLabel} · ${trechoEdicao(disco)} · ${finalLinhaItem(disco.preco, item.qtd)}`
     );
-    linhas.push(`   discogs.com/release/${disco.id}`);
+    linhas.push(`   discogs.com/release/${releaseIdLinha(disco)}`);
   });
 
   linhas.push('');
