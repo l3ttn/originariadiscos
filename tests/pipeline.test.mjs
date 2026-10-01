@@ -18,6 +18,7 @@ import {
   derivarEdicaoVendaFixada,
   resolverIdEdicaoFixada,
   descricoesVinilString,
+  chamarDiscogs,
 } from '../scripts/build-catalogo.mjs';
 
 // --- parseLinha -------------------------------------------------------
@@ -342,4 +343,44 @@ test('derivarEdicaoVendaFixada: sem release (falha ao buscar) → null', () => {
 test('descricoesVinilString: descrições do 1º formato Vinyl unidas por ", "; sem Vinyl → null', () => {
   assert.equal(descricoesVinilString([{ name: 'Vinyl', descriptions: ['LP', 'Album', 'Reissue'] }]), 'LP, Album, Reissue');
   assert.equal(descricoesVinilString([{ name: 'CD' }]), null);
+});
+
+// --- chamarDiscogs: retry em 5xx (além do 429 já existente) ------------------
+// Caso real medido em 2026-10-01: GET masters/8554/versions devolveu HTTP 500 (não 429), e a
+// mesma URL respondeu 200 minutos depois — por isso 5xx também precisa de retry.
+
+function respostaFalsa(status, corpo) {
+  return { status, ok: status >= 200 && status < 300, headers: { get: () => null }, json: async () => corpo };
+}
+
+test('chamarDiscogs: 500, 500, 200 — tenta de novo em 5xx e tem sucesso na 3ª tentativa', async () => {
+  const respostas = [respostaFalsa(500), respostaFalsa(500), respostaFalsa(200, { versions: [] })];
+  let chamadas = 0;
+  const fetchFalso = async () => respostas[chamadas++];
+  const esperas = [];
+  const dormirFalso = async (ms) => {
+    esperas.push(ms);
+  };
+  const dados = await chamarDiscogs('https://api.discogs.com/masters/8554/versions', 'masters/8554/versions(teste)', {
+    fetchImpl: fetchFalso,
+    dormirImpl: dormirFalso,
+  });
+  assert.deepEqual(dados, { versions: [] });
+  assert.equal(chamadas, 3);
+  // 2 esperas de 5s (depois da 1ª e da 2ª tentativa, ambas 500); as demais entradas de
+  // `esperas` são o espaçamento normal entre chamadas (PACING_MS), não a espera do retry.
+  assert.deepEqual(esperas.filter((ms) => ms === 5000), [5000, 5000]);
+});
+
+test('chamarDiscogs: 500 nas 3 tentativas — erro com mensagem clara (não trava à toa, como o 429)', async () => {
+  const fetchFalso = async () => respostaFalsa(500);
+  const dormirFalso = async () => {};
+  await assert.rejects(
+    () =>
+      chamarDiscogs('https://api.discogs.com/masters/8554/versions', 'masters/8554/versions(teste persistente)', {
+        fetchImpl: fetchFalso,
+        dormirImpl: dormirFalso,
+      }),
+    /HTTP 500 persistente em masters\/8554\/versions\(teste persistente\)/,
+  );
 });

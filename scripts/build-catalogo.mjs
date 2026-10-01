@@ -24,6 +24,7 @@ const PACING_MS = 2600;
 const TIMEOUT_MS = 20000;
 const CACHE_FRESCURA_MS = 6 * 60 * 60 * 1000; // 6h
 const MAX_TENTATIVAS_429 = 3;
+const ESPERA_5XX_MS = 5000;
 
 const STATUS_VALIDOS = ['esgotado', 'disponivel', 'encomenda'];
 const SEPARADOR_RE = / (–|-|—) /;
@@ -425,16 +426,23 @@ function dormir(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-async function espacarChamada() {
+async function espacarChamada(dormirImpl) {
   const agora = Date.now();
   const espera = ultimaChamadaEm + PACING_MS - agora;
-  if (espera > 0) await dormir(espera);
+  if (espera > 0) await dormirImpl(espera);
   ultimaChamadaEm = Date.now();
 }
 
-export async function chamarDiscogs(url, contexto) {
+/**
+ * `fetchImpl`/`dormirImpl` são injetáveis para teste (sem rede, sem esperar de verdade);
+ * com os valores padrão (`fetch`/`dormir` de verdade) o comportamento é o de produção.
+ * Retry: até MAX_TENTATIVAS_429 tentativas no total, tanto em 429 (espera `Retry-After`, ou
+ * 60s sem o header) quanto em 5xx (espera fixa de `ESPERA_5XX_MS`, 5s) — qualquer outro erro
+ * HTTP ou timeout não tenta de novo.
+ */
+export async function chamarDiscogs(url, contexto, { fetchImpl = fetch, dormirImpl = dormir } = {}) {
   for (let tentativa = 1; tentativa <= MAX_TENTATIVAS_429; tentativa += 1) {
-    await espacarChamada();
+    await espacarChamada(dormirImpl);
     const headers = { 'User-Agent': USER_AGENT };
     if (process.env.DISCOGS_TOKEN) {
       headers.Authorization = `Discogs token=${process.env.DISCOGS_TOKEN}`;
@@ -443,15 +451,22 @@ export async function chamarDiscogs(url, contexto) {
     const timer = setTimeout(() => controller.abort(), TIMEOUT_MS);
     contadorChamadas += 1;
     try {
-      const resp = await fetch(url, { headers, signal: controller.signal });
+      const resp = await fetchImpl(url, { headers, signal: controller.signal });
       if (resp.status === 429) {
         const retryAfter = Number(resp.headers.get('retry-after'));
         const esperaMs = Number.isFinite(retryAfter) && retryAfter > 0 ? retryAfter * 1000 : 60000;
         if (tentativa < MAX_TENTATIVAS_429) {
-          await dormir(esperaMs);
+          await dormirImpl(esperaMs);
           continue;
         }
         throw new Error(`429 persistente em ${contexto}`);
+      }
+      if (resp.status >= 500 && resp.status <= 599) {
+        if (tentativa < MAX_TENTATIVAS_429) {
+          await dormirImpl(ESPERA_5XX_MS);
+          continue;
+        }
+        throw new Error(`HTTP ${resp.status} persistente em ${contexto}`);
       }
       if (!resp.ok) {
         throw new Error(`HTTP ${resp.status} em ${contexto}`);
