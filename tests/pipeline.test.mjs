@@ -14,6 +14,11 @@ import {
   listaFormato,
   pontuarCandidato,
   escolherMelhorCandidato,
+  derivarEdicaoVendaAutomatica,
+  derivarEdicaoVendaFixada,
+  resolverIdEdicaoFixada,
+  descricoesVinilString,
+  chamarDiscogs,
 } from '../scripts/build-catalogo.mjs';
 
 // --- parseLinha -------------------------------------------------------
@@ -261,4 +266,121 @@ test('filtrarCandidatosQueCasam: devolve todos os que casam, não só o primeiro
   const candidatos = filtrarCandidatosQueCasam(resultados, normalizarTexto('Alice Coltrane'), normalizarTexto('Journey In Satchidananda'));
   assert.equal(candidatos.length, 2);
   assert.deepEqual(candidatos.map((c) => c.id), [1, 2]);
+});
+
+// --- edicaoVenda (v5) — CONTRATO.md "Edição à venda (v5)" -------------------
+
+test('parseLinha: campo edicao= fica em opts.edicao (URL ou id de release)', () => {
+  const r1 = parseLinha('Jorge Ben – África Brasil | edicao=https://www.discogs.com/release/15793439', 'Brasil');
+  assert.equal(r1.ok, true);
+  assert.equal(r1.opts.edicao, 'https://www.discogs.com/release/15793439');
+  const r2 = parseLinha('Jorge Ben – África Brasil', 'Brasil');
+  assert.equal(r2.opts.edicao, null);
+});
+
+test('resolverIdEdicaoFixada: aceita URL de release ou id numérico; outra coisa → null', () => {
+  assert.equal(resolverIdEdicaoFixada('https://www.discogs.com/release/15793439-Jorge-Ben-Africa-Brasil'), 15793439);
+  assert.equal(resolverIdEdicaoFixada('15793439'), 15793439);
+  assert.equal(resolverIdEdicaoFixada('abc'), null);
+  assert.equal(resolverIdEdicaoFixada(null), null);
+});
+
+test('derivarEdicaoVendaAutomatica: a partir de um versions[] de fixture com bootleg — exclui o bootleg e escolhe a reedição Brasil mais recente (caso real: master 112296, África Brasil)', () => {
+  const versoesBrutas = [
+    { id: 31257475, released: '2024', country: 'Europe', label: 'Future Shock (4)', catno: 'FS4485', format: 'LP, Album, Reissue, Unofficial Release' }, // bootleg — tem de ser excluído
+    { id: 15793439, released: '2020', country: 'Brazil', label: 'Polysom', catno: '33057-1', format: 'LP, Album, Limited Edition, Reissue, Repress' },
+    { id: 18574192, released: '2019', country: 'US', label: 'Universal Music Special Markets (2)', catno: 'B0028558-01', format: 'LP, Album, Reissue, Stereo' },
+  ];
+  const edicaoVenda = derivarEdicaoVendaAutomatica(versoesBrutas);
+  assert.deepEqual(edicaoVenda, {
+    id: 15793439,
+    ano: 2020,
+    pais: 'Brazil',
+    selo: 'Polysom',
+    catno: '33057-1',
+    formato: 'LP, Album, Limited Edition, Reissue, Repress',
+    discogsUrl: 'https://www.discogs.com/release/15793439',
+    fixadaPeloDono: false,
+  });
+});
+
+test('derivarEdicaoVendaAutomatica: só o bootleg (sem versão oficial) → null', () => {
+  const versoesBrutas = [
+    { id: 31257475, released: '2024', country: 'Europe', label: 'Future Shock', catno: 'FS4485', format: 'LP, Album, Reissue, Unofficial Release' },
+  ];
+  assert.equal(derivarEdicaoVendaAutomatica(versoesBrutas), null);
+});
+
+test('derivarEdicaoVendaAutomatica: sem versões (master sem reedição) → null', () => {
+  assert.equal(derivarEdicaoVendaAutomatica([]), null);
+});
+
+test('derivarEdicaoVendaFixada: a partir de um release de fixture (edicao= fixado pelo dono)', () => {
+  const releaseFixture = {
+    id: 999,
+    year: 2018,
+    country: 'Germany',
+    labels: [{ name: 'Music On Vinyl (2)', catno: 'MOVLP123' }],
+    formats: [{ name: 'Vinyl', qty: '1', descriptions: ['LP', 'Album', 'Reissue', '180g'] }],
+    uri: 'https://www.discogs.com/release/999-Fixture',
+  };
+  assert.deepEqual(derivarEdicaoVendaFixada(releaseFixture), {
+    id: 999,
+    ano: 2018,
+    pais: 'Germany',
+    selo: 'Music On Vinyl', // sufixo " (2)" removido
+    catno: 'MOVLP123',
+    formato: 'LP, Album, Reissue, 180g',
+    discogsUrl: 'https://www.discogs.com/release/999-Fixture',
+    fixadaPeloDono: true,
+  });
+});
+
+test('derivarEdicaoVendaFixada: sem release (falha ao buscar) → null', () => {
+  assert.equal(derivarEdicaoVendaFixada(null), null);
+});
+
+test('descricoesVinilString: descrições do 1º formato Vinyl unidas por ", "; sem Vinyl → null', () => {
+  assert.equal(descricoesVinilString([{ name: 'Vinyl', descriptions: ['LP', 'Album', 'Reissue'] }]), 'LP, Album, Reissue');
+  assert.equal(descricoesVinilString([{ name: 'CD' }]), null);
+});
+
+// --- chamarDiscogs: retry em 5xx (além do 429 já existente) ------------------
+// Caso real medido em 2026-10-01: GET masters/8554/versions devolveu HTTP 500 (não 429), e a
+// mesma URL respondeu 200 minutos depois — por isso 5xx também precisa de retry.
+
+function respostaFalsa(status, corpo) {
+  return { status, ok: status >= 200 && status < 300, headers: { get: () => null }, json: async () => corpo };
+}
+
+test('chamarDiscogs: 500, 500, 200 — tenta de novo em 5xx e tem sucesso na 3ª tentativa', async () => {
+  const respostas = [respostaFalsa(500), respostaFalsa(500), respostaFalsa(200, { versions: [] })];
+  let chamadas = 0;
+  const fetchFalso = async () => respostas[chamadas++];
+  const esperas = [];
+  const dormirFalso = async (ms) => {
+    esperas.push(ms);
+  };
+  const dados = await chamarDiscogs('https://api.discogs.com/masters/8554/versions', 'masters/8554/versions(teste)', {
+    fetchImpl: fetchFalso,
+    dormirImpl: dormirFalso,
+  });
+  assert.deepEqual(dados, { versions: [] });
+  assert.equal(chamadas, 3);
+  // 2 esperas de 5s (depois da 1ª e da 2ª tentativa, ambas 500); as demais entradas de
+  // `esperas` são o espaçamento normal entre chamadas (PACING_MS), não a espera do retry.
+  assert.deepEqual(esperas.filter((ms) => ms === 5000), [5000, 5000]);
+});
+
+test('chamarDiscogs: 500 nas 3 tentativas — erro com mensagem clara (não trava à toa, como o 429)', async () => {
+  const fetchFalso = async () => respostaFalsa(500);
+  const dormirFalso = async () => {};
+  await assert.rejects(
+    () =>
+      chamarDiscogs('https://api.discogs.com/masters/8554/versions', 'masters/8554/versions(teste persistente)', {
+        fetchImpl: fetchFalso,
+        dormirImpl: dormirFalso,
+      }),
+    /HTTP 500 persistente em masters\/8554\/versions\(teste persistente\)/,
+  );
 });

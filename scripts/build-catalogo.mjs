@@ -8,6 +8,8 @@ import { promises as fs } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
+import { filtrarVersoesOficiais, escolherCandidatasReedicao, obterVersoesReedicao } from './discogs-versoes.mjs';
+
 const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
 const ROOT_DIR = path.join(SCRIPT_DIR, '..');
 const DATA_DIR = path.join(ROOT_DIR, 'data');
@@ -22,6 +24,7 @@ const PACING_MS = 2600;
 const TIMEOUT_MS = 20000;
 const CACHE_FRESCURA_MS = 6 * 60 * 60 * 1000; // 6h
 const MAX_TENTATIVAS_429 = 3;
+const ESPERA_5XX_MS = 5000;
 
 const STATUS_VALIDOS = ['esgotado', 'disponivel', 'encomenda'];
 const SEPARADOR_RE = / (–|-|—) /;
@@ -164,6 +167,60 @@ export function derivarVideos(videos) {
   return out;
 }
 
+/** descrições do 1º formato Vinyl unidas por ", "; sem formato Vinyl ou sem descriptions → null. */
+export function descricoesVinilString(formats) {
+  const vinil = encontrarFormatoVinil(formats);
+  if (!vinil) return null;
+  const descricoes = Array.isArray(vinil.descriptions) ? vinil.descriptions.map(String) : [];
+  return descricoes.length ? descricoes.join(', ') : null;
+}
+
+/**
+ * edicaoVenda automático (CONTRATO.md "Edição à venda (v5)") a partir de TODAS as versões em
+ * vinil do master (ordenadas por released desc, como a API devolve em
+ * /masters/{id}/versions): filtra fora Unofficial Release/Test Pressing/Promo e escolhe a
+ * mesma regra de `precos.mjs` (v4.1) — a mais recente com country "Brazil", senão a mais
+ * recente oficial no geral. Sem versão oficial alguma → null.
+ */
+export function derivarEdicaoVendaAutomatica(versoesBrutas) {
+  const escolhida = escolherCandidatasReedicao(filtrarVersoesOficiais(versoesBrutas))[0] || null;
+  if (!escolhida) return null;
+  return {
+    id: escolhida.id,
+    ano: Number(String(escolhida.released ?? '').slice(0, 4)) || null,
+    pais: escolhida.country || null,
+    selo: escolhida.label ? removerSufixoNumerico(escolhida.label) : null,
+    catno: escolhida.catno || null,
+    formato: escolhida.format || null,
+    discogsUrl: `https://www.discogs.com/release/${escolhida.id}`,
+    fixadaPeloDono: false,
+  };
+}
+
+/** edicaoVenda fixada pelo dono (`| edicao=`) a partir do release completo (GET /releases/{id}). */
+export function derivarEdicaoVendaFixada(release) {
+  if (!release) return null;
+  return {
+    id: release.id,
+    ano: release.year && release.year !== 0 ? release.year : null,
+    pais: release.country || null,
+    selo: release.labels?.[0]?.name ? limparNomeSelo(release.labels[0].name) : null,
+    catno: release.labels?.[0]?.catno || null,
+    formato: descricoesVinilString(release.formats),
+    discogsUrl: release.uri,
+    fixadaPeloDono: true,
+  };
+}
+
+/** `edicao=<URL ou id>` → release id; sem casar URL de release nem id numérico válido → null. */
+export function resolverIdEdicaoFixada(valor) {
+  if (!valor) return null;
+  const releaseMatch = RELEASE_URL_RE.exec(valor);
+  if (releaseMatch) return Number(releaseMatch[1]);
+  const n = Number(valor);
+  return Number.isInteger(n) && n > 0 ? n : null;
+}
+
 /**
  * Parse de uma linha de discos.txt.
  * Retorna { ok: true, tipo: 'release'|'master'|'texto', ... , opts, bruta }
@@ -184,6 +241,7 @@ export function parseLinha(linhaCrua, secaoAtual) {
     nota: null,
     destaque: false,
     novo: false,
+    edicao: null,
   };
 
   for (const campo of partes.slice(1)) {
@@ -210,6 +268,8 @@ export function parseLinha(linhaCrua, secaoAtual) {
       opts.secao = valor;
     } else if (chave === 'nota') {
       opts.nota = valor;
+    } else if (chave === 'edicao') {
+      opts.edicao = valor;
     } else {
       return { ok: false, motivo: `campo desconhecido: ${chave}`, bruta };
     }
@@ -353,20 +413,36 @@ class PendenteError extends Error {}
 let contadorChamadas = 0;
 let ultimaChamadaEm = 0;
 
+/**
+ * Total de chamadas HTTP de verdade feitas via `chamarDiscogs` nesta execução (não conta
+ * cache hits) — único contador, incrementado dentro de `chamarDiscogs` independente de quem
+ * chama (este módulo, discogs-versoes.mjs ou precos.mjs), já que todos passam por aqui.
+ */
+export function obterContadorChamadas() {
+  return contadorChamadas;
+}
+
 function dormir(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-async function espacarChamada() {
+async function espacarChamada(dormirImpl) {
   const agora = Date.now();
   const espera = ultimaChamadaEm + PACING_MS - agora;
-  if (espera > 0) await dormir(espera);
+  if (espera > 0) await dormirImpl(espera);
   ultimaChamadaEm = Date.now();
 }
 
-export async function chamarDiscogs(url, contexto) {
+/**
+ * `fetchImpl`/`dormirImpl` são injetáveis para teste (sem rede, sem esperar de verdade);
+ * com os valores padrão (`fetch`/`dormir` de verdade) o comportamento é o de produção.
+ * Retry: até MAX_TENTATIVAS_429 tentativas no total, tanto em 429 (espera `Retry-After`, ou
+ * 60s sem o header) quanto em 5xx (espera fixa de `ESPERA_5XX_MS`, 5s) — qualquer outro erro
+ * HTTP ou timeout não tenta de novo.
+ */
+export async function chamarDiscogs(url, contexto, { fetchImpl = fetch, dormirImpl = dormir } = {}) {
   for (let tentativa = 1; tentativa <= MAX_TENTATIVAS_429; tentativa += 1) {
-    await espacarChamada();
+    await espacarChamada(dormirImpl);
     const headers = { 'User-Agent': USER_AGENT };
     if (process.env.DISCOGS_TOKEN) {
       headers.Authorization = `Discogs token=${process.env.DISCOGS_TOKEN}`;
@@ -375,15 +451,22 @@ export async function chamarDiscogs(url, contexto) {
     const timer = setTimeout(() => controller.abort(), TIMEOUT_MS);
     contadorChamadas += 1;
     try {
-      const resp = await fetch(url, { headers, signal: controller.signal });
+      const resp = await fetchImpl(url, { headers, signal: controller.signal });
       if (resp.status === 429) {
         const retryAfter = Number(resp.headers.get('retry-after'));
         const esperaMs = Number.isFinite(retryAfter) && retryAfter > 0 ? retryAfter * 1000 : 60000;
         if (tentativa < MAX_TENTATIVAS_429) {
-          await dormir(esperaMs);
+          await dormirImpl(esperaMs);
           continue;
         }
         throw new Error(`429 persistente em ${contexto}`);
+      }
+      if (resp.status >= 500 && resp.status <= 599) {
+        if (tentativa < MAX_TENTATIVAS_429) {
+          await dormirImpl(ESPERA_5XX_MS);
+          continue;
+        }
+        throw new Error(`HTTP ${resp.status} persistente em ${contexto}`);
       }
       if (!resp.ok) {
         throw new Error(`HTTP ${resp.status} em ${contexto}`);
@@ -432,6 +515,36 @@ async function obterRelease(id, force) {
   await fs.mkdir(CACHE_DIR, { recursive: true });
   await escreverJsonAtomic(caminho, data);
   return data;
+}
+
+/**
+ * edicaoVenda do disco (CONTRATO.md "Edição à venda (v5)"): `opts.edicao` (fixada pelo
+ * dono) tem prioridade; falhando ou ausente, cai para a escolha automática pela reedição do
+ * master (cache de 6h em data/cache/versoes-{masterId}.json, via discogs-versoes.mjs). Sem
+ * masterId e sem `opts.edicao` válida → null.
+ */
+async function obterEdicaoVenda(opts, masterId, force) {
+  if (opts.edicao) {
+    const idFixado = resolverIdEdicaoFixada(opts.edicao);
+    if (idFixado) {
+      try {
+        const releaseFixado = await obterRelease(idFixado, force);
+        return derivarEdicaoVendaFixada(releaseFixado);
+      } catch (err) {
+        console.error(`aviso: falha ao buscar edicao=${opts.edicao} (release ${idFixado}): ${err.message}`);
+      }
+    } else {
+      console.error(`aviso: edicao=${opts.edicao} não é URL de release nem id válido`);
+    }
+  }
+  if (!masterId) return null;
+  try {
+    const versoes = await obterVersoesReedicao(masterId);
+    return derivarEdicaoVendaAutomatica(versoes);
+  } catch (err) {
+    console.error(`aviso: falha em masters/${masterId}/versions (edicaoVenda): ${err.message}`);
+    return null;
+  }
 }
 
 async function buscarDiscogs(artista, titulo, tipo) {
@@ -736,6 +849,7 @@ async function main() {
         const adicionadoEm = resolvidos[chave]?.adicionadoEm ?? anterior.adicionadoEm ?? new Date().toISOString();
         discosFinal.push({
           ...anterior,
+          edicaoVenda: anterior.edicaoVenda ?? null,
           status: linha.opts.status,
           preco: linha.opts.preco,
           secao: linha.opts.secao,
@@ -767,6 +881,7 @@ async function main() {
       pendentesLinhas.push(`SEM RESULTADO (release ${id} sem formato Vinyl): ${linha.bruta}`);
       continue;
     }
+    entrada.edicaoVenda = await obterEdicaoVenda(linha.opts, entrada.masterId, force);
     resolvidos[chave] = { id, adicionadoEm };
     discosFinal.push(entrada);
     if (verificarInfo) pendentesLinhas.push(verificarInfo);
