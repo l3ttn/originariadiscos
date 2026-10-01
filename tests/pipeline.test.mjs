@@ -19,6 +19,7 @@ import {
   resolverIdEdicaoFixada,
   descricoesVinilString,
   chamarDiscogs,
+  obterEdicaoVenda,
 } from '../scripts/build-catalogo.mjs';
 
 // --- parseLinha -------------------------------------------------------
@@ -383,4 +384,63 @@ test('chamarDiscogs: 500 nas 3 tentativas — erro com mensagem clara (não trav
       }),
     /HTTP 500 persistente em masters\/8554\/versions\(teste persistente\)/,
   );
+});
+
+// --- obterEdicaoVenda: falha de rede/HTTP não é "sem versão oficial" --------
+// Caso real medido em 2026-10-01: masters/8554/versions falhou (HTTP 500) e o build gravou
+// `edicaoVenda: null` por cima da edição que o disco já tinha — o Actions roda sem cache a
+// cada 6h, então um 500 passageiro trocaria a ficha pela prensagem original até a próxima
+// rodada com sorte. CONTRATO.md "Pipeline": falha por disco reaproveita a entrada anterior.
+
+const EDICAO_VENDA_ANTERIOR = {
+  id: 15793439,
+  ano: 2020,
+  pais: 'Brazil',
+  selo: 'Polysom',
+  catno: '33057-1',
+  formato: 'LP, Album, Limited Edition, Reissue, Repress',
+  discogsUrl: 'https://www.discogs.com/release/15793439',
+  fixadaPeloDono: false,
+};
+
+test('obterEdicaoVenda: anterior com edição + versões falhando (mesmo após retries) → mantém a anterior', async () => {
+  const anterior = { id: 726944, edicaoVenda: EDICAO_VENDA_ANTERIOR };
+  const obterVersoesReedicaoImpl = async () => {
+    throw new Error('HTTP 500 persistente em masters/112296/versions(reedicao)');
+  };
+  const resultado = await obterEdicaoVenda({ edicao: null }, 112296, false, anterior, { obterVersoesReedicaoImpl });
+  assert.deepEqual(resultado, EDICAO_VENDA_ANTERIOR);
+});
+
+test('obterEdicaoVenda: anterior com edição + versões OK mas sem versão oficial → null (resultado legítimo, não mantém a anterior)', async () => {
+  const anterior = { id: 726944, edicaoVenda: EDICAO_VENDA_ANTERIOR };
+  const versoesSoBootleg = [
+    { id: 31257475, released: '2024', country: 'Europe', label: 'Future Shock', catno: 'FS4485', format: 'LP, Album, Reissue, Unofficial Release' },
+  ];
+  const obterVersoesReedicaoImpl = async () => versoesSoBootleg;
+  const resultado = await obterEdicaoVenda({ edicao: null }, 112296, false, anterior, { obterVersoesReedicaoImpl });
+  assert.equal(resultado, null);
+});
+
+test('obterEdicaoVenda: sem anterior (disco novo) + falha → null (não tem o que manter)', async () => {
+  const obterVersoesReedicaoImpl = async () => {
+    throw new Error('HTTP 500 persistente em masters/999/versions(reedicao)');
+  };
+  const resultado = await obterEdicaoVenda({ edicao: null }, 999, false, undefined, { obterVersoesReedicaoImpl });
+  assert.equal(resultado, null);
+});
+
+test('obterEdicaoVenda: edicao= fixada falhando no GET /releases/{id} → mesma regra, mantém a anterior', async () => {
+  const anterior = { id: 726944, edicaoVenda: EDICAO_VENDA_ANTERIOR };
+  const obterReleaseImpl = async () => {
+    throw new Error('HTTP 500 persistente em releases/15793439');
+  };
+  const resultado = await obterEdicaoVenda(
+    { edicao: 'https://www.discogs.com/release/15793439' },
+    112296,
+    false,
+    anterior,
+    { obterReleaseImpl },
+  );
+  assert.deepEqual(resultado, EDICAO_VENDA_ANTERIOR);
 });
