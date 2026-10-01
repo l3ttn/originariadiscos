@@ -5,6 +5,7 @@ import {
   parseRobotsTxt,
   caminhoCasaPadrao,
   permiteCaminho,
+  interpretarRobots,
   caminhoDaUrl,
   intervaloDoHost,
   requisitarRespeitandoRobots,
@@ -15,10 +16,12 @@ import {
   extrairNomeProduto,
   slugDaUrl,
   slugCasaDisco,
+  nomeCasaDisco,
   escolherUrlsCandidatas,
   casaTituloEArtista,
   dedupUrls,
   dedupOfertasPorUrl,
+  processarLoja,
 } from '../scripts/varejo-br.mjs';
 
 const ROBOTS_LOJA_INTEGRADA = [
@@ -72,6 +75,66 @@ test('caminhoDaUrl / intervaloDoHost: path+query, e max(Crawl-delay, 3s)', () =>
   assert.equal(intervaloDoHost(10), 10000);
   assert.equal(intervaloDoHost(null), 3000);
   assert.equal(intervaloDoHost(1), 3000); // 1s de Crawl-delay não baixa do mínimo de 3s
+});
+
+// --- disponibilidade do robots.txt (RFC 9309 §2.3.1.3) --------------------------------------
+
+test('interpretarRobots: 200 → parse normal das regras', () => {
+  const r = interpretarRobots(200, ROBOTS_LOJA_INTEGRADA);
+  assert.equal(r.indisponivel, false);
+  assert.equal(r.status, 200);
+  assert.equal(r.crawlDelay, 10);
+  assert.equal(r.regras.length, 8);
+});
+
+test('interpretarRobots: 404 (sem robots.txt) → sem regra nenhuma, permitido', () => {
+  const r = interpretarRobots(404, null);
+  assert.equal(r.indisponivel, false);
+  assert.equal(r.status, 404);
+  assert.deepEqual(r.regras, []);
+  assert.equal(permiteCaminho(r, '/qualquer-caminho'), true);
+});
+
+test('interpretarRobots: 503 → indisponível (host inteiro deve ser pulado, não "tudo permitido")', () => {
+  const r = interpretarRobots(503, null);
+  assert.equal(r.indisponivel, true);
+  assert.equal(r.status, 503);
+});
+
+test('interpretarRobots: timeout/erro de rede (status null) → indisponível', () => {
+  const r = interpretarRobots(null, null);
+  assert.equal(r.indisponivel, true);
+  assert.equal(r.status, null);
+});
+
+test('processarLoja: robots.txt 503 → host pulado por completo, fetch injetado só vê o robots.txt', async () => {
+  const chamadas = [];
+  const buscarFn = async (url) => {
+    chamadas.push(url);
+    if (url.endsWith('/robots.txt')) return { status: 503, texto: null };
+    throw new Error(`não deveria buscar ${url} com robots indisponível`);
+  };
+  const loja = { nome: 'Loja Indisponível', base: 'https://loja-indisponivel.example.com' };
+  const { resumo, ofertasPorId } = await processarLoja(loja, [JORGE_BEN_AFRICA_BRASIL], buscarFn);
+  assert.deepEqual(chamadas, ['https://loja-indisponivel.example.com/robots.txt']);
+  assert.equal(resumo.robotsIndisponivel, true);
+  assert.equal(resumo.robotsStatus, 503);
+  assert.equal(resumo.produtosNoSitemap, 0);
+  assert.deepEqual(ofertasPorId, {});
+});
+
+test('processarLoja: erro de rede no robots.txt → mesmo tratamento (host pulado)', async () => {
+  const chamadas = [];
+  const buscarFn = async (url) => {
+    chamadas.push(url);
+    if (url.endsWith('/robots.txt')) return { status: null, texto: null };
+    throw new Error(`não deveria buscar ${url} com robots indisponível`);
+  };
+  const loja = { nome: 'Loja Fora Do Ar', base: 'https://loja-fora-do-ar.example.com' };
+  const { resumo } = await processarLoja(loja, [JORGE_BEN_AFRICA_BRASIL], buscarFn);
+  assert.deepEqual(chamadas, ['https://loja-fora-do-ar.example.com/robots.txt']);
+  assert.equal(resumo.robotsIndisponivel, true);
+  assert.equal(resumo.robotsStatus, null);
 });
 
 // --- agendador: nunca chama fetch para URL proibida; respeita o intervalo ------------------
@@ -262,4 +325,17 @@ test('casaTituloEArtista: nome extraído da página precisa casar título+artist
   const nome = extrairNomeProduto(HTML_PRODUTO);
   assert.equal(casaTituloEArtista(JORGE_BEN_AFRICA_BRASIL, nome), true);
   assert.equal(casaTituloEArtista({ artista: 'Outro Artista', titulo: 'Outro Título' }, nome), false);
+});
+
+test('nomeCasaDisco: rejeita pelo nome um "kit" que casaria em título+artista (mesmo casamento do slug)', () => {
+  // casaTituloEArtista por si só aceitaria (não aplica a lista de exclusão) — é por isso que
+  // o contrato pede "o mesmo casamento" do slug no nome, não só título+artista.
+  const nome = 'Kit Disco de Vinil Lp Jorge Ben A Tabua da Esmeralda + Africa Brasil';
+  assert.equal(casaTituloEArtista(JORGE_BEN_AFRICA_BRASIL, nome), true);
+  assert.equal(nomeCasaDisco(JORGE_BEN_AFRICA_BRASIL, nome), false);
+});
+
+test('nomeCasaDisco: aceita nome normal, sem termo excluído ("lp"/"vinil" não é exigido aqui)', () => {
+  const nome = extrairNomeProduto(HTML_PRODUTO);
+  assert.equal(nomeCasaDisco(JORGE_BEN_AFRICA_BRASIL, nome), true);
 });

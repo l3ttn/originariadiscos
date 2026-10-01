@@ -90,10 +90,20 @@ export function casaTituloEArtista(disco, texto) {
 }
 
 /** Regra de casamento do slug: sem termo excluído, com "lp"/"vinil", título+artista casam. */
+/**
+ * "Mesmo casamento" do slug, mas sem exigir "lp"/"vinil" (isso é regra só do slug da URL,
+ * não do nome da página — CONTRATO.md: "o nome tem de passar no mesmo casamento"). Cobre a
+ * exclusão (cd/box/kit/…) + título/artista — é o que falta para rejeitar, por nome, algo como
+ * "Kit Disco de Vinil Lp Jorge Ben A Tabua da Esmeralda + Africa Brasil".
+ */
+export function nomeCasaDisco(disco, nome) {
+  if (slugExcluido(nome)) return false;
+  return casaTituloEArtista(disco, nome);
+}
+
 export function slugCasaDisco(disco, slug) {
-  if (slugExcluido(slug)) return false;
   if (!contemLpOuVinil(slug)) return false;
-  return casaTituloEArtista(disco, slug);
+  return nomeCasaDisco(disco, slug);
 }
 
 /** Último segmento não vazio do path da URL (o slug, nas lojas Loja Integrada). */
@@ -216,6 +226,23 @@ export function permiteCaminho(parsed, caminho) {
   return melhor.tipo === 'allow';
 }
 
+/**
+ * Interpreta a resposta de robots.txt pela RFC 9309 (§2.3.1.3): 2xx → parse normal; 4xx
+ * (inclusive 404, "sem robots.txt") → sem regra nenhuma, tudo permitido; 5xx, timeout ou erro
+ * de rede (`status` null) → **indisponível**, o host inteiro deve ser tratado como proibido
+ * (não é "tudo permitido" por omissão — essa era a falha: `parseRobotsTxt('')` num erro de
+ * rede equivalia a Allow: / implícito).
+ */
+export function interpretarRobots(status, texto) {
+  if (typeof status === 'number' && status >= 200 && status < 300) {
+    return { ...parseRobotsTxt(texto || ''), indisponivel: false, status };
+  }
+  if (typeof status === 'number' && status >= 400 && status < 500) {
+    return { regras: [], crawlDelay: null, indisponivel: false, status };
+  }
+  return { regras: [], crawlDelay: null, indisponivel: true, status: status ?? null };
+}
+
 // --- sitemap -------------------------------------------------------------------------------
 
 /** Todo conteúdo de <loc>...</loc> de um XML de sitemap. */
@@ -331,8 +358,13 @@ async function dormirReal(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-/** GET com User-Agent honesto, timeout de 20s e retry de 429/503 (60s, até 2 tentativas). */
-async function buscarTexto(url) {
+/**
+ * GET com User-Agent honesto, timeout de 20s e retry de 429/503 (60s, até 2 tentativas).
+ * Devolve `{ status, texto }`: `status` é o HTTP status da última tentativa, ou `null` se a
+ * requisição nunca chegou a ter resposta (timeout/erro de rede) — é esse par que permite
+ * distinguir "site respondeu 4xx" de "site fora do ar", a diferença que importa pro robots.txt.
+ */
+async function buscarComStatus(url) {
   for (let tentativa = 1; tentativa <= MAX_TENTATIVAS; tentativa += 1) {
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), TIMEOUT_MS);
@@ -343,29 +375,34 @@ async function buscarTexto(url) {
           await dormirReal(ESPERA_RETENTATIVA_MS);
           continue;
         }
-        return null;
+        return { status: resp.status, texto: null };
       }
-      if (!resp.ok) return null;
-      return await resp.text();
+      if (!resp.ok) return { status: resp.status, texto: null };
+      return { status: resp.status, texto: await resp.text() };
     } catch {
       if (tentativa < MAX_TENTATIVAS) continue;
-      return null;
+      return { status: null, texto: null };
     } finally {
       clearTimeout(timer);
     }
   }
-  return null;
+  return { status: null, texto: null };
 }
 
-async function obterRobots(base, log) {
-  const texto = await buscarTexto(`${base}/robots.txt`);
+/** Só o texto, para URLs (sitemap/produto) que não precisam do status — já passaram pelo robots. */
+function textoDe(buscarFn) {
+  return (url) => buscarFn(url).then((r) => r.texto);
+}
+
+async function obterRobots(base, log, buscarFn) {
+  const { status, texto } = await buscarFn(`${base}/robots.txt`);
   log.push({ url: `${base}/robots.txt`, caminho: '/robots.txt', bloqueada: false });
-  return parseRobotsTxt(texto || '');
+  return interpretarRobots(status, texto);
 }
 
 /** URLs de todos os produtos do sitemap (índice -> sub-sitemaps de produto -> URLs), com
  * cache de 24h em data/cache/sitemap-{host}.json. */
-async function obterUrlsDoSitemap(base, robots, estadoHost, intervaloMs, log) {
+async function obterUrlsDoSitemap(base, robots, estadoHost, intervaloMs, log, buscarFn) {
   const host = new URL(base).host;
   const caminhoCache = path.join(CACHE_DIR, `sitemap-${host}.json`);
   const cache = await lerJsonSeExistir(caminhoCache);
@@ -375,12 +412,13 @@ async function obterUrlsDoSitemap(base, robots, estadoHost, intervaloMs, log) {
     return dedupUrls(cache.urls || []);
   }
 
+  const fetchFn = textoDe(buscarFn);
   const { dados: xmlIndice } = await requisitarRespeitandoRobots({
     url: `${base}/sitemap.xml`,
     robots,
     estadoHost,
     intervaloMs,
-    fetchFn: buscarTexto,
+    fetchFn,
     log,
   });
   const subSitemaps = filtrarSubSitemapsDeProduto(extrairLocs(xmlIndice));
@@ -392,7 +430,7 @@ async function obterUrlsDoSitemap(base, robots, estadoHost, intervaloMs, log) {
       robots,
       estadoHost,
       intervaloMs,
-      fetchFn: buscarTexto,
+      fetchFn,
       log,
     });
     urls.push(...extrairLocs(xmlSub));
@@ -411,7 +449,7 @@ function hashSimples(texto) {
 }
 
 /** HTML da página do produto, com cache de 6h em data/cache/produto-{hash}.json. */
-async function obterHtmlProduto(url, robots, estadoHost, intervaloMs, log) {
+async function obterHtmlProduto(url, robots, estadoHost, intervaloMs, log, buscarFn) {
   const caminhoCache = path.join(CACHE_DIR, `produto-${hashSimples(url)}.json`);
   const cache = await lerJsonSeExistir(caminhoCache);
   if (cache && cache._fetchedAt && Date.now() - new Date(cache._fetchedAt).getTime() < PRODUTO_CACHE_FRESCURA_MS) {
@@ -422,7 +460,7 @@ async function obterHtmlProduto(url, robots, estadoHost, intervaloMs, log) {
     robots,
     estadoHost,
     intervaloMs,
-    fetchFn: buscarTexto,
+    fetchFn: textoDe(buscarFn),
     log,
   });
   if (!bloqueada && html != null) {
@@ -432,13 +470,35 @@ async function obterHtmlProduto(url, robots, estadoHost, intervaloMs, log) {
   return { html, bloqueada };
 }
 
-async function processarLoja(loja, discosCatalogo) {
+/**
+ * `buscarFn` é injetável (produção usa `buscarComStatus`, rede real) para testar sem rede:
+ * robots.txt 5xx/timeout/erro de rede → `indisponivel: true` → host pulado por completo,
+ * sem nenhuma outra chamada (nem sitemap, nem produto) — é a correção da RFC 9309 §2.3.1.3
+ * (antes, qualquer falha em buscar robots.txt virava "sem regra nenhuma" = permitido).
+ */
+export async function processarLoja(loja, discosCatalogo, buscarFn = buscarComStatus) {
   const log = [];
   const estadoHost = {};
-  const robots = await obterRobots(loja.base, log);
-  const intervaloMs = intervaloDoHost(robots.crawlDelay);
+  const robots = await obterRobots(loja.base, log, buscarFn);
 
-  const urlsSitemap = await obterUrlsDoSitemap(loja.base, robots, estadoHost, intervaloMs, log);
+  if (robots.indisponivel) {
+    return {
+      resumo: {
+        nome: loja.nome,
+        base: loja.base,
+        produtosNoSitemap: 0,
+        requisicoes: log.filter((e) => !e.bloqueada).length,
+        bloqueadasPorRobots: log.filter((e) => e.bloqueada).length,
+        robotsIndisponivel: true,
+        robotsStatus: robots.status,
+      },
+      ofertasPorId: {},
+      log,
+    };
+  }
+
+  const intervaloMs = intervaloDoHost(robots.crawlDelay);
+  const urlsSitemap = await obterUrlsDoSitemap(loja.base, robots, estadoHost, intervaloMs, log, buscarFn);
   const produtosNoSitemap = urlsSitemap.length;
 
   const ofertasPorId = {};
@@ -446,11 +506,11 @@ async function processarLoja(loja, discosCatalogo) {
     const candidatas = escolherUrlsCandidatas(urlsSitemap, disco);
     const ofertas = [];
     for (const url of candidatas) {
-      const { html, bloqueada } = await obterHtmlProduto(url, robots, estadoHost, intervaloMs, log);
+      const { html, bloqueada } = await obterHtmlProduto(url, robots, estadoHost, intervaloMs, log, buscarFn);
       if (bloqueada) continue;
       if (!html) continue;
       const nome = extrairNomeProduto(html);
-      if (!nome || !casaTituloEArtista(disco, nome)) continue;
+      if (!nome || !nomeCasaDisco(disco, nome)) continue;
       const preco = extrairPreco(html);
       if (preco == null) continue;
       ofertas.push({ loja: loja.nome, nome, preco, url, disponivel: extrairDisponivel(html) });
@@ -466,6 +526,8 @@ async function processarLoja(loja, discosCatalogo) {
       produtosNoSitemap,
       requisicoes: log.filter((e) => !e.bloqueada).length,
       bloqueadasPorRobots: log.filter((e) => e.bloqueada).length,
+      robotsIndisponivel: false,
+      robotsStatus: robots.status,
     },
     ofertasPorId,
     log,
