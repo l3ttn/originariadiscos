@@ -519,31 +519,45 @@ async function obterRelease(id, force) {
 
 /**
  * edicaoVenda do disco (CONTRATO.md "Edição à venda (v5)"): `opts.edicao` (fixada pelo
- * dono) tem prioridade; falhando ou ausente, cai para a escolha automática pela reedição do
- * master (cache de 6h em data/cache/versoes-{masterId}.json, via discogs-versoes.mjs). Sem
- * masterId e sem `opts.edicao` válida → null.
+ * dono) tem prioridade; sem ela, a escolha automática pela reedição do master (cache de 6h
+ * em data/cache/versoes-{masterId}.json, via discogs-versoes.mjs).
+ *
+ * "Sem versão oficial", sem masterId ou sem `opts.edicao` válida são resultados LEGÍTIMOS →
+ * null. Falha de rede/HTTP (em `GET /releases/{id}` da edição fixada, ou em
+ * `/masters/{id}/versions` da automática, mesmo depois dos retries de `chamarDiscogs`) NÃO é
+ * o mesmo que "não existe": mantém a `edicaoVenda` que o disco já tinha em
+ * data/catalogo.json (`anterior`), avisando no stderr — do contrário um 500 passageiro (sem
+ * cache, como no Actions a cada 6h) trocaria a edição mostrada na ficha até a próxima rodada
+ * com sorte. Mesma tolerância que a seção "Pipeline" já aplica ao disco inteiro.
+ *
+ * `deps.obterReleaseImpl`/`deps.obterVersoesReedicaoImpl` são injetáveis para teste (default:
+ * `obterRelease`/`obterVersoesReedicao` de verdade).
  */
-async function obterEdicaoVenda(opts, masterId, force) {
+export async function obterEdicaoVenda(opts, masterId, force, anterior, deps = {}) {
+  const { obterReleaseImpl = obterRelease, obterVersoesReedicaoImpl = obterVersoesReedicao } = deps;
+  const edicaoVendaAnterior = anterior?.edicaoVenda ?? null;
   if (opts.edicao) {
     const idFixado = resolverIdEdicaoFixada(opts.edicao);
     if (idFixado) {
       try {
-        const releaseFixado = await obterRelease(idFixado, force);
+        const releaseFixado = await obterReleaseImpl(idFixado, force);
         return derivarEdicaoVendaFixada(releaseFixado);
       } catch (err) {
-        console.error(`aviso: falha ao buscar edicao=${opts.edicao} (release ${idFixado}): ${err.message}`);
+        console.error(
+          `aviso: falha ao buscar edicao=${opts.edicao} (release ${idFixado}): ${err.message} — mantendo edicaoVenda anterior`,
+        );
+        return edicaoVendaAnterior;
       }
-    } else {
-      console.error(`aviso: edicao=${opts.edicao} não é URL de release nem id válido`);
     }
+    console.error(`aviso: edicao=${opts.edicao} não é URL de release nem id válido`);
   }
   if (!masterId) return null;
   try {
-    const versoes = await obterVersoesReedicao(masterId);
+    const versoes = await obterVersoesReedicaoImpl(masterId);
     return derivarEdicaoVendaAutomatica(versoes);
   } catch (err) {
-    console.error(`aviso: falha em masters/${masterId}/versions (edicaoVenda): ${err.message}`);
-    return null;
+    console.error(`aviso: falha em masters/${masterId}/versions (edicaoVenda): ${err.message} — mantendo edicaoVenda anterior`);
+    return edicaoVendaAnterior;
   }
 }
 
@@ -881,7 +895,7 @@ async function main() {
       pendentesLinhas.push(`SEM RESULTADO (release ${id} sem formato Vinyl): ${linha.bruta}`);
       continue;
     }
-    entrada.edicaoVenda = await obterEdicaoVenda(linha.opts, entrada.masterId, force);
+    entrada.edicaoVenda = await obterEdicaoVenda(linha.opts, entrada.masterId, force, catalogoAnteriorPorId.get(id));
     resolvidos[chave] = { id, adicionadoEm };
     discosFinal.push(entrada);
     if (verificarInfo) pendentesLinhas.push(verificarInfo);
