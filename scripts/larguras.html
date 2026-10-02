@@ -1,0 +1,12 @@
+<!-- scripts/larguras.html — larguras dos versos do poema a 100 px por display (Afirmação F10).
+     google-chrome --headless=new --disable-gpu --virtual-time-budget=15000 --dump-dom "file://$PWD/scripts/larguras.html" -->
+<!doctype html><meta charset=utf-8><style>
+@font-face{font-family:BS;src:url(https://fonts.gstatic.com/s/bigshoulders/v4/qFdk35CPh40oITJ69S3GFqy5-BQAcbz7z7beObof__ytqyTi33thrko94eTNB9k0DFVQtQ.woff2)}
+@font-face{font-family:AR;src:url(https://fonts.gstatic.com/s/archivo/v25/k3kPo8UDI-1M0wlSV9XA35FckqWY8Q-2trydOxKsv4Rn.woff2)}
+@font-face{font-family:AN;src:url(https://fonts.gstatic.com/s/anton/v27/1Ptgg87LROyAm3Kz-C8CSKlv.woff2)}
+span{font-size:100px;white-space:nowrap;text-transform:uppercase}
+</style><div id=o></div><script>
+const v=['VINIL NOVO','LACRADO','ORIGINÁRIA'],f={BS:'900',AR:'800',AN:'400'};
+(async()=>{for(const k in f)await document.fonts.load(f[k]+' 100px '+k);const r={};
+for(const k in f)r[k]=v.map(t=>{const s=document.createElement('span');Object.assign(s.style,{fontFamily:k,fontWeight:f[k]});if(k==='AR')s.style.fontVariationSettings="'wdth' 62";s.textContent=t;document.body.append(s);const w=s.getBoundingClientRect().width;s.remove();return +w.toFixed(1)});
+o.textContent=JSON.stringify(r)})()</script>
