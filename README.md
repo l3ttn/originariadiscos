@@ -9,12 +9,14 @@ Os dados dos discos vêm do Discogs (`scripts/build-catalogo.mjs` lê `discos.tx
    `Artista – Título` (ou cole a URL do release/master do Discogs). Depois de `|` dá pra
    marcar `destaque`, `novo`, `status=disponivel|encomenda|esgotado`, `preco=180`,
    `secao=Nome` e `nota=comentário curto`.
-2. Rode `npm run catalogo` localmente (ou apenas dê `git push` — o cron do GitHub Actions
-   também gera o catálogo sozinho a cada 6h). Confira `data/pendentes.txt`: uma linha que
-   não foi encontrada no Discogs, ou que o script não teve certeza de qual prensagem é a
-   certa (`VERIFICAR: ...`), aparece ali — não quebra o site, mas vale checar.
-3. Dê commit e push em `data/catalogo.json`, `data/resolvidos.json` e `discos.txt`. O deploy
-   no GitHub Pages acontece sozinho a cada push em `main`.
+2. Rode `git pull` antes de editar, depois dê commit e `git push` só do `discos.txt`. O GitHub
+   Actions gera o catálogo a partir dele, commita o `data/` sozinho ("Atualiza catálogo (build
+   automático)") e publica o site em poucos minutos. Não precisa rodar nada no computador.
+3. Confira `data/pendentes.txt` depois do build: uma linha que não foi encontrada no Discogs,
+   ou que o script não teve certeza de qual prensagem é a certa (`VERIFICAR: ...`), aparece
+   ali — não quebra o site, mas vale checar. `npm run catalogo` continua servindo para ver o
+   resultado no computador antes do push, mas não commite o `data/` gerado: quem commita é o
+   Actions, e commit dos dois lados dá conflito.
 
 ## Rodar local
 
@@ -73,6 +75,6 @@ lado (`original` e `reedição`) para o dono comparar.
 O workflow de build/deploy usa o secret `DISCOGS_TOKEN` (Settings → Secrets → Actions) se ele
 existir, só para aumentar o limite de chamadas à API do Discogs — sem ele o pipeline funciona
 do mesmo jeito, só que mais devagar. O cron (`schedule: '0 */6 * * *'`) para sozinho se não
-houver nenhum `push` em `main` há mais de 60 dias, pra não gastar minutos de Actions num
-repositório abandonado; um `workflow_dispatch` manual sempre funciona, e qualquer `push`
-reativa o cron.
+houver nenhum `push` em `main` há mais de 60 dias (os commits automáticos do catálogo não
+contam), pra não gastar minutos de Actions num repositório abandonado; um `workflow_dispatch`
+manual sempre funciona, e qualquer `push` reativa o cron.

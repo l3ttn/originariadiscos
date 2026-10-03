@@ -25,11 +25,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # histórico inteiro (1 MB): a trava de 60 dias procura o último commit que não é do bot
 
       - name: Verifica atividade recente (cron para após 60 dias sem push)
         id: atividade
         run: |
-          ultimo=$(git log -1 --format=%ct)
+          ultimo=$(git log --format='%ct %ae' | awk '$2 != "github-actions[bot]@users.noreply.github.com" {print $1; exit}')   # commit do bot não conta como atividade
           agora=$(date +%s)
           dias=$(( (agora - ultimo) / 86400 ))
           echo "Último commit há $dias dia(s)."
@@ -57,15 +59,21 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add --intent-to-add data/            # arquivos novos entram na comparação
-          if git diff -I '"geradoEm"' --quiet -- data; then
-            echo "Dados sem mudança de conteúdo (fora de geradoEm) — não commita."
-          else
-            git add data/
-            git commit -m "Atualiza catálogo (build automático)"
-            git pull --rebase --autostash         # depois do commit: nada sujo no caminho
-            git push
-          fi
+          git add --intent-to-add data/                 # arquivo novo entra na lista
+          gerados=$(git diff --name-only -- data)       # só o que este build mexeu; o resto de data/ fica como está na main
+          if [ -z "$gerados" ]; then echo "O build não mexeu em data/."; exit 0; fi
+          for tentativa in 1 2 3; do
+            git fetch origin "$GITHUB_REF_NAME"         # a main pode ter andado durante o build (outra execução, push do dono)
+            git reset -q FETCH_HEAD                     # índice na ponta atual; os dados recém-gerados ficam na árvore
+            git add -- $gerados
+            if git diff --cached -I '"geradoEm"' --quiet; then
+              echo "Dados sem mudança de conteúdo em relação à main (fora de geradoEm) — não commita."; exit 0
+            fi
+            git commit -qm "Atualiza catálogo (build automático)"
+            if git push origin "HEAD:$GITHUB_REF_NAME"; then exit 0; fi
+            echo "Push recusado (a main andou de novo): tentativa $tentativa de 3."
+          done
+          exit 1
 
       - name: Monta o artefato só com o site
         if: steps.atividade.outputs.continuar == 'true'
