@@ -66,7 +66,7 @@ jobs:
           for tentativa in 1 2 3; do
             git fetch origin "$GITHUB_REF_NAME"         # a main pode ter andado durante o build (outra execução, push do dono)
             if ! git diff --quiet "$base" FETCH_HEAD -- discos.txt scripts/; then
-              echo "discos.txt ou scripts/ mudaram desde o checkout: a execução do push mais novo commita os dados."; exit 0
+              echo "discos.txt ou scripts/ mudaram desde o checkout: não commita (a execução mais nova, ou o próximo cron, commita os dados)."; exit 0
             fi
             git reset -q FETCH_HEAD                     # índice na ponta atual; os dados recém-gerados ficam na árvore
             git add -- $gerados

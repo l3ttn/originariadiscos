@@ -9,18 +9,18 @@ Os dados dos discos vêm do Discogs (`scripts/build-catalogo.mjs` lê `discos.tx
    `Artista – Título` (ou cole a URL do release/master do Discogs). Depois de `|` dá pra
    marcar `destaque`, `novo`, `status=disponivel|encomenda|esgotado`, `preco=180`,
    `secao=Nome` e `nota=comentário curto`.
-2. Rode `git pull --rebase` antes de editar, depois dê commit e `git push` só do `discos.txt`
-   (se o push for recusado porque o Actions commitou nesse meio-tempo, rode `git pull --rebase`
-   de novo e repita o push). O GitHub Actions gera o catálogo a partir dele, commita o `data/`
-   sozinho ("Atualiza catálogo (build automático)") e publica o site em poucos minutos. Não
-   precisa rodar nada no computador.
+2. Rode `git pull --rebase --autostash` antes de editar, depois dê commit e `git push` só do
+   `discos.txt` (se o push for recusado porque o Actions commitou nesse meio-tempo, rode
+   `git pull --rebase --autostash` de novo e repita o push). O GitHub Actions gera o catálogo
+   a partir dele, commita o `data/` sozinho ("Atualiza catálogo (build automático)") e publica
+   o site em poucos minutos. Não precisa rodar nada no computador.
 3. Confira `data/pendentes.txt` depois do build: uma linha que não foi encontrada no Discogs,
    ou que o script não teve certeza de qual prensagem é a certa (`VERIFICAR: ...`), aparece
    ali — não quebra o site, mas vale checar. `npm run catalogo` continua servindo para ver o
    resultado no computador antes do push, mas não commite o `data/` gerado: quem commita é o
    Actions, e commit dos dois lados dá conflito. Depois de olhar, desfaça com
    `git restore data/catalogo.json data/resolvidos.json data/pendentes.txt` (senão o
-   próximo `git pull --rebase` recusa).
+   próximo `git pull` esbarra neles).
 
 ## Rodar local
 
@@ -37,13 +37,14 @@ releases em `data/cache/` e buscar tudo de novo.
 
 ## Como precificar (4 passos)
 
-1. Rode `npm run varejo` antes de `npm run precos` (≈ 10–20 min, por causa do intervalo de
-   10 s que as lojas pedem) para gerar `data/precos-varejo.json` com ofertas de lojas
-   brasileiras de vinil novo. Sem esse arquivo, `npm run precos` roda igual, só sem a coluna
-   de varejo BR no relatório.
-2. Rode `npm run precos` (usa `data/catalogo.json`; rode `git pull --rebase` antes para pegar
-   o catálogo que o Actions gerou). O script consulta o Discogs Marketplace disco a disco — sem
-   `DISCOGS_TOKEN` já traz o menor anúncio à venda em BRL; com um token em
+1. Rode `git pull --rebase --autostash` (traz o catálogo que o Actions gerou) e depois
+   `npm run varejo`, antes de `npm run precos` (≈ 10–20 min, por causa do intervalo de 10 s
+   que as lojas pedem) para gerar `data/precos-varejo.json` com ofertas de lojas brasileiras
+   de vinil novo. Sem esse arquivo, `npm run precos` roda igual, só sem a coluna de varejo BR
+   no relatório.
+2. Rode `npm run precos` (usa o `data/catalogo.json` que veio no `git pull` do passo 1). O
+   script consulta o Discogs Marketplace disco a disco — sem `DISCOGS_TOKEN` já traz o
+   menor anúncio à venda em BRL; com um token em
    `Settings → Developers` no discogs.com (`export DISCOGS_TOKEN=...` antes de rodar), também
    traz a sugestão de preço por condição (Mint, Near Mint) na moeda da sua conta.
 3. Leia `data/precos-relatorio.md`: uma linha por disco com à venda, menor anúncio, sugestão,
