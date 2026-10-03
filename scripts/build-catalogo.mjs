@@ -20,12 +20,14 @@ const RESOLVIDOS_JSON = path.join(DATA_DIR, 'resolvidos.json');
 const PENDENTES_TXT = path.join(DATA_DIR, 'pendentes.txt');
 const CODIGOS_JSON = path.join(DATA_DIR, 'codigos.json');
 
-// Cauda comum das mensagens de aborto relacionadas ao código OD (T2/R3.3): "restaure
+// Cauda comum das mensagens de aborto relacionadas ao código OD (T2/R3.3/R4.1): "restaure
 // data/codigos.json" sozinho não resolve quando é o catalogo.json que está na frente do
-// mapa (medido) — por isso cita os 4 arquivos e, se a restauração não bastar, aponta para
-// o histórico do mapa commitado.
+// mapa (medido) — por isso cita os 4 arquivos; e `git restore <arquivo>` simples falha com
+// "path ... is unmerged" justamente no conflito do `git pull --autostash` que motivou a
+// R3.4 (medido) — por isso `--source=HEAD --staged --worktree`, que funciona nesse caso. Se
+// a restauração não bastar, aponta para o histórico do mapa commitado.
 const RESTAURA_CODIGOS =
-  'restaure com: git restore data/catalogo.json data/resolvidos.json data/pendentes.txt data/codigos.json ' +
+  'restaure com: git restore --source=HEAD --staged --worktree data/catalogo.json data/resolvidos.json data/pendentes.txt data/codigos.json ' +
   '(se continuar, o mapa commitado está danificado: git log -- data/codigos.json)';
 
 const USER_AGENT = 'OriginariaDiscos/1.0 (+https://l3ttn.github.io/originariadiscos/)';
@@ -999,7 +1001,13 @@ async function main() {
   // o mapa é estruturalmente inválido → lança aqui, antes de qualquer escrita em data/, e
   // main().catch adiante faz o processo sair com 1 sem mexer em nada.
   const mapaLido = await lerMapaCodigos();
-  atribuirCodigos([], mapaLido);
+  try {
+    atribuirCodigos([], mapaLido); // só valida a estrutura do mapa; não usa a saída aqui
+  } catch (err) {
+    // atribuirCodigos (função pura) não muda: continua lançando sem RESTAURA_CODIGOS, que é
+    // vocabulário de main()/pipeline, não dela. main() acrescenta a cauda ao relançar (R4.2).
+    throw new Error(`${err.message} — ${RESTAURA_CODIGOS}`);
+  }
 
   const catalogoAnterior = await lerCatalogoAnterior();
 
