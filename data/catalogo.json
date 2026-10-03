@@ -1,5 +1,5 @@
 {
-  "geradoEm": "2026-10-03T04:24:04.489Z",
+  "geradoEm": "2026-10-03T19:44:32.874Z",
   "fonte": "Discogs",
   "discos": [
     {
@@ -193,7 +193,8 @@
         "formato": "LP, Album, Limited Edition, Reissue, Repress",
         "discogsUrl": "https://www.discogs.com/release/15793439",
         "fixadaPeloDono": false
-      }
+      },
+      "codigo": "OD-001"
     },
     {
       "id": 170032,
@@ -320,7 +321,8 @@
         "formato": "LP, Album, Club Edition, Limited Edition, Reissue, Remastered",
         "discogsUrl": "https://www.discogs.com/release/36683854",
         "fixadaPeloDono": false
-      }
+      },
+      "codigo": "OD-002"
     },
     {
       "id": 1205173,
@@ -522,7 +524,8 @@
         "formato": "LP, Album, Limited Edition, Reissue, Remastered",
         "discogsUrl": "https://www.discogs.com/release/37141890",
         "fixadaPeloDono": false
-      }
+      },
+      "codigo": "OD-003"
     },
     {
       "id": 2968639,
@@ -668,7 +671,8 @@
         "formato": "LP, Album, Reissue, Repress",
         "discogsUrl": "https://www.discogs.com/release/36838822",
         "fixadaPeloDono": false
-      }
+      },
+      "codigo": "OD-004"
     },
     {
       "id": 2422289,
@@ -825,7 +829,8 @@
         "formato": "LP, Album, Reissue, Remastered",
         "discogsUrl": "https://www.discogs.com/release/9804534",
         "fixadaPeloDono": false
-      }
+      },
+      "codigo": "OD-005"
     },
     {
       "id": 1222672,
@@ -987,7 +992,8 @@
         "formato": "LP, Album, Reissue, Remastered, Repress, Stereo",
         "discogsUrl": "https://www.discogs.com/release/35136590",
         "fixadaPeloDono": false
-      }
+      },
+      "codigo": "OD-006"
     },
     {
       "id": 1365302,
@@ -1177,7 +1183,8 @@
         "formato": "LP, Album, Reissue, Mono",
         "discogsUrl": "https://www.discogs.com/release/8173813",
         "fixadaPeloDono": false
-      }
+      },
+      "codigo": "OD-007"
     },
     {
       "id": 14478692,
@@ -1418,7 +1425,8 @@
         "formato": "LP, Album, Reissue",
         "discogsUrl": "https://www.discogs.com/release/13980452",
         "fixadaPeloDono": false
-      }
+      },
+      "codigo": "OD-050"
     },
     {
       "id": 13374934,
@@ -1590,7 +1598,8 @@
         "formato": "LP, Album",
         "discogsUrl": "https://www.discogs.com/release/5280303",
         "fixadaPeloDono": false
-      }
+      },
+      "codigo": "OD-008"
     },
     {
       "id": 649184,
@@ -1701,7 +1710,8 @@
         "formato": "LP, Album, Club Edition, Limited Edition, Reissue",
         "discogsUrl": "https://www.discogs.com/release/35731924",
         "fixadaPeloDono": false
-      }
+      },
+      "codigo": "OD-009"
     },
     {
       "id": 6276183,
@@ -1811,7 +1821,8 @@
         "formato": "LP, Album, Reissue, Stereo",
         "discogsUrl": "https://www.discogs.com/release/37584492",
         "fixadaPeloDono": false
-      }
+      },
+      "codigo": "OD-010"
     },
     {
       "id": 6890747,
@@ -1913,7 +1924,8 @@
         "formato": "LP, Album, Reissue, Mono",
         "discogsUrl": "https://www.discogs.com/release/35229295",
         "fixadaPeloDono": false
-      }
+      },
+      "codigo": "OD-011"
     },
     {
       "id": 549847,
@@ -2014,7 +2026,8 @@
         "formato": "LP, Album, Limited Edition, Reissue",
         "discogsUrl": "https://www.discogs.com/release/35411572",
         "fixadaPeloDono": false
-      }
+      },
+      "codigo": "OD-012"
     },
     {
       "id": 873261,
@@ -2081,7 +2094,8 @@
         "formato": "LP, Album, Reissue, Remastered, Stereo",
         "discogsUrl": "https://www.discogs.com/release/25484281",
         "fixadaPeloDono": false
-      }
+      },
+      "codigo": "OD-013"
     },
     {
       "id": 31381,
@@ -2214,7 +2228,8 @@
         "formato": "LP, Album, Limited Edition, Reissue, Repress, Stereo",
         "discogsUrl": "https://www.discogs.com/release/18271585",
         "fixadaPeloDono": false
-      }
+      },
+      "codigo": "OD-014"
     },
     {
       "id": 7383499,
@@ -2425,7 +2440,8 @@
         "formato": "Album",
         "discogsUrl": "https://www.discogs.com/release/19092715",
         "fixadaPeloDono": false
-      }
+      },
+      "codigo": "OD-015"
     },
     {
       "id": 12766539,
@@ -2497,7 +2513,8 @@
         "formato": "LP, Album, Limited Edition, Reissue, Stereo",
         "discogsUrl": "https://www.discogs.com/release/36391366",
         "fixadaPeloDono": false
-      }
+      },
+      "codigo": "OD-016"
     },
     {
       "id": 26197826,
@@ -2586,7 +2603,8 @@
         "formato": "LP, Album, Limited Edition, Reissue",
         "discogsUrl": "https://www.discogs.com/release/38205186",
         "fixadaPeloDono": false
-      }
+      },
+      "codigo": "OD-017"
     },
     {
       "id": 13286331,
@@ -2757,7 +2775,8 @@
         "formato": "LP, Album, Reissue, Remastered, Stereo",
         "discogsUrl": "https://www.discogs.com/release/25276999",
         "fixadaPeloDono": false
-      }
+      },
+      "codigo": "OD-018"
     },
     {
       "id": 23757107,
@@ -2849,7 +2868,8 @@
         "formato": "LP, Album, Limited Edition, Numbered, Reissue, Stereo",
         "discogsUrl": "https://www.discogs.com/release/37636218",
         "fixadaPeloDono": false
-      }
+      },
+      "codigo": "OD-019"
     },
     {
       "id": 268430,
@@ -3066,7 +3086,8 @@
         "formato": "LP, Album, Limited Edition, Reissue, Stereo",
         "discogsUrl": "https://www.discogs.com/release/36474214",
         "fixadaPeloDono": false
-      }
+      },
+      "codigo": "OD-020"
     },
     {
       "id": 202658,
@@ -3197,7 +3218,8 @@
         "formato": "LP, Album, Limited Edition, Reissue",
         "discogsUrl": "https://www.discogs.com/release/25628452",
         "fixadaPeloDono": false
-      }
+      },
+      "codigo": "OD-021"
     },
     {
       "id": 5431106,
@@ -3400,7 +3422,8 @@
         "formato": "LP, Album, Club Edition, Reissue, Remastered, Stereo",
         "discogsUrl": "https://www.discogs.com/release/27647037",
         "fixadaPeloDono": false
-      }
+      },
+      "codigo": "OD-022"
     },
     {
       "id": 2028398,
@@ -3577,7 +3600,8 @@
         "formato": "LP, Album, Stereo",
         "discogsUrl": "https://www.discogs.com/release/11741258",
         "fixadaPeloDono": false
-      }
+      },
+      "codigo": "OD-023"
     },
     {
       "id": 94800,
@@ -3739,7 +3763,8 @@
         "formato": "LP, Album, Record Store Day, Limited Edition, Reissue",
         "discogsUrl": "https://www.discogs.com/release/33671583",
         "fixadaPeloDono": false
-      }
+      },
+      "codigo": "OD-024"
     },
     {
       "id": 392604,
@@ -3937,7 +3962,8 @@
         "formato": "7\", 45 RPM, Album, Stereo",
         "discogsUrl": "https://www.discogs.com/release/30343493",
         "fixadaPeloDono": false
-      }
+      },
+      "codigo": "OD-025"
     },
     {
       "id": 242785,
@@ -4129,7 +4155,8 @@
         "formato": "LP, 45 RPM, Album, Reissue, Remastered",
         "discogsUrl": "https://www.discogs.com/release/32459088",
         "fixadaPeloDono": false
-      }
+      },
+      "codigo": "OD-026"
     },
     {
       "id": 356592,
@@ -4250,7 +4277,8 @@
         "formato": "LP, Album, Reissue, Stereo",
         "discogsUrl": "https://www.discogs.com/release/37515507",
         "fixadaPeloDono": false
-      }
+      },
+      "codigo": "OD-027"
     },
     {
       "id": 8938725,
@@ -4556,7 +4584,8 @@
         "formato": "LP, 45 RPM, Album, Reissue, Stereo",
         "discogsUrl": "https://www.discogs.com/release/35572192",
         "fixadaPeloDono": false
-      }
+      },
+      "codigo": "OD-028"
     },
     {
       "id": 15714043,
@@ -4713,7 +4742,8 @@
         "formato": "LP, Limited Edition, Stereo",
         "discogsUrl": "https://www.discogs.com/release/34138573",
         "fixadaPeloDono": false
-      }
+      },
+      "codigo": "OD-029"
     },
     {
       "id": 5604009,
@@ -4885,7 +4915,8 @@
         "formato": "LP, Album, Limited Edition, Reissue",
         "discogsUrl": "https://www.discogs.com/release/35873041",
         "fixadaPeloDono": false
-      }
+      },
+      "codigo": "OD-030"
     },
     {
       "id": 9500449,
@@ -5061,7 +5092,8 @@
         "formato": "12\", 45 RPM, Album, Numbered, Remastered, Stereo",
         "discogsUrl": "https://www.discogs.com/release/34074901",
         "fixadaPeloDono": false
-      }
+      },
+      "codigo": "OD-031"
     },
     {
       "id": 3942811,
@@ -5222,7 +5254,8 @@
         "formato": "LP, Album, Limited Edition, Reissue",
         "discogsUrl": "https://www.discogs.com/release/34444447",
         "fixadaPeloDono": false
-      }
+      },
+      "codigo": "OD-032"
     },
     {
       "id": 6401859,
@@ -5426,7 +5459,8 @@
         "formato": "LP, Album, Limited Edition, Numbered, Reissue",
         "discogsUrl": "https://www.discogs.com/release/25493965",
         "fixadaPeloDono": false
-      }
+      },
+      "codigo": "OD-051"
     },
     {
       "id": 135352,
@@ -5573,7 +5607,8 @@
         "formato": "LP, Album",
         "discogsUrl": "https://www.discogs.com/release/38138442",
         "fixadaPeloDono": false
-      }
+      },
+      "codigo": "OD-033"
     },
     {
       "id": 4202979,
@@ -5736,7 +5771,8 @@
         "formato": "LP, Album, Reissue",
         "discogsUrl": "https://www.discogs.com/release/27035517",
         "fixadaPeloDono": false
-      }
+      },
+      "codigo": "OD-034"
     },
     {
       "id": 1078894,
@@ -5854,7 +5890,8 @@
         "formato": "LP, Album, Reissue, Stereo",
         "discogsUrl": "https://www.discogs.com/release/34930796",
         "fixadaPeloDono": false
-      }
+      },
+      "codigo": "OD-035"
     },
     {
       "id": 2879,
@@ -6140,7 +6177,8 @@
         "formato": "LP, Album, Limited Edition, Reissue",
         "discogsUrl": "https://www.discogs.com/release/32515302",
         "fixadaPeloDono": false
-      }
+      },
+      "codigo": "OD-036"
     },
     {
       "id": 11778,
@@ -6768,7 +6806,8 @@
         "formato": "LP, Album, Reissue",
         "discogsUrl": "https://www.discogs.com/release/34258777",
         "fixadaPeloDono": false
-      }
+      },
+      "codigo": "OD-037"
     },
     {
       "id": 13314830,
@@ -6894,7 +6933,8 @@
         "formato": "LP, Album, Limited Edition, Picture Disc, Reissue, Stereo",
         "discogsUrl": "https://www.discogs.com/release/37004412",
         "fixadaPeloDono": false
-      }
+      },
+      "codigo": "OD-038"
     },
     {
       "id": 5750709,
@@ -7007,7 +7047,8 @@
         "formato": "LP, Album, Reissue, Remastered, Repress",
         "discogsUrl": "https://www.discogs.com/release/30995770",
         "fixadaPeloDono": false
-      }
+      },
+      "codigo": "OD-039"
     },
     {
       "id": 6530,
@@ -7113,7 +7154,8 @@
         "formato": "LP, Album, Reissue, Stereo",
         "discogsUrl": "https://www.discogs.com/release/37787442",
         "fixadaPeloDono": false
-      }
+      },
+      "codigo": "OD-040"
     },
     {
       "id": 1125096,
@@ -7259,7 +7301,8 @@
         "formato": "12\", 33 ⅓ RPM, Album, Reissue, Repress, Special Edition",
         "discogsUrl": "https://www.discogs.com/release/31888372",
         "fixadaPeloDono": false
-      }
+      },
+      "codigo": "OD-041"
     },
     {
       "id": 1025,
@@ -7443,7 +7486,8 @@
         "formato": "12\", Album, 33 ⅓ RPM",
         "discogsUrl": "https://www.discogs.com/release/1025",
         "fixadaPeloDono": false
-      }
+      },
+      "codigo": "OD-042"
     },
     {
       "id": 1873013,
@@ -7547,7 +7591,8 @@
         "formato": "LP, Album, Reissue, Remastered, Stereo",
         "discogsUrl": "https://www.discogs.com/release/33535515",
         "fixadaPeloDono": false
-      }
+      },
+      "codigo": "OD-043"
     },
     {
       "id": 4950798,
@@ -7677,7 +7722,8 @@
         "formato": "LP, Album, Reissue",
         "discogsUrl": "https://www.discogs.com/release/38206593",
         "fixadaPeloDono": false
-      }
+      },
+      "codigo": "OD-044"
     },
     {
       "id": 5034045,
@@ -7868,7 +7914,8 @@
         "formato": "LP, Album, Limited Edition, Reissue, Stereo",
         "discogsUrl": "https://www.discogs.com/release/38237838",
         "fixadaPeloDono": false
-      }
+      },
+      "codigo": "OD-045"
     },
     {
       "id": 7252111,
@@ -8100,7 +8147,8 @@
         "formato": "LP, Album, Limited Edition, Reissue",
         "discogsUrl": "https://www.discogs.com/release/35422432",
         "fixadaPeloDono": false
-      }
+      },
+      "codigo": "OD-046"
     },
     {
       "id": 11416588,
@@ -8277,7 +8325,8 @@
         "formato": "LP, Album, Limited Edition, Reissue",
         "discogsUrl": "https://www.discogs.com/release/35974129",
         "fixadaPeloDono": false
-      }
+      },
+      "codigo": "OD-047"
     },
     {
       "id": 216166,
@@ -8392,7 +8441,8 @@
         "formato": "LP, Album, Reissue, Remastered, Stereo",
         "discogsUrl": "https://www.discogs.com/release/36839548",
         "fixadaPeloDono": false
-      }
+      },
+      "codigo": "OD-048"
     },
     {
       "id": 526351,
@@ -8518,7 +8568,8 @@
         "formato": "LP, Album, Reissue, Stereo",
         "discogsUrl": "https://www.discogs.com/release/37222998",
         "fixadaPeloDono": false
-      }
+      },
+      "codigo": "OD-049"
     }
   ]
 }
