@@ -459,7 +459,10 @@ test('código OD: semente (mapa null) numera pela ordem de adicionadoEm, desempa
   const b = disco(20, '2026-01-01', 2);
   const c = disco(30, '2026-01-01', 1);
   const d = disco(40, '2026-01-02', 1);
-  const { discos, mapa } = atribuirCodigos([a, b, c, d], null);
+  const entrada = [a, b, c, d];
+  const snapshotEntrada = JSON.stringify(entrada);
+
+  const { discos, mapa } = atribuirCodigos(entrada, null);
 
   // mesma ordem/tamanho da entrada
   assert.deepEqual(discos.map((x) => x.id), [10, 20, 30, 40]);
@@ -475,9 +478,41 @@ test('código OD: semente (mapa null) numera pela ordem de adicionadoEm, desempa
     { id: 40, codigo: 'OD-003' },
     { id: 10, codigo: 'OD-004' },
   ]);
-  // entrada não foi mutada nem ordenada
-  assert.deepEqual([a.id, b.id, c.id, d.id], [10, 20, 30, 40]);
-  assert.equal(a.codigo, undefined);
+  // entrada não foi mutada (nem ordenada, nem ganhou campo novo) — snapshot antes/depois,
+  // não a asserção tautológica de só olhar os ids.
+  assert.equal(JSON.stringify(entrada), snapshotEntrada);
+});
+
+test('código OD: id repetido em discos numera pela ocorrência MAIS ANTIGA (menor adicionadoEm, desempate menor ordem), não pela posição no array (R2.1)', () => {
+  const entrada = [
+    disco(1, '2026-03-01T00:00:00.000Z', 1),
+    disco(2, '2026-02-01T00:00:00.000Z', 2),
+    disco(1, '2026-01-01T00:00:00.000Z', 3), // mesmo id 1, mas mais antigo que a 1ª ocorrência
+  ];
+  const { mapa } = atribuirCodigos(entrada, null);
+  assert.deepEqual(mapa, [
+    { id: 1, codigo: 'OD-001' },
+    { id: 2, codigo: 'OD-002' },
+  ]);
+});
+
+test('código OD: chaves do mapa na ordem id, codigo, removido — comparação byte a byte via JSON.stringify', () => {
+  const mapaAnterior = [
+    { id: 1, codigo: 'OD-001' },
+    { id: 2, codigo: 'OD-002' },
+  ];
+  const { mapa } = atribuirCodigos([disco(1, '2026-01-01', 1)], mapaAnterior); // id 2 saiu → removido
+  assert.equal(JSON.stringify(mapa), '[{"id":1,"codigo":"OD-001"},{"id":2,"codigo":"OD-002","removido":true}]');
+});
+
+test('código OD: mapa de entrada não é mutado pela chamada (snapshot antes/depois)', () => {
+  const mapaEntrada = [
+    { id: 1, codigo: 'OD-001' },
+    { id: 2, codigo: 'OD-002', removido: true },
+  ];
+  const snapshotMapa = JSON.stringify(mapaEntrada);
+  atribuirCodigos([disco(1, '2026-01-01', 1), disco(3, '2026-02-01', 1)], mapaEntrada);
+  assert.equal(JSON.stringify(mapaEntrada), snapshotMapa);
 });
 
 test('código OD: mapa vazio ([]) começa em 1, igual a null', () => {

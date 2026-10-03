@@ -461,7 +461,9 @@ function validarMapaCodigos(mapa) {
  * número novo, por `adicionadoEm` asc (desempate `ordem` asc), a partir de
  * (maior número do mapa, incluindo removidos) + 1; id do mapa que não está em `discos`
  * desta chamada fica `removido: true` (nunca sai do mapa, número nunca reaproveitado);
- * id repetido em `discos` recebe um único código; idempotente.
+ * id repetido em `discos` recebe um único código, numerado pela ocorrência mais antiga
+ * (menor `adicionadoEm`, desempate menor `ordem`) entre as linhas repetidas — não pela
+ * posição no array; idempotente.
  */
 export function atribuirCodigos(discos, mapa) {
   const mapaValidado = validarMapaCodigos(mapa);
@@ -475,14 +477,22 @@ export function atribuirCodigos(discos, mapa) {
   }
 
   const idsAtivos = new Set();
-  const semCodigoEmOrdem = [];
+  // id repetido em `discos` → a ocorrência mais antiga (menor adicionadoEm, desempate menor
+  // ordem) representa o id na numeração de código novo, não a 1ª do array (R2.1).
+  const candidatoNovoPorId = new Map();
   for (const disco of discos) {
-    if (idsAtivos.has(disco.id)) continue;
     idsAtivos.add(disco.id);
-    if (!codigoPorId.has(disco.id)) {
-      semCodigoEmOrdem.push({ id: disco.id, adicionadoEm: disco.adicionadoEm, ordem: disco.ordem });
+    if (codigoPorId.has(disco.id)) continue;
+    const atual = candidatoNovoPorId.get(disco.id);
+    const vence =
+      !atual ||
+      disco.adicionadoEm < atual.adicionadoEm ||
+      (disco.adicionadoEm === atual.adicionadoEm && disco.ordem < atual.ordem);
+    if (vence) {
+      candidatoNovoPorId.set(disco.id, { id: disco.id, adicionadoEm: disco.adicionadoEm, ordem: disco.ordem });
     }
   }
+  const semCodigoEmOrdem = Array.from(candidatoNovoPorId.values());
   semCodigoEmOrdem.sort((a, b) => {
     if (a.adicionadoEm < b.adicionadoEm) return -1;
     if (a.adicionadoEm > b.adicionadoEm) return 1;
@@ -957,13 +967,22 @@ async function main() {
   atribuirCodigos([], mapaLido);
 
   const catalogoAnterior = await lerJsonSeExistir(CATALOGO_JSON);
-  const mapaAusenteOuVazio = !mapaLido || mapaLido.length === 0;
-  const catalogoAnteriorTemCodigo = (catalogoAnterior?.discos ?? []).some((d) => d && d.codigo);
-  if (mapaAusenteOuVazio && catalogoAnteriorTemCodigo) {
-    throw new Error(
-      'data/codigos.json está ausente ou vazio, mas data/catalogo.json já tem discos com código — ' +
-        'restaure data/codigos.json (não é seguro renumerar em silêncio).',
-    );
+  // Guarda geral (R2.2 — inclui o caso "mapa ausente/vazio" como um caso particular): todo
+  // disco do catalogo.json anterior que já tinha `codigo` precisa achar o MESMO id com o
+  // MESMO codigo no mapa lido (removido ou não) — senão algum código mudou de disco sem
+  // passar por atribuirCodigos (mapa editado à mão, restaurado errado, ou apagado) e
+  // renumerar agora trocaria o código que o site já mostra para aquele disco.
+  const codigoNoMapaPorId = new Map((mapaLido ?? []).map((item) => [item.id, item.codigo]));
+  for (const d of catalogoAnterior?.discos ?? []) {
+    if (!d || !d.codigo) continue;
+    const codigoNoMapa = codigoNoMapaPorId.get(d.id);
+    if (codigoNoMapa !== d.codigo) {
+      throw new Error(
+        `data/codigos.json não bate com data/catalogo.json: disco id ${d.id} tem codigo ${d.codigo} ` +
+          `no catálogo anterior, mas o mapa lido tem ${codigoNoMapa === undefined ? 'nenhuma entrada para esse id' : codigoNoMapa} — ` +
+          'restaure data/codigos.json (não é seguro renumerar em silêncio).',
+      );
+    }
   }
 
   const conteudo = await fs.readFile(DISCOS_TXT, 'utf8');
