@@ -20,6 +20,8 @@ import {
   descricoesVinilString,
   chamarDiscogs,
   obterEdicaoVenda,
+  atribuirCodigos,
+  obterContadorChamadas,
 } from '../scripts/build-catalogo.mjs';
 
 // --- parseLinha -------------------------------------------------------
@@ -443,4 +445,176 @@ test('obterEdicaoVenda: edicao= fixada falhando no GET /releases/{id} → mesma 
     { obterReleaseImpl },
   );
   assert.deepEqual(resultado, EDICAO_VENDA_ANTERIOR);
+});
+
+// --- atribuirCodigos (T2 — código OD estável) -------------------------------
+// CONTRATO.md "Código OD (T2) — data/codigos.json".
+
+function disco(id, adicionadoEm, ordem, extra = {}) {
+  return { id, adicionadoEm, ordem, ...extra };
+}
+
+test('código OD: semente (mapa null) numera pela ordem de adicionadoEm, desempate por ordem — não pela posição no array nem pelo campo ordem isolado', () => {
+  const a = disco(10, '2026-01-03', 5);
+  const b = disco(20, '2026-01-01', 2);
+  const c = disco(30, '2026-01-01', 1);
+  const d = disco(40, '2026-01-02', 1);
+  const { discos, mapa } = atribuirCodigos([a, b, c, d], null);
+
+  // mesma ordem/tamanho da entrada
+  assert.deepEqual(discos.map((x) => x.id), [10, 20, 30, 40]);
+  const codigoPorId = new Map(discos.map((x) => [x.id, x.codigo]));
+  assert.equal(codigoPorId.get(30), 'OD-001'); // 2026-01-01, ordem 1
+  assert.equal(codigoPorId.get(20), 'OD-002'); // 2026-01-01, ordem 2
+  assert.equal(codigoPorId.get(40), 'OD-003'); // 2026-01-02
+  assert.equal(codigoPorId.get(10), 'OD-004'); // 2026-01-03
+
+  assert.deepEqual(mapa, [
+    { id: 30, codigo: 'OD-001' },
+    { id: 20, codigo: 'OD-002' },
+    { id: 40, codigo: 'OD-003' },
+    { id: 10, codigo: 'OD-004' },
+  ]);
+  // entrada não foi mutada nem ordenada
+  assert.deepEqual([a.id, b.id, c.id, d.id], [10, 20, 30, 40]);
+  assert.equal(a.codigo, undefined);
+});
+
+test('código OD: mapa vazio ([]) começa em 1, igual a null', () => {
+  const { mapa } = atribuirCodigos([disco(1, '2026-01-01', 1)], []);
+  assert.deepEqual(mapa, [{ id: 1, codigo: 'OD-001' }]);
+});
+
+test('código OD: codigo que já vem na entrada é ignorado — vale o mapa', () => {
+  const mapaAnterior = [{ id: 1, codigo: 'OD-001' }];
+  const entradaComCodigoErrado = disco(1, '2026-01-01', 1, { codigo: 'OD-999' });
+  const { discos } = atribuirCodigos([entradaComCodigoErrado], mapaAnterior);
+  assert.equal(discos[0].codigo, 'OD-001');
+});
+
+test('código OD: remover um disco não muda o código dos outros e marca removido no mapa', () => {
+  const mapaAnterior = [
+    { id: 1, codigo: 'OD-001' },
+    { id: 2, codigo: 'OD-002' },
+    { id: 3, codigo: 'OD-003' },
+  ];
+  const atuais = [disco(1, '2026-01-01', 1), disco(3, '2026-01-03', 1)]; // id 2 saiu
+  const { discos, mapa } = atribuirCodigos(atuais, mapaAnterior);
+  assert.equal(discos.find((d) => d.id === 1).codigo, 'OD-001');
+  assert.equal(discos.find((d) => d.id === 3).codigo, 'OD-003');
+  assert.deepEqual(mapa, [
+    { id: 1, codigo: 'OD-001' },
+    { id: 2, codigo: 'OD-002', removido: true },
+    { id: 3, codigo: 'OD-003' },
+  ]);
+});
+
+test('código OD: disco novo depois de remover o de maior código pula o número dele (não reaproveita)', () => {
+  const mapaAnterior = [
+    { id: 1, codigo: 'OD-001' },
+    { id: 2, codigo: 'OD-002' },
+    { id: 3, codigo: 'OD-003' }, // maior número; vai ser removido
+  ];
+  const passo1 = atribuirCodigos([disco(1, '2026-01-01', 1), disco(2, '2026-01-02', 1)], mapaAnterior);
+  assert.ok(passo1.mapa.find((m) => m.id === 3).removido);
+
+  const passo2 = atribuirCodigos(
+    [...passo1.discos, disco(4, '2026-01-04', 1)], // disco novo, id nunca visto
+    passo1.mapa,
+  );
+  const novo = passo2.discos.find((d) => d.id === 4);
+  assert.equal(novo.codigo, 'OD-004'); // pula o OD-003 do removido, não reaproveita
+});
+
+test('código OD: disco que volta recupera o mesmo código e perde o removido', () => {
+  const mapaComRemovido = [
+    { id: 1, codigo: 'OD-001' },
+    { id: 2, codigo: 'OD-002', removido: true },
+  ];
+  const { discos, mapa } = atribuirCodigos(
+    [disco(1, '2026-01-01', 1), disco(2, '2026-02-01', 9)], // id 2 voltou, com outro adicionadoEm/ordem
+    mapaComRemovido,
+  );
+  assert.equal(discos.find((d) => d.id === 2).codigo, 'OD-002');
+  const entradaMapa2 = mapa.find((m) => m.id === 2);
+  assert.equal(entradaMapa2.removido, undefined);
+  assert.deepEqual(entradaMapa2, { id: 2, codigo: 'OD-002' });
+});
+
+test('código OD: id repetido em discos (mesmo release em duas linhas) recebe um único código', () => {
+  const linha1 = disco(5, '2026-01-01', 1);
+  const linha2 = disco(5, '2026-01-01', 2);
+  const { discos, mapa } = atribuirCodigos([linha1, linha2], null);
+  assert.equal(discos[0].codigo, 'OD-001');
+  assert.equal(discos[1].codigo, 'OD-001');
+  assert.deepEqual(mapa, [{ id: 5, codigo: 'OD-001' }]); // uma entrada só no mapa, não duplicada
+});
+
+test('código OD: idempotente — chamar de novo com (discos, mapa) da saída devolve o mesmo mapa byte a byte', () => {
+  const mapaAnterior = [
+    { id: 1, codigo: 'OD-001' },
+    { id: 9, codigo: 'OD-002', removido: true },
+  ];
+  const entrada = [disco(1, '2026-01-01', 1), disco(2, '2026-02-01', 1)];
+  const saida1 = atribuirCodigos(entrada, mapaAnterior);
+  const saida2 = atribuirCodigos(saida1.discos, saida1.mapa);
+  assert.equal(JSON.stringify(saida2.mapa), JSON.stringify(saida1.mapa));
+  assert.equal(JSON.stringify(saida2.discos), JSON.stringify(saida1.discos));
+});
+
+test('código OD: OD-1000 — mapa com maior número 999 gera o próximo com 4 dígitos', () => {
+  const mapaAnterior = [{ id: 1, codigo: 'OD-999' }];
+  const { discos, mapa } = atribuirCodigos([disco(1, '2026-01-01', 1), disco(2, '2026-01-02', 1)], mapaAnterior);
+  assert.equal(discos.find((d) => d.id === 2).codigo, 'OD-1000');
+  assert.deepEqual(mapa, [
+    { id: 1, codigo: 'OD-999' },
+    { id: 2, codigo: 'OD-1000' },
+  ]);
+});
+
+test('código OD: mapa que não é array/null/undefined lança Error', () => {
+  assert.throws(() => atribuirCodigos([], { 1: 'OD-001' }), Error);
+});
+
+test('código OD: item do mapa sem id inteiro lança Error', () => {
+  assert.throws(() => atribuirCodigos([], [{ id: '1', codigo: 'OD-001' }]), Error);
+  assert.throws(() => atribuirCodigos([], [{ id: 1.5, codigo: 'OD-001' }]), Error);
+  assert.throws(() => atribuirCodigos([], [{ codigo: 'OD-001' }]), Error);
+});
+
+test('código OD: item do mapa com codigo que não casa /^OD-\\d{3,}$/ lança Error', () => {
+  assert.throws(() => atribuirCodigos([], [{ id: 1, codigo: 'OD-01' }]), Error);
+  assert.throws(() => atribuirCodigos([], [{ id: 1, codigo: 'XX-001' }]), Error);
+  assert.throws(() => atribuirCodigos([], [{ id: 1, codigo: 1 }]), Error);
+});
+
+test('código OD: id repetido no mapa lança Error', () => {
+  assert.throws(
+    () => atribuirCodigos([], [{ id: 1, codigo: 'OD-001' }, { id: 1, codigo: 'OD-002' }]),
+    Error,
+  );
+});
+
+test('código OD: número de código repetido no mapa lança Error, mesmo com padding diferente', () => {
+  assert.throws(
+    () => atribuirCodigos([], [{ id: 1, codigo: 'OD-001' }, { id: 2, codigo: 'OD-0001' }]),
+    Error,
+  );
+});
+
+// --- chamarDiscogs com { semRede: true } (T2 — flag --sem-rede) -------------
+
+test('código OD / --sem-rede: chamarDiscogs com semRede:true lança sem chamar fetchImpl e sem mudar obterContadorChamadas()', async () => {
+  let chamadasFetch = 0;
+  const fetchQueConta = async () => {
+    chamadasFetch += 1;
+    throw new Error('não deveria ter sido chamado');
+  };
+  const antes = obterContadorChamadas();
+  await assert.rejects(
+    () => chamarDiscogs('https://api.discogs.com/releases/1', 'teste sem rede', { fetchImpl: fetchQueConta, semRede: true }),
+    /sem rede/,
+  );
+  assert.equal(chamadasFetch, 0);
+  assert.equal(obterContadorChamadas(), antes);
 });
