@@ -31,7 +31,7 @@ jobs:
       - name: Verifica atividade recente (cron para após 60 dias sem push)
         id: atividade
         run: |
-          ultimo=$(git log --format='%ct %ae' | awk '$2 != "github-actions[bot]@users.noreply.github.com" {print $1; exit}')   # commit do bot não conta como atividade
+          ultimo=$(git log --format='%ct %ae' | awk '$2 != "github-actions[bot]@users.noreply.github.com" && !u {u=$1} END {print u}')   # commit do bot não conta como atividade; lê até o fim (sem SIGPIPE se vier pipefail)
           agora=$(date +%s)
           dias=$(( (agora - ultimo) / 86400 ))
           echo "Último commit há $dias dia(s)."
@@ -62,8 +62,12 @@ jobs:
           git add --intent-to-add data/                 # arquivo novo entra na lista
           gerados=$(git diff --name-only -- data)       # só o que este build mexeu; o resto de data/ fica como está na main
           if [ -z "$gerados" ]; then echo "O build não mexeu em data/."; exit 0; fi
+          base=$(git rev-parse HEAD)                    # o commit de onde este build saiu
           for tentativa in 1 2 3; do
             git fetch origin "$GITHUB_REF_NAME"         # a main pode ter andado durante o build (outra execução, push do dono)
+            if ! git diff --quiet "$base" FETCH_HEAD -- discos.txt scripts/; then
+              echo "discos.txt ou scripts/ mudaram desde o checkout: a execução do push mais novo commita os dados."; exit 0
+            fi
             git reset -q FETCH_HEAD                     # índice na ponta atual; os dados recém-gerados ficam na árvore
             git add -- $gerados
             if git diff --cached -I '"geradoEm"' --quiet; then
