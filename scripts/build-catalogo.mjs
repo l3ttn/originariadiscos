@@ -1,8 +1,8 @@
 // Pipeline do catálogo. Lê discos.txt, resolve cada linha no Discogs e escreve
-// data/catalogo.json, data/resolvidos.json e data/pendentes.txt.
-// Ver CONTRATO.md — seções "discos.txt", "data/catalogo.json" e "Pipeline".
+// data/catalogo.json, data/codigos.json, data/resolvidos.json e data/pendentes.txt.
+// Ver CONTRATO.md — seções "discos.txt", "data/catalogo.json", "Código OD (T2)" e "Pipeline".
 //
-// Uso: node scripts/build-catalogo.mjs [--force]
+// Uso: node scripts/build-catalogo.mjs [--force] [--sem-rede]
 
 import { promises as fs } from 'node:fs';
 import path from 'node:path';
@@ -18,6 +18,17 @@ const DISCOS_TXT = path.join(ROOT_DIR, 'discos.txt');
 const CATALOGO_JSON = path.join(DATA_DIR, 'catalogo.json');
 const RESOLVIDOS_JSON = path.join(DATA_DIR, 'resolvidos.json');
 const PENDENTES_TXT = path.join(DATA_DIR, 'pendentes.txt');
+const CODIGOS_JSON = path.join(DATA_DIR, 'codigos.json');
+
+// Cauda comum das mensagens de aborto relacionadas ao código OD (T2/R3.3/R4.1): "restaure
+// data/codigos.json" sozinho não resolve quando é o catalogo.json que está na frente do
+// mapa (medido) — por isso cita os 4 arquivos; e `git restore <arquivo>` simples falha com
+// "path ... is unmerged" justamente no conflito do `git pull --autostash` que motivou a
+// R3.4 (medido) — por isso `--source=HEAD --staged --worktree`, que funciona nesse caso. Se
+// a restauração não bastar, aponta para o histórico do mapa commitado.
+const RESTAURA_CODIGOS =
+  'restaure com: git restore --source=HEAD --staged --worktree data/catalogo.json data/resolvidos.json data/pendentes.txt data/codigos.json ' +
+  '(se continuar, o mapa commitado está danificado: git log -- data/codigos.json)';
 
 const USER_AGENT = 'OriginariaDiscos/1.0 (+https://l3ttn.github.io/originariadiscos/)';
 const PACING_MS = 2600;
@@ -404,6 +415,124 @@ export function escolherMelhorCandidato(candidatos) {
   return { candidato: melhor, pontos: melhorPontos };
 }
 
+const CODIGO_RE = /^OD-\d{3,}$/;
+
+function formatarCodigoOd(n) {
+  return `OD-${String(n).padStart(3, '0')}`;
+}
+
+function numeroDoCodigoOd(codigo) {
+  return Number(codigo.slice(3));
+}
+
+/**
+ * Valida `data/codigos.json` já parseado (null/undefined/`[]` contam como mapa vazio).
+ * Lança Error (nunca renumera em silêncio — CONTRATO.md "Código OD (T2)") quando: não é
+ * null/undefined/array; algum item não tem `id` inteiro; algum `codigo` não casa
+ * `/^OD-\d{3,}$/`; há `id` repetido; há número de código repetido (mesmo com paddings
+ * diferentes, ex. "OD-001" e "OD-0001").
+ */
+function validarMapaCodigos(mapa) {
+  if (mapa === null || mapa === undefined) return [];
+  if (!Array.isArray(mapa)) {
+    throw new Error('data/codigos.json inválido: esperava um array (ou null/undefined), recebi outra coisa');
+  }
+  const idsVistos = new Set();
+  const numerosVistos = new Set();
+  for (const item of mapa) {
+    if (!item || !Number.isInteger(item.id)) {
+      throw new Error(`data/codigos.json inválido: item sem id inteiro (${JSON.stringify(item)})`);
+    }
+    if (typeof item.codigo !== 'string' || !CODIGO_RE.test(item.codigo)) {
+      throw new Error(`data/codigos.json inválido: codigo inválido para id ${item.id} (${JSON.stringify(item.codigo)})`);
+    }
+    if (idsVistos.has(item.id)) {
+      throw new Error(`data/codigos.json inválido: id repetido ${item.id}`);
+    }
+    idsVistos.add(item.id);
+    const numero = numeroDoCodigoOd(item.codigo);
+    if (numerosVistos.has(numero)) {
+      throw new Error(`data/codigos.json inválido: número de código repetido ${numero} (id ${item.id})`);
+    }
+    numerosVistos.add(numero);
+  }
+  return mapa;
+}
+
+/**
+ * Código OD estável (CONTRATO.md "Código OD (T2)") — função pura, sem I/O/rede/Date.
+ *
+ * `discos`: entradas do catálogo (cada uma com `id` number, `adicionadoEm` string ISO,
+ * `ordem` number). `mapa`: conteúdo de data/codigos.json já parseado, ou null/undefined
+ * quando o arquivo não existe (`[]` vale o mesmo). Devolve `{ discos, mapa }` — objetos
+ * novos, mesma ordem/tamanho de `discos` de entrada (nunca ordena nem muta a entrada).
+ *
+ * Regras (CONTRATO.md): id já no mapa → código do mapa (perde `removido`); id novo →
+ * número novo, por `adicionadoEm` asc (desempate `ordem` asc), a partir de
+ * (maior número do mapa, incluindo removidos) + 1; id do mapa que não está em `discos`
+ * desta chamada fica `removido: true` (nunca sai do mapa, número nunca reaproveitado);
+ * id repetido em `discos` recebe um único código, numerado pela ocorrência mais antiga
+ * (menor `adicionadoEm`, desempate menor `ordem`) entre as linhas repetidas — não pela
+ * posição no array; idempotente.
+ */
+export function atribuirCodigos(discos, mapa) {
+  const mapaValidado = validarMapaCodigos(mapa);
+
+  const codigoPorId = new Map();
+  let maiorNumero = 0;
+  for (const item of mapaValidado) {
+    codigoPorId.set(item.id, item.codigo);
+    const numero = numeroDoCodigoOd(item.codigo);
+    if (numero > maiorNumero) maiorNumero = numero;
+  }
+
+  const idsAtivos = new Set();
+  // id repetido em `discos` → a ocorrência mais antiga (menor adicionadoEm, desempate menor
+  // ordem) representa o id na numeração de código novo, não a 1ª do array (R2.1).
+  const candidatoNovoPorId = new Map();
+  for (const disco of discos) {
+    idsAtivos.add(disco.id);
+    if (codigoPorId.has(disco.id)) continue;
+    const atual = candidatoNovoPorId.get(disco.id);
+    const vence =
+      !atual ||
+      disco.adicionadoEm < atual.adicionadoEm ||
+      (disco.adicionadoEm === atual.adicionadoEm && disco.ordem < atual.ordem);
+    if (vence) {
+      candidatoNovoPorId.set(disco.id, { id: disco.id, adicionadoEm: disco.adicionadoEm, ordem: disco.ordem });
+    }
+  }
+  const semCodigoEmOrdem = Array.from(candidatoNovoPorId.values());
+  semCodigoEmOrdem.sort((a, b) => {
+    if (a.adicionadoEm < b.adicionadoEm) return -1;
+    if (a.adicionadoEm > b.adicionadoEm) return 1;
+    return a.ordem - b.ordem;
+  });
+
+  let proximoNumero = maiorNumero + 1;
+  for (const item of semCodigoEmOrdem) {
+    codigoPorId.set(item.id, formatarCodigoOd(proximoNumero));
+    proximoNumero += 1;
+  }
+
+  const discosComCodigo = discos.map((disco) => ({ ...disco, codigo: codigoPorId.get(disco.id) }));
+
+  const mapaOut = [];
+  for (const item of mapaValidado) {
+    mapaOut.push(
+      idsAtivos.has(item.id)
+        ? { id: item.id, codigo: item.codigo }
+        : { id: item.id, codigo: item.codigo, removido: true },
+    );
+  }
+  for (const item of semCodigoEmOrdem) {
+    mapaOut.push({ id: item.id, codigo: codigoPorId.get(item.id) });
+  }
+  mapaOut.sort((a, b) => numeroDoCodigoOd(a.codigo) - numeroDoCodigoOd(b.codigo));
+
+  return { discos: discosComCodigo, mapa: mapaOut };
+}
+
 // ---------------------------------------------------------------------------
 // I/O e rede (não exportadas / não testadas por unidade)
 // ---------------------------------------------------------------------------
@@ -412,6 +541,9 @@ class PendenteError extends Error {}
 
 let contadorChamadas = 0;
 let ultimaChamadaEm = 0;
+// Default de `semRede` em chamarDiscogs: `main()` lê a flag --sem-rede do argv e atribui
+// aqui antes de qualquer chamada; testes ignoram esta variável passando `semRede` explícito.
+let semRedeFlag = false;
 
 /**
  * Total de chamadas HTTP de verdade feitas via `chamarDiscogs` nesta execução (não conta
@@ -439,8 +571,16 @@ async function espacarChamada(dormirImpl) {
  * Retry: até MAX_TENTATIVAS_429 tentativas no total, tanto em 429 (espera `Retry-After`, ou
  * 60s sem o header) quanto em 5xx (espera fixa de `ESPERA_5XX_MS`, 5s) — qualquer outro erro
  * HTTP ou timeout não tenta de novo.
+ *
+ * `semRede` (T2, flag --sem-rede do build): quando truthy, falha na hora — sem chamar
+ * `fetchImpl`, sem contar em `contadorChamadas` e sem esperar nada — com um erro cuja
+ * mensagem contém "sem rede". Default = `semRedeFlag`, que `main()` ajusta a partir do
+ * argv; testes podem passar `semRede: true` direto, sem tocar em `process.argv`.
  */
-export async function chamarDiscogs(url, contexto, { fetchImpl = fetch, dormirImpl = dormir } = {}) {
+export async function chamarDiscogs(url, contexto, { fetchImpl = fetch, dormirImpl = dormir, semRede = semRedeFlag } = {}) {
+  if (semRede) {
+    throw new Error(`sem rede: ${contexto}`);
+  }
   for (let tentativa = 1; tentativa <= MAX_TENTATIVAS_429; tentativa += 1) {
     await espacarChamada(dormirImpl);
     const headers = { 'User-Agent': USER_AGENT };
@@ -496,6 +636,49 @@ export async function lerJsonSeExistir(caminho) {
     return JSON.parse(raw);
   } catch {
     return null;
+  }
+}
+
+/**
+ * Lê `data/codigos.json` distinguindo "arquivo não existe" (ENOENT → null, semente legítima)
+ * de "existe mas não é JSON válido" (lança — ao contrário de `lerJsonSeExistir`, que engoliria
+ * o erro e faria o mapa sumir, abrindo a porta para renumeração em silêncio).
+ */
+async function lerMapaCodigos() {
+  let raw;
+  try {
+    raw = await fs.readFile(CODIGOS_JSON, 'utf8');
+  } catch (err) {
+    if (err.code === 'ENOENT') return null;
+    throw err;
+  }
+  try {
+    return JSON.parse(raw);
+  } catch (err) {
+    throw new Error(`data/codigos.json inválido (não é JSON): ${err.message} — ${RESTAURA_CODIGOS}`);
+  }
+}
+
+/**
+ * Lê `data/catalogo.json` distinguindo "não existe" (ENOENT → null, build nunca rodou) de
+ * "existe mas não é JSON válido" (ex.: marcadores de conflito deixados por `git pull
+ * --autostash`) — devolve `{ invalido: true, erro }` em vez de lançar direto, porque
+ * `main()` só aborta nesse caso quando o mapa de códigos também está ausente/vazio (R3.4);
+ * com o mapa presente os códigos vêm dele e o catálogo corrompido não precisa travar o
+ * build (só perde, nesta rodada, a tolerância de reaproveitar entradas por disco).
+ */
+async function lerCatalogoAnterior() {
+  let raw;
+  try {
+    raw = await fs.readFile(CATALOGO_JSON, 'utf8');
+  } catch (err) {
+    if (err.code === 'ENOENT') return null;
+    throw err;
+  }
+  try {
+    return JSON.parse(raw);
+  } catch (erro) {
+    return { invalido: true, erro };
   }
 }
 
@@ -811,14 +994,59 @@ function formatarTempo(ms) {
 async function main() {
   const inicio = Date.now();
   const force = process.argv.includes('--force');
+  semRedeFlag = process.argv.includes('--sem-rede');
+
+  // Lê e valida data/codigos.json antes de qualquer outra coisa (CONTRATO.md "Código OD
+  // (T2)"): arquivo ausente (ENOENT) → null (semente legítima); existe mas não é JSON, ou
+  // o mapa é estruturalmente inválido → lança aqui, antes de qualquer escrita em data/, e
+  // main().catch adiante faz o processo sair com 1 sem mexer em nada.
+  const mapaLido = await lerMapaCodigos();
+  try {
+    atribuirCodigos([], mapaLido); // só valida a estrutura do mapa; não usa a saída aqui
+  } catch (err) {
+    // atribuirCodigos (função pura) não muda: continua lançando sem RESTAURA_CODIGOS, que é
+    // vocabulário de main()/pipeline, não dela. main() acrescenta a cauda ao relançar (R4.2).
+    throw new Error(`${err.message} — ${RESTAURA_CODIGOS}`);
+  }
+
+  const catalogoAnterior = await lerCatalogoAnterior();
+
+  // R3.4: catalogo.json existe mas não é JSON (ex.: marcadores de conflito do `git pull
+  // --autostash`) + mapa ausente/vazio → não dá pra saber se o catálogo perdido já tinha
+  // código, e seguir em frente renumeraria do zero em silêncio (medido: catálogo com
+  // "<<<<<<<" na 1ª linha + codigos.json apagado + 1 disco novo no cache deu "OK 1" com o
+  // disco novo virando OD-001). Com o mapa presente, os códigos vêm dele e isso não importa.
+  const mapaAusenteOuVazio = !mapaLido || mapaLido.length === 0;
+  if (catalogoAnterior?.invalido && mapaAusenteOuVazio) {
+    throw new Error(
+      `data/catalogo.json inválido (não é JSON): ${catalogoAnterior.erro.message} — ${RESTAURA_CODIGOS}`,
+    );
+  }
+  const catalogoAnteriorUsavel = catalogoAnterior?.invalido ? null : catalogoAnterior;
+
+  // Guarda geral (R2.2 — inclui o caso "mapa ausente/vazio" como um caso particular): todo
+  // disco do catalogo.json anterior que já tinha `codigo` precisa achar o MESMO id com o
+  // MESMO codigo no mapa lido (removido ou não) — senão algum código mudou de disco sem
+  // passar por atribuirCodigos (mapa editado à mão, restaurado errado, ou apagado) e
+  // renumerar agora trocaria o código que o site já mostra para aquele disco.
+  const codigoNoMapaPorId = new Map((mapaLido ?? []).map((item) => [item.id, item.codigo]));
+  for (const d of catalogoAnteriorUsavel?.discos ?? []) {
+    if (!d || !d.codigo) continue;
+    const codigoNoMapa = codigoNoMapaPorId.get(d.id);
+    if (codigoNoMapa !== d.codigo) {
+      throw new Error(
+        `data/codigos.json não bate com data/catalogo.json: disco id ${d.id} tem codigo ${d.codigo} ` +
+          `no catálogo anterior, mas o mapa lido tem ${codigoNoMapa === undefined ? 'nenhuma entrada para esse id' : codigoNoMapa} — ${RESTAURA_CODIGOS}`,
+      );
+    }
+  }
 
   const conteudo = await fs.readFile(DISCOS_TXT, 'utf8');
   const linhas = prepararLinhas(conteudo);
 
   const resolvidos = (await lerJsonSeExistir(RESOLVIDOS_JSON)) || {};
-  const catalogoAnterior = await lerJsonSeExistir(CATALOGO_JSON);
   const catalogoAnteriorPorId = new Map();
-  for (const d of catalogoAnterior?.discos ?? []) {
+  for (const d of catalogoAnteriorUsavel?.discos ?? []) {
     catalogoAnteriorPorId.set(d.id, d);
   }
 
@@ -902,19 +1130,22 @@ async function main() {
     if (motivoVerificar) pendentesLinhas.push(`VERIFICAR: ${linha.bruta} → ${motivoVerificar}`);
   }
 
+  const { discos: discosComCodigo, mapa: mapaFinal } = atribuirCodigos(discosFinal, mapaLido);
+
   await fs.mkdir(DATA_DIR, { recursive: true });
   await escreverJsonAtomic(RESOLVIDOS_JSON, resolvidos);
+  await escreverJsonAtomic(CODIGOS_JSON, mapaFinal);
   await escreverJsonAtomic(CATALOGO_JSON, {
     geradoEm: new Date().toISOString(),
     fonte: 'Discogs',
-    discos: discosFinal,
+    discos: discosComCodigo,
   });
   await fs.writeFile(PENDENTES_TXT, pendentesLinhas.length ? `${pendentesLinhas.join('\n')}\n` : '', 'utf8');
 
   const tempo = formatarTempo(Date.now() - inicio);
-  console.log(`OK ${discosFinal.length} · pendentes ${pendentesLinhas.length} · chamadas ${contadorChamadas} · ${tempo}`);
+  console.log(`OK ${discosComCodigo.length} · pendentes ${pendentesLinhas.length} · chamadas ${contadorChamadas} · ${tempo}`);
 
-  if (discosFinal.length === 0) {
+  if (discosComCodigo.length === 0) {
     process.exit(1);
   }
 }
