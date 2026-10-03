@@ -25,11 +25,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # histórico inteiro (1 MB): a trava de 60 dias procura o último commit que não é do bot
 
       - name: Verifica atividade recente (cron para após 60 dias sem push)
         id: atividade
         run: |
-          ultimo=$(git log -1 --format=%ct)
+          ultimo=$(git log --format='%ct %ae' | awk '$2 != "github-actions[bot]@users.noreply.github.com" && !u {u=$1} END {print u}')   # commit do bot não conta como atividade; lê até o fim (sem SIGPIPE se vier pipefail)
           agora=$(date +%s)
           dias=$(( (agora - ultimo) / 86400 ))
           echo "Último commit há $dias dia(s)."
@@ -52,20 +54,39 @@ jobs:
           DISCOGS_TOKEN: ${{ secrets.DISCOGS_TOKEN }}
         run: node scripts/build-catalogo.mjs
 
-      - name: Commita catálogo se mudou
+      - name: Commita dados se mudaram
         if: steps.atividade.outputs.continuar == 'true'
-        continue-on-error: true
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git pull --rebase
-          if git diff -I '"geradoEm"' --quiet -- data; then
-            echo "Catálogo sem mudança de conteúdo (fora de geradoEm) — não commita."
-          else
-            git add data/catalogo.json data/resolvidos.json data/pendentes.txt
-            git commit -m "Atualiza catálogo (build automático)"
-            git push
-          fi
+          git add --intent-to-add data/                 # arquivo novo entra na lista
+          gerados=$(git diff --name-only -- data)       # só o que este build mexeu; o resto de data/ fica como está na main
+          if [ -z "$gerados" ]; then echo "O build não mexeu em data/."; exit 0; fi
+          base=$(git rev-parse HEAD)                    # o commit de onde este build saiu
+          for tentativa in 1 2 3; do
+            git fetch origin "$GITHUB_REF_NAME"         # a main pode ter andado durante o build (outra execução, push do dono)
+            if ! git diff --quiet "$base" FETCH_HEAD -- discos.txt scripts/; then
+              echo "discos.txt ou scripts/ mudaram desde o checkout: não commita (a execução mais nova, ou o próximo cron, commita os dados)."; exit 0
+            fi
+            git reset -q FETCH_HEAD                     # índice na ponta atual; os dados recém-gerados ficam na árvore
+            git add -- $gerados
+            if git diff --cached -I '"geradoEm"' --quiet; then
+              echo "Dados sem mudança de conteúdo em relação à main (fora de geradoEm) — não commita."; exit 0
+            fi
+            git commit -qm "Atualiza catálogo (build automático)"
+            if git push origin "HEAD:$GITHUB_REF_NAME"; then exit 0; fi
+            echo "Push recusado (a main andou de novo): tentativa $tentativa de 3."
+          done
+          exit 1
+
+      - name: Monta o artefato só com o site
+        if: steps.atividade.outputs.continuar == 'true'
+        run: |
+          mkdir _site
+          for f in index.html catalogo.html disco.html carrinho.html como-funciona.html .nojekyll css js img fonts data prototipos; do
+            if [ -e "$f" ]; then cp -r "$f" _site/; fi
+          done
+          rm -rf _site/data/cache
 
       - name: Configura Pages
         if: steps.atividade.outputs.continuar == 'true'
@@ -75,7 +96,7 @@ jobs:
         if: steps.atividade.outputs.continuar == 'true'
         uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: _site
 
       - name: Deploy no Pages
         if: steps.atividade.outputs.continuar == 'true'
