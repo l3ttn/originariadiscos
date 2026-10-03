@@ -67,6 +67,7 @@ Cada item de `discos`:
 | `comentario` | string \| null | `nota=` do dono |
 | `adicionadoEm` | string ISO | primeira vez que a linha foi resolvida (persistido em `data/resolvidos.json`) |
 | `ordem` | number | posição da linha em `discos.txt` (1-based) |
+| `codigo` | string | `OD-001`…, vem de `data/codigos.json` (ver a seção nova "Código OD (T2)") |
 
 ## Pipeline `scripts/build-catalogo.mjs`
 
@@ -76,11 +77,61 @@ Cada item de `discos`:
    - `master` → `GET /masters/{id}` → `main_release`; se esse release não tiver `formats[].name === "Vinyl"` → `GET /masters/{id}/versions?format=Vinyl&per_page=1` → 1º id.
    - texto → consulta `data/resolvidos.json` (chave = linha normalizada) primeiro. Senão `GET /database/search?artist=&release_title=&type=master&format=Vinyl&per_page=5`. Percorre os 5: **primeiro resultado cujo `title` normalizado termina com `" - " + tituloNorm` e contém `artistaNorm`** vence (títulos do Discogs vêm como `Doom* And Madlib - Madvillain - Madvillainy`, com créditos e `*`). Nenhum casou → usa o 1º e grava `VERIFICAR: <linha> → <url>` em `data/pendentes.txt`. Zero resultados → repete com `type=release`; ainda zero → `SEM RESULTADO: <linha>`, pula.
    - Normalização: NFD sem diacríticos, minúsculas, remove `*`, remove ` (n)`, colapsa espaços.
-3. `GET /releases/{id}` com cache em `data/cache/{id}.json` (`_fetchedAt`); refetch só se > 6 h. Flag `--force` ignora o cache.
+3. `GET /releases/{id}` com cache em `data/cache/{id}.json` (`_fetchedAt`); refetch só se > 6 h. Flag `--force` ignora o cache. Flag `--sem-rede`: `chamarDiscogs` falha na hora para qualquer chamada (sem `fetch`, sem contar chamada), com mensagem contendo "sem rede" — serve para refazer o catálogo e os códigos em segundos usando só o cache e a tolerância do item 5, sem bater no Discogs.
 4. Headers: `User-Agent: OriginariaDiscos/1.0 (+https://l3ttn.github.io/originariadiscos/)`; se `process.env.DISCOGS_TOKEN` existir, `Authorization: Discogs token=<token>`. HTTP 429 → espera `Retry-After` (ou 60 s), até 3 tentativas. Toda chamada com timeout (AbortController, 20 s).
-5. Tolerância: falha por disco → reaproveita a entrada do `data/catalogo.json` anterior se existir, senão pula e reporta. Escreve JSON via arquivo temporário + rename. `exit 1` **só** se o resultado tiver 0 discos.
+5. Tolerância: falha por disco → reaproveita a entrada do `data/catalogo.json` anterior se existir, senão pula e reporta. Escreve JSON via arquivo temporário + rename. `exit 1` **só** se o resultado tiver 0 discos — ou, antes de qualquer escrita em `data/`, se `data/codigos.json` existir e for inválido, ou se o mapa de códigos sumiu/está vazio enquanto o catálogo anterior já tem discos com `codigo` (ver "Código OD (T2)"): nesses dois casos o build não escreve nada.
 6. `data/resolvidos.json`: `{ "<linha normalizada>": { "id": 726944, "adicionadoEm": "..." } }`. Chave por URL também (`release:726944`).
 7. Última linha do stdout, sempre: `OK <n> · pendentes <p> · chamadas <c> · <tempo>`.
+
+## Código OD (T2) — `data/codigos.json`
+
+O código acompanha o **release** do Discogs que a linha resolve; mudar opções da linha (`status`,
+`preco`, `secao`, `nota`, flags) não mexe no código; reescrever a linha pode apontar outro
+release, e aí o disco ganha código novo e o antigo fica `removido`.
+
+`atribuirCodigos(discos, mapa)` (função pura, exportada de `scripts/build-catalogo.mjs`, seção
+"Funções puras" — sem I/O, sem rede, sem `Date`):
+
+- **Entrada `discos`:** array de entradas do catálogo (cada uma com pelo menos `id` number,
+  `adicionadoEm` string ISO, `ordem` number). **Entrada `mapa`:** o conteúdo de
+  `data/codigos.json` já parseado, ou `null`/`undefined` quando o arquivo não existe (`[]`
+  vale o mesmo).
+- **Saída:** `{ discos, mapa }`, objetos **novos** — não altera nenhuma das entradas (nem
+  ordena o array recebido).
+  - `discos`: mesmo tamanho e **mesma ordem** da entrada; cada item é uma cópia com o campo
+    `codigo` (string) e nada mais muda. Um `codigo` que já venha no item de entrada (ex.:
+    entrada reaproveitada do catálogo anterior) é **ignorado**: vale o mapa.
+  - `mapa`: o novo conteúdo de `data/codigos.json`.
+- **Regras:**
+  1. Disco cujo `id` já está no mapa fica com o código do mapa — mesmo que `adicionadoEm` ou
+     `ordem` tenham mudado — e perde o `removido`, se tinha.
+  2. Disco que não está no mapa ganha código novo. Os novos são numerados pela ordem de
+     `adicionadoEm` crescente, desempate por `ordem` crescente, a partir de **(maior número
+     que já existe no mapa, contando os removidos) + 1**; mapa vazio começa em 1.
+  3. Formato: `"OD-" + String(n).padStart(3, "0")` → `OD-001` … `OD-999`, `OD-1000`.
+  4. **Nunca** derivar o código do campo `ordem` (ele só desempata `adicionadoEm` igual).
+  5. Entrada do mapa cujo `id` não está entre os `discos` desta chamada continua no mapa com
+     `"removido": true`. Nada sai do mapa, nunca. Número de removido nunca é reaproveitado.
+     Se o disco voltar, recupera o mesmo código (regra 1).
+  6. `id` repetido em `discos` (mesmo release em duas linhas) → um código só para os dois.
+  7. Idempotente: chamar de novo com `(saida.discos, saida.mapa)` devolve um `mapa` igual,
+     byte a byte em `JSON.stringify`.
+  8. `mapa` que não seja `null`/`undefined`/array, ou com item sem `id` inteiro, sem `codigo`
+     casando `/^OD-\d{3,}$/`, com `id` repetido ou com número de código repetido → **lança
+     `Error`** (jamais renumera em silêncio).
+
+Formato de `data/codigos.json` (ilustração compacta; o arquivo de verdade sai no formato de
+`JSON.stringify(dados, null, 2)` + `\n`):
+
+```json
+[ {"id": 726944, "codigo": "OD-001"}, {"id": 170032, "codigo": "OD-002"}, …, {"id": 6401859, "codigo": "OD-051", "removido": true} ]
+```
+
+- Array em ordem crescente do número do código; cada item tem só `id`, `codigo` e, quando
+  removido, `"removido": true` (ativo = **sem** a chave, nunca `false`).
+- **Chaves de cada item nesta ordem: `id`, `codigo`, `removido`** (o arquivo é comparado byte
+  a byte).
+- Escrito com `escreverJsonAtomic` (o mesmo de `catalogo.json`).
 
 ## Páginas
 
@@ -105,7 +156,7 @@ Cada item de `discos`:
 
 ## Deploy `.github/workflows/build-deploy.yml`
 
-`on: push (main) · schedule '0 */6 * * *' · workflow_dispatch`. `permissions: contents: write, pages: write, id-token: write`. `concurrency: { group: pages, cancel-in-progress: false }`. Passos: `actions/checkout@v4` com `fetch-depth: 0` (histórico inteiro, precisa pra trava de atividade achar o último commit que não é do bot, lendo o log até o fim em vez de parar no primeiro — não quebra sob `pipefail`) → `actions/setup-node@v4` (node 22) → `node scripts/build-catalogo.mjs` (env `DISCOGS_TOKEN: ${{ secrets.DISCOGS_TOKEN }}`) → commit de `data/`: lista só o que este build mexeu (`git add --intent-to-add data/` + `git diff --name-only -- data`), e se a lista não for vazia, até 3 tentativas de `git fetch origin "$GITHUB_REF_NAME"` + se `discos.txt` ou `scripts/` mudaram entre o commit de onde este build saiu e a ponta buscada, pula o commit (a execução mais nova, ou o próximo cron, commita) + `git reset FETCH_HEAD` (índice na ponta atual, árvore com os dados recém-gerados) + `git add` só dos arquivos da lista + commit **só se mudou ignorando a linha `geradoEm` em relação à ponta** + `git push origin "HEAD:$GITHUB_REF_NAME"` (sem rebase; push recusado por a main ter andado → repete o fetch/reset/commit); sem `continue-on-error`, falha fica visível; `data/` é do bot → monta `_site/` com só o que vai ao ar (`index.html catalogo.html disco.html carrinho.html como-funciona.html .nojekyll css js img fonts data prototipos`, cada um só se existir) e remove `_site/data/cache` → `actions/configure-pages@v5` → `actions/upload-pages-artifact@v3` (`path: _site`) → `actions/deploy-pages@v4`. Limitação conhecida: a execução que pula o commit ainda publica o site do próprio checkout, então um re-run manual de uma execução antiga publica o site antigo até a próxima execução.
+`on: push (main) · schedule '0 */6 * * *' · workflow_dispatch`. `permissions: contents: write, pages: write, id-token: write`. `concurrency: { group: pages, cancel-in-progress: false }`. Passos: `actions/checkout@v4` com `fetch-depth: 0` (histórico inteiro, precisa pra trava de atividade achar o último commit que não é do bot, lendo o log até o fim em vez de parar no primeiro — não quebra sob `pipefail`) → `actions/setup-node@v4` (node 22) → `node scripts/build-catalogo.mjs` (env `DISCOGS_TOKEN: ${{ secrets.DISCOGS_TOKEN }}`) → commit de `data/` (`id: commit`): lista só o que este build mexeu (`git add --intent-to-add data/` + `git diff --name-only -- data`), e se a lista não for vazia, até 3 tentativas de `git fetch origin "$GITHUB_REF_NAME"` + se `discos.txt`, `scripts/` **ou `data/codigos.json`** mudaram entre o commit de onde este build saiu e a ponta buscada, pula o commit e marca `publicar=false` no `$GITHUB_OUTPUT` (a execução mais nova, ou o próximo cron, commita e publica — `data/codigos.json` é estado: duas execuções resolvendo discos novos diferentes a partir do mesmo commit calculariam o mesmo código para discos diferentes, e por isso a execução barrada também não publica, nem o site do próprio checkout) + `git reset FETCH_HEAD` (índice na ponta atual, árvore com os dados recém-gerados) + `git add` só dos arquivos da lista + commit **só se mudou ignorando a linha `geradoEm` em relação à ponta** + `git push origin "HEAD:$GITHUB_REF_NAME"` (sem rebase; push recusado por a main ter andado → repete o fetch/reset/commit); sem `continue-on-error`, falha fica visível; `data/` é do bot → os quatro passos de publicação (montar `_site/`, `configure-pages`, `upload-pages-artifact`, `deploy-pages`) rodam só com `if: steps.atividade.outputs.continuar == 'true' && steps.commit.outputs.publicar != 'false'` → monta `_site/` com só o que vai ao ar (`index.html catalogo.html disco.html carrinho.html como-funciona.html .nojekyll css js img fonts data prototipos`, cada um só se existir) e remove `_site/data/cache` → `actions/configure-pages@v5` → `actions/upload-pages-artifact@v3` (`path: _site`) → `actions/deploy-pages@v4`.
 
 ## Carrinho (v2) — pedido com vários discos pelo WhatsApp
 

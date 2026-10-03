@@ -19,8 +19,15 @@ Os dados dos discos vêm do Discogs (`scripts/build-catalogo.mjs` lê `discos.tx
    ali — não quebra o site, mas vale checar. `npm run catalogo` continua servindo para ver o
    resultado no computador antes do push, mas não commite o `data/` gerado: quem commita é o
    Actions, e commit dos dois lados dá conflito. Depois de olhar, desfaça com
-   `git restore data/catalogo.json data/resolvidos.json data/pendentes.txt` (senão o
-   próximo `git pull` esbarra neles).
+   `git restore data/catalogo.json data/resolvidos.json data/pendentes.txt data/codigos.json`
+   (senão o próximo `git pull` esbarra neles).
+
+Cada disco ganha um código fixo (`OD-001`, `OD-002`…), ligado ao release do Discogs que a
+linha encontra. Mudar `status`, `preco`, `secao`, `nota`, `edicao=` ou as flags não mexe no
+código; tirar a linha não libera o número, e se ela voltar o disco recupera o mesmo código.
+Já reescrever a linha (outras palavras, ou trocar o texto por um link) pode apontar outro
+release, e aí o disco ganha código novo. Não edite `data/codigos.json`: o build recusa um
+mapa inválido e para.
 
 ## Rodar local
 

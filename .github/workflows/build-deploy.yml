@@ -55,6 +55,7 @@ jobs:
         run: node scripts/build-catalogo.mjs
 
       - name: Commita dados se mudaram
+        id: commit
         if: steps.atividade.outputs.continuar == 'true'
         run: |
           git config user.name "github-actions[bot]"
@@ -65,8 +66,9 @@ jobs:
           base=$(git rev-parse HEAD)                    # o commit de onde este build saiu
           for tentativa in 1 2 3; do
             git fetch origin "$GITHUB_REF_NAME"         # a main pode ter andado durante o build (outra execução, push do dono)
-            if ! git diff --quiet "$base" FETCH_HEAD -- discos.txt scripts/; then
-              echo "discos.txt ou scripts/ mudaram desde o checkout: não commita (a execução mais nova, ou o próximo cron, commita os dados)."; exit 0
+            if ! git diff --quiet "$base" FETCH_HEAD -- discos.txt scripts/ data/codigos.json; then
+              echo "discos.txt, scripts/ ou data/codigos.json mudaram desde o checkout: não commita nem publica (a execução mais nova, ou o próximo cron, commita e publica)."
+              echo "publicar=false" >> "$GITHUB_OUTPUT"; exit 0
             fi
             git reset -q FETCH_HEAD                     # índice na ponta atual; os dados recém-gerados ficam na árvore
             git add -- $gerados
@@ -80,7 +82,7 @@ jobs:
           exit 1
 
       - name: Monta o artefato só com o site
-        if: steps.atividade.outputs.continuar == 'true'
+        if: steps.atividade.outputs.continuar == 'true' && steps.commit.outputs.publicar != 'false'
         run: |
           mkdir _site
           for f in index.html catalogo.html disco.html carrinho.html como-funciona.html .nojekyll css js img fonts data prototipos; do
@@ -89,16 +91,16 @@ jobs:
           rm -rf _site/data/cache
 
       - name: Configura Pages
-        if: steps.atividade.outputs.continuar == 'true'
+        if: steps.atividade.outputs.continuar == 'true' && steps.commit.outputs.publicar != 'false'
         uses: actions/configure-pages@v5
 
       - name: Upload artifact do Pages
-        if: steps.atividade.outputs.continuar == 'true'
+        if: steps.atividade.outputs.continuar == 'true' && steps.commit.outputs.publicar != 'false'
         uses: actions/upload-pages-artifact@v3
         with:
           path: _site
 
       - name: Deploy no Pages
-        if: steps.atividade.outputs.continuar == 'true'
+        if: steps.atividade.outputs.continuar == 'true' && steps.commit.outputs.publicar != 'false'
         id: deploy
         uses: actions/deploy-pages@v4
