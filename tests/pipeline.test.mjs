@@ -515,6 +515,53 @@ test('código OD: mapa de entrada não é mutado pela chamada (snapshot antes/de
   assert.equal(JSON.stringify(mapaEntrada), snapshotMapa);
 });
 
+test('código OD: mapa E discos de entrada não mutados quando ids trocam de estado (um some e vira removido, outro volta) — R3.5(a)', () => {
+  const mapaEntrada = [
+    { id: 1, codigo: 'OD-001' },
+    { id: 2, codigo: 'OD-002', removido: true },
+  ];
+  const discosEntrada = [disco(2, '2026-01-01', 1)]; // só id 2: ele volta; id 1 passa a faltar
+  const snapshotMapa = JSON.stringify(mapaEntrada);
+  const snapshotDiscos = JSON.stringify(discosEntrada);
+
+  const { discos, mapa } = atribuirCodigos(discosEntrada, mapaEntrada);
+
+  // o estado realmente mudou na SAÍDA — senão o teste não provaria nada
+  assert.deepEqual(mapa, [
+    { id: 1, codigo: 'OD-001', removido: true },
+    { id: 2, codigo: 'OD-002' },
+  ]);
+  assert.equal(discos[0].codigo, 'OD-002');
+
+  // mas a ENTRADA (mapa e discos) não foi tocada
+  assert.equal(JSON.stringify(mapaEntrada), snapshotMapa);
+  assert.equal(JSON.stringify(discosEntrada), snapshotDiscos);
+});
+
+test('código OD: R2.1 com a ocorrência mais antiga no MEIO das repetições, não na ponta — R3.5(b)', () => {
+  const entrada = [
+    disco(1, '2026-03-01T00:00:00.000Z', 1),
+    disco(1, '2026-01-01T00:00:00.000Z', 2), // a mais antiga das 3 ocorrências de id 1
+    disco(2, '2026-02-01T00:00:00.000Z', 3),
+    disco(1, '2026-04-01T00:00:00.000Z', 4),
+  ];
+  const { mapa } = atribuirCodigos(entrada, null);
+  assert.deepEqual(mapa, [
+    { id: 1, codigo: 'OD-001' },
+    { id: 2, codigo: 'OD-002' },
+  ]);
+});
+
+test('código OD: empate de adicionadoEm entre ids diferentes é decidido pela menor ordem — R3.5(c)', () => {
+  const entrada = [
+    disco(1, '2026-01-01T00:00:00.000Z', 2),
+    disco(2, '2026-01-01T00:00:00.000Z', 3),
+    disco(1, '2026-01-01T00:00:00.000Z', 4), // mesmo adicionadoEm, ordem maior — não vence
+  ];
+  const { mapa } = atribuirCodigos(entrada, null);
+  assert.equal(mapa.find((m) => m.id === 1).codigo, 'OD-001');
+});
+
 test('código OD: mapa vazio ([]) começa em 1, igual a null', () => {
   const { mapa } = atribuirCodigos([disco(1, '2026-01-01', 1)], []);
   assert.deepEqual(mapa, [{ id: 1, codigo: 'OD-001' }]);

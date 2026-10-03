@@ -20,6 +20,14 @@ const RESOLVIDOS_JSON = path.join(DATA_DIR, 'resolvidos.json');
 const PENDENTES_TXT = path.join(DATA_DIR, 'pendentes.txt');
 const CODIGOS_JSON = path.join(DATA_DIR, 'codigos.json');
 
+// Cauda comum das mensagens de aborto relacionadas ao código OD (T2/R3.3): "restaure
+// data/codigos.json" sozinho não resolve quando é o catalogo.json que está na frente do
+// mapa (medido) — por isso cita os 4 arquivos e, se a restauração não bastar, aponta para
+// o histórico do mapa commitado.
+const RESTAURA_CODIGOS =
+  'restaure com: git restore data/catalogo.json data/resolvidos.json data/pendentes.txt data/codigos.json ' +
+  '(se continuar, o mapa commitado está danificado: git log -- data/codigos.json)';
+
 const USER_AGENT = 'OriginariaDiscos/1.0 (+https://l3ttn.github.io/originariadiscos/)';
 const PACING_MS = 2600;
 const TIMEOUT_MS = 20000;
@@ -642,7 +650,34 @@ async function lerMapaCodigos() {
     if (err.code === 'ENOENT') return null;
     throw err;
   }
-  return JSON.parse(raw);
+  try {
+    return JSON.parse(raw);
+  } catch (err) {
+    throw new Error(`data/codigos.json inválido (não é JSON): ${err.message} — ${RESTAURA_CODIGOS}`);
+  }
+}
+
+/**
+ * Lê `data/catalogo.json` distinguindo "não existe" (ENOENT → null, build nunca rodou) de
+ * "existe mas não é JSON válido" (ex.: marcadores de conflito deixados por `git pull
+ * --autostash`) — devolve `{ invalido: true, erro }` em vez de lançar direto, porque
+ * `main()` só aborta nesse caso quando o mapa de códigos também está ausente/vazio (R3.4);
+ * com o mapa presente os códigos vêm dele e o catálogo corrompido não precisa travar o
+ * build (só perde, nesta rodada, a tolerância de reaproveitar entradas por disco).
+ */
+async function lerCatalogoAnterior() {
+  let raw;
+  try {
+    raw = await fs.readFile(CATALOGO_JSON, 'utf8');
+  } catch (err) {
+    if (err.code === 'ENOENT') return null;
+    throw err;
+  }
+  try {
+    return JSON.parse(raw);
+  } catch (erro) {
+    return { invalido: true, erro };
+  }
 }
 
 async function obterRelease(id, force) {
@@ -966,21 +1001,34 @@ async function main() {
   const mapaLido = await lerMapaCodigos();
   atribuirCodigos([], mapaLido);
 
-  const catalogoAnterior = await lerJsonSeExistir(CATALOGO_JSON);
+  const catalogoAnterior = await lerCatalogoAnterior();
+
+  // R3.4: catalogo.json existe mas não é JSON (ex.: marcadores de conflito do `git pull
+  // --autostash`) + mapa ausente/vazio → não dá pra saber se o catálogo perdido já tinha
+  // código, e seguir em frente renumeraria do zero em silêncio (medido: catálogo com
+  // "<<<<<<<" na 1ª linha + codigos.json apagado + 1 disco novo no cache deu "OK 1" com o
+  // disco novo virando OD-001). Com o mapa presente, os códigos vêm dele e isso não importa.
+  const mapaAusenteOuVazio = !mapaLido || mapaLido.length === 0;
+  if (catalogoAnterior?.invalido && mapaAusenteOuVazio) {
+    throw new Error(
+      `data/catalogo.json inválido (não é JSON): ${catalogoAnterior.erro.message} — ${RESTAURA_CODIGOS}`,
+    );
+  }
+  const catalogoAnteriorUsavel = catalogoAnterior?.invalido ? null : catalogoAnterior;
+
   // Guarda geral (R2.2 — inclui o caso "mapa ausente/vazio" como um caso particular): todo
   // disco do catalogo.json anterior que já tinha `codigo` precisa achar o MESMO id com o
   // MESMO codigo no mapa lido (removido ou não) — senão algum código mudou de disco sem
   // passar por atribuirCodigos (mapa editado à mão, restaurado errado, ou apagado) e
   // renumerar agora trocaria o código que o site já mostra para aquele disco.
   const codigoNoMapaPorId = new Map((mapaLido ?? []).map((item) => [item.id, item.codigo]));
-  for (const d of catalogoAnterior?.discos ?? []) {
+  for (const d of catalogoAnteriorUsavel?.discos ?? []) {
     if (!d || !d.codigo) continue;
     const codigoNoMapa = codigoNoMapaPorId.get(d.id);
     if (codigoNoMapa !== d.codigo) {
       throw new Error(
         `data/codigos.json não bate com data/catalogo.json: disco id ${d.id} tem codigo ${d.codigo} ` +
-          `no catálogo anterior, mas o mapa lido tem ${codigoNoMapa === undefined ? 'nenhuma entrada para esse id' : codigoNoMapa} — ` +
-          'restaure data/codigos.json (não é seguro renumerar em silêncio).',
+          `no catálogo anterior, mas o mapa lido tem ${codigoNoMapa === undefined ? 'nenhuma entrada para esse id' : codigoNoMapa} — ${RESTAURA_CODIGOS}`,
       );
     }
   }
@@ -990,7 +1038,7 @@ async function main() {
 
   const resolvidos = (await lerJsonSeExistir(RESOLVIDOS_JSON)) || {};
   const catalogoAnteriorPorId = new Map();
-  for (const d of catalogoAnterior?.discos ?? []) {
+  for (const d of catalogoAnteriorUsavel?.discos ?? []) {
     catalogoAnteriorPorId.set(d.id, d);
   }
 
