@@ -1,5 +1,5 @@
 {
-  "geradoEm": "2026-10-04T11:44:41.200Z",
+  "geradoEm": "2026-10-06T12:39:59.332Z",
   "fonte": "Discogs",
   "discos": [
     {
@@ -1813,13 +1813,13 @@
       "adicionadoEm": "2026-09-24T15:13:13.584Z",
       "ordem": 11,
       "edicaoVenda": {
-        "id": 37478574,
+        "id": 37584492,
         "ano": 2026,
         "pais": "Europe",
-        "selo": "DOL",
-        "catno": "DOL725HZ",
-        "formato": "LP, Album, Reissue",
-        "discogsUrl": "https://www.discogs.com/release/37478574",
+        "selo": "Second Records",
+        "catno": "SRPD0019",
+        "formato": "LP, Album, Reissue, Stereo",
+        "discogsUrl": "https://www.discogs.com/release/37584492",
         "fixadaPeloDono": false
       },
       "codigo": "OD-010"
