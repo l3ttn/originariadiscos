@@ -1,5 +1,5 @@
 {
-  "geradoEm": "2026-10-06T12:39:59.332Z",
+  "geradoEm": "2026-10-07T22:36:15.106Z",
   "fonte": "Discogs",
   "discos": [
     {
@@ -2141,24 +2141,8 @@
       ],
       "videos": [
         {
-          "ytId": "3m3qOD-hhrQ",
-          "titulo": "Head Hunters | Herbie Hancock | 1973 | Full Album"
-        },
-        {
-          "ytId": "WYRrIBqKsJ4",
-          "titulo": "Chameleon"
-        },
-        {
           "ytId": "ppJQKfqhFfE",
           "titulo": "Watermelon Man"
-        },
-        {
-          "ytId": "At1wCLEVdWI",
-          "titulo": "Sly"
-        },
-        {
-          "ytId": "hcvb5muPPNA",
-          "titulo": "Vein Melter"
         },
         {
           "ytId": "3m3qOD-hhrQ",
@@ -2169,20 +2153,24 @@
           "titulo": "Chameleon"
         },
         {
-          "ytId": "ppJQKfqhFfE",
-          "titulo": "Watermelon Man"
-        },
-        {
-          "ytId": "At1wCLEVdWI",
-          "titulo": "Sly"
-        },
-        {
           "ytId": "hcvb5muPPNA",
           "titulo": "Vein Melter"
         },
         {
+          "ytId": "ppJQKfqhFfE",
+          "titulo": "Watermelon Man"
+        },
+        {
           "ytId": "3m3qOD-hhrQ",
           "titulo": "Head Hunters | Herbie Hancock | 1973 | Full Album"
+        },
+        {
+          "ytId": "WYRrIBqKsJ4",
+          "titulo": "Chameleon"
+        },
+        {
+          "ytId": "hcvb5muPPNA",
+          "titulo": "Vein Melter"
         },
         {
           "ytId": "STKxbUmVCkg",
