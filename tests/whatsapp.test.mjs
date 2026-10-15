@@ -43,7 +43,8 @@ describe('montarLink', () => {
   test('usa o número de js/config.js, nunca hardcoded', () => {
     const href = montarLink('oi');
     assert.equal(href, `https://wa.me/${WHATSAPP}?text=oi`);
-    assert.equal(WHATSAPP, '5547900000000');
+    assert.notEqual(WHATSAPP, '5547900000000');
+    assert.match(WHATSAPP, /^55\d{10,11}$/);
   });
 });
 
