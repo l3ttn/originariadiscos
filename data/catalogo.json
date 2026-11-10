@@ -1,5 +1,5 @@
 {
-  "geradoEm": "2026-11-10T14:12:14.103Z",
+  "geradoEm": "2026-11-10T22:47:48.989Z",
   "fonte": "Discogs",
   "discos": [
     {
@@ -1801,13 +1801,13 @@
       "adicionadoEm": "2026-09-24T15:13:13.584Z",
       "ordem": 11,
       "edicaoVenda": {
-        "id": 37584492,
+        "id": 37478574,
         "ano": 2026,
         "pais": "Europe",
-        "selo": "Second Records",
-        "catno": "SRPD0019",
-        "formato": "LP, Album, Reissue, Stereo",
-        "discogsUrl": "https://www.discogs.com/release/37584492",
+        "selo": "DOL",
+        "catno": "DOL725HZ",
+        "formato": "LP, Album, Reissue",
+        "discogsUrl": "https://www.discogs.com/release/37478574",
         "fixadaPeloDono": false
       },
       "codigo": "OD-010"
@@ -6901,6 +6901,14 @@
         }
       ],
       "videos": [
+        {
+          "ytId": "H26yWAkkTtI",
+          "titulo": "APHEX TWIN - HELIOSPHAN (AMB LP 3922)"
+        },
+        {
+          "ytId": "aL8lYoOxTv4",
+          "titulo": "APHEX TWIN - XTAL (AMB LP 3922)"
+        },
         {
           "ytId": "Xw5AiRVqfqk",
           "titulo": "Aphex Twin - Selected Ambient Works 85-92"
