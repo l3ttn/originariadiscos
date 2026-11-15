@@ -1,5 +1,5 @@
 {
-  "geradoEm": "2026-11-14T21:57:41.685Z",
+  "geradoEm": "2026-11-15T22:27:28.811Z",
   "fonte": "Discogs",
   "discos": [
     {
@@ -1497,13 +1497,13 @@
       "adicionadoEm": "2026-09-24T15:13:13.584Z",
       "ordem": 11,
       "edicaoVenda": {
-        "id": 37584492,
+        "id": 37478574,
         "ano": 2026,
         "pais": "Europe",
-        "selo": "Second Records",
-        "catno": "SRPD0019",
-        "formato": "LP, Album, Reissue, Stereo",
-        "discogsUrl": "https://www.discogs.com/release/37584492",
+        "selo": "DOL",
+        "catno": "DOL725HZ",
+        "formato": "LP, Album, Reissue",
+        "discogsUrl": "https://www.discogs.com/release/37478574",
         "fixadaPeloDono": false
       },
       "codigo": "OD-010"
@@ -2502,7 +2502,32 @@
           "dur": "3:51"
         }
       ],
-      "videos": [],
+      "videos": [
+        {
+          "ytId": "muLcm3_JSR4",
+          "titulo": "Superfly"
+        },
+        {
+          "ytId": "585pSKysWqk",
+          "titulo": "curtis mayfield - Superfly - Superfly"
+        },
+        {
+          "ytId": "FpPYBoPVl5E",
+          "titulo": "Super Fly (1972)(Curtis Mayfield - Superfly)"
+        },
+        {
+          "ytId": "Xdd2BS9SHe0",
+          "titulo": "Curtis Mayfield - Superfly (1972) Part 1 (Full Album)"
+        },
+        {
+          "ytId": "0B6TKClPFQA",
+          "titulo": "curtis mayfield - Freddie's Dead - Superfly"
+        },
+        {
+          "ytId": "xatZALKiI8A",
+          "titulo": "Curtis Mayfield - Pusherman (Official Audio)"
+        }
+      ],
       "notas": "Super Fly Original Motion Picture Soundtrack. \nDie-Cut Jacket. Walmart Limited Edition Exclusive Gold Vinyl.\nSticker Label RCD1 524044 / 081227879983\nDie Cut  reverse side  is blank compared to similar [r3328948]\n\n",
       "discogsUrl": "https://www.discogs.com/release/23757107-Curtis-Mayfield-Superfly",
       "status": "esgotado",
